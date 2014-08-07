@@ -8,3 +8,4 @@ Contents:
 
    hello-world
    types-and-vars
+   logic
