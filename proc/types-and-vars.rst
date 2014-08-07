@@ -79,7 +79,7 @@ before computing the result. For floating point vs. integer, this is always
 floating point which is why in the above example program writing ``8 / 3.0`` was
 enough (but ``8.0 / 3.0`` would also work, of course).
 
-The last line demonstrates that you can use arbitrary complex expressions that
+The last line demonstrates that you can use arbitrarily complex expressions that
 may contain multiple operators (including unary ``-``, i.e. negation) and
 parenthesis. They are evaluated like you probably know from school: ``+`` and
 ``-`` are computed after ``*`` and ``/``, the contents of parentheses are
@@ -113,13 +113,13 @@ result, not to the expression). Such a named value is called :dfn:`variable`,
 and the introduction of a new variable (e.g. with the ``auto`` keyword) is
 called a variable :dfn:`definition`.
 
-The name of a variable must start with a letter or underscore and can be followed by any
-number of letters, numbers or underscores (but not two or more underscores in a
-row). The following names are valid::
+The name of a variable must start with a letter or underscore and can be
+followed by any number of letters, numbers or underscores (but not two or more
+underscores in a row). The following names are valid::
 
   circle_radius circleRadius Html5Text MAX_INTEGER_VALUE temp i h h2  _y _1 _
 
-While valid, names like the last ones (from ``temp`` one) should, in general,
+While valid, names like the last ones (from ``temp`` on) should, in general,
 better be avoided: The purpose of a name is to let the reader know what the
 variable means, but these names tell nothing.
 
@@ -155,13 +155,14 @@ Note that the ``auto`` keyword is used only once here: No new variables are
 introduced thereafter; it is really the value that is saved in the variable that
 changes. The `=` is the assignment operator: It assigns the value of the
 expression on its right side to its left side, which must be a variable. An
-assignment like ``3 = 4 + 3`` or ``1 * 2 = 2`` will not compile.
+assignment like ``3 = 4 + 3`` or ``1 * 2 = 2`` will not compile (after all, what
+should be the meaning of this?).
 
 Do not mistake the meaning of the assignment operator for the mathematical
 equals sign: while both use the same character, they don't mean the same.
 Mathematically, :math:`p = p + 90` is a proposition that is false (at least for
 real numbers), because it can be reduced to the obviously false :math:`0 = 90`
-by subtracting 90 on both sides. In C++, however, ``p = p + 90`` is a command
+by subtracting :math:`p` on both sides. In C++, however, ``p = p + 90`` is a command
 that tells the computer to compute the result of the expression ``p + 90`` and
 save it in the variable ``p``.
 
@@ -188,7 +189,7 @@ you by now; a variables type is the very same concept as a literal's or an
 expression's type). The type of a variable is determined at compile time (i.e.
 when compiling the program, not when running it), when defining it. Unlike a
 variable's value, it's type never changes. Thus in the program above, the type
-of ``price`` is determined by the line ::
+of ``price`` is determined solely by the line ::
 
   auto price = 0;
 
@@ -275,7 +276,8 @@ range and the number of bytes they occupy. From smallest to largest, there are:
 * ``short int``, or just ``short``, typically 16 bit long, allowing numbers from
   :math:`-2^{16 - 1} = -32768` to :math:`2^{16 - 1} - 1 = 32767` in their signed
   variant and from :math:`0` to :math:`2^{16} = 65536` in their unsigned variant
-* ``int``, typically 32 bit long, allowing numbers from -2147483648 to 2147483647
+* ``int``, typically 32 bit long, allowing numbers from -2,147,483,648 to
+  2,147,483,647
 * ``long int``, or just ``long``, typically 32 or 64 bit long
 * ``long long int``, or just ``long long``, typically 64 bit long, allowing
   absolute numbers as big as circa :math:`9.2 \cdot 10^{18}` (that is, a number
@@ -287,6 +289,17 @@ range and the number of bytes they occupy. From smallest to largest, there are:
 
 .. _binary numbers: http://en.wikipedia.org/wiki/Binary_number
 .. _positional notation: http://en.wikipedia.org/wiki/Positional_notation
+
+I said “typically” for the sizes and valid ranges because this is one of the
+things that are :dfn:`implementation defined`, i.e. the C++ Standard does not say how
+large the types are; it only guarantees that ``int`` is at least as large as
+``short``, ``long`` is at least as large as ``int`` and ``long long`` at least
+as large as ``long``. Additionally, it says that the smallest integer type must
+be at least 1 byte long and that one byte must have at least 8 bit [#oddbits]_.
+And lastly, the standard mandates (and that is actually the general definition
+of “implementation defined”) that all compilers document how large the types
+are, and which ranges they support. For example, the documentation for MSVC is
+at http://msdn.microsoft.com/en-us/library/s3f49ktz.aspx.
 
 For each of these types, an unsigned variant exists, that has the same type name
 as the signed type above, but with ``unsigned`` prepended, e.g. ``unsigned
@@ -449,7 +462,7 @@ temporary variables.
   This is just conceptually so. When there is no observable difference in the
   program's behavior, the compiler can always do something different. E.g. in
   the above code it will probably detect that no temporaries are necessary,
-  since the calculations intermediate values can be accumulated in x::
+  since the calculation's intermediate values can be accumulated in ``x``::
 
     auto x = p * p;
     x = 1 - x;
@@ -469,7 +482,6 @@ Summary
   operators and parentheses.
 * Everything has a type: Literals, variables, expressions and subexpressions
   (like the ``3 * 4`` in ``2 + 3 * 4``).
-
 * Types are fixed at compile time.
 * A literal's type can be influenced by appending a suffix (e.g. ``1.0f``).
 * For numbers, there are floating point and signed and unsigned integer types of
@@ -485,6 +497,9 @@ Summary
 * ``const`` can be prepended to a variable's type name or to ``auto`` to define
   a constant that cannot be changed.
 
+Your knowledge of C++ is now sufficient for developing programs that replace
+e.g. simple spreadsheet documents.
+
 ----
 
 .. rubric:: Footnotes
@@ -496,3 +511,5 @@ Summary
    means the same as ``1.0``.
 .. [#inputerr] We will cover what happens when you enter an invalid value
    later; for now, just enter something correct.
+.. [#oddbits] Yes, there are/were exotic platforms were a byte does
+   not have 8 bit.
