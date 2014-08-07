@@ -34,6 +34,8 @@ extensions = [
     'sphinx.ext.mathjax',
 ]
 
+todo_include_todos = True
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -92,6 +94,8 @@ exclude_patterns = ['_build']
 pygments_style = 'sphinx'
 
 highlight_language = 'cpp'
+
+primary_domain = 'cpp'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -182,7 +186,7 @@ html_domain_indices = False
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'OnCdoc'
+htmlhelp_basename = 'OnC++'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -202,7 +206,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'OnC.tex', 'On C++ Documentation',
+  ('index', 'OnCPP.tex', 'On C++',
    'Christian Neumüller', 'manual'),
 ]
 
@@ -232,7 +236,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'onc', 'On C++ Documentation',
+    ('index', 'oncpp', 'On C++',
      ['Christian Neumüller'], 1)
 ]
 
@@ -246,7 +250,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'OnC', 'On C++ Documentation',
+  ('index', 'OnCPP', 'On C++',
    'Christian Neumüller', 'OnC', 'One line description of project.',
    'Miscellaneous'),
 ]
