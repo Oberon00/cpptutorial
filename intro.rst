@@ -437,6 +437,26 @@ you leave this option out, it will be called ``a.out``.
 ``hello_world.cpp`` is obviously the name of the source file to compile.
 
 
+A few command line tips
+-----------------------
+
+To use the command line effectively, I recommend reading a good tutorial
+[#cmdtut]_. I will, however, give a few tips here:
+
+* You can use the :kbd:`Up` and :kbd:`Down` keys to cycle through your last
+  commands. For example, if you want to run the last command again, just press
+  :kbd:`Up` again, and the command will reappear, ready to be edited or directly
+  started with :kbd:`Return`.
+* You can use the :kbd:`Tab` key to complete filenames: for instance, if you
+  typed ``hel`` and the file :file:`hello_world.cpp` is in the current
+  directory, you can press :kbd:`Tab` to complete the filename.
+* On Linux, use the ``ls`` or ``ls -l`` command to show the files and
+  subdirectories in the current directory. On Windows, ``dir`` does that.
+* To open the current directory in your GUI file system browser (e.g. Nautilus,
+  Dolphin or Windows Explorer) Use ``xdg-open .`` on Linux and ``explorer .`` on
+  Windows.
+
+
 *********
 Resources
 *********
@@ -503,3 +523,6 @@ habits is great with C++.
 
 .. [#cppfirst] See :ref:`intro-whycpp` for whether this is a good idea.
 .. [#long-ms-names] Microsoft is infamous for it's long product names.
+.. [#cmdtut] Although I have not read it and it uses PowerShell on Windows
+   instead of the ordinary ``cmd``, http://cli.learncodethehardway.org/book/
+   made a good first impression on me, if you can find nothing else.
