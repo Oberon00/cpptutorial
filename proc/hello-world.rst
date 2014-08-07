@@ -102,7 +102,7 @@ Writing to the console
    :emphasize-lines: 5
 
 This line really is the only one that is actually executed at runtime. It is a
-so called :dnf:`statement`. These are really “instructions”, or “commands” that
+so called :dfn:`statement`. These are really “instructions”, or “commands” that
 instruct the computer to do something. In this case, it tells the computer to
 print the text “Hello world!” followed by a line break (``\n``) to the standard
 output (``std::cout``) [#tellcompiler]_. For now, you can thus think of the
