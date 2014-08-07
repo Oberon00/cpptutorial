@@ -169,7 +169,7 @@ that or at least know where to look it up. The instructions could even be
 refined further: For example, you could look in your stove's manual to find out
 out how exactly to turn it on and if you had to program a robot to do this you
 would probably have to tell it exactly how to move every finger. The abstraction
-could also be expanded into the other direction: The Sphagetti could be part of
+could also be expanded into the other direction: The Spaghetti could be part of
 a whole meal. This stepwise refinement is the concept of procedural abstraction,
 and the main features in programming languages to support it are :ref:`functions
 <proc-functions>`.
@@ -306,10 +306,10 @@ like
 
 .. literalinclude:: proc/hello_world.cpp
 
-You write this text using any plain text *editor* you like (e.g. `Notepad++`_ or Vim_,
+You write this text using any plain text editor you like (e.g. `Notepad++`_ or Vim_,
 but not a rich text editor like Word or Open Office Writer). The colors are just
 added here and by good editors automatically to make the code more readable
-(that feature is called *syntax highlighting*); you do not set them yourself in
+(that feature is called :dfn:`syntax highlighting`); you do not set them yourself in
 any way and they do not influence the program behaviour. The file is usually
 saved as with a ``.cpp`` file name extension to make it clear that this is a C++
 source code file. You might also encounter the ``.cc`` or ``.cxx`` extensions.
@@ -319,20 +319,21 @@ source code file. You might also encounter the ``.cc`` or ``.cxx`` extensions.
 
 Computers cannot execute such a source file, they must be translated into binary
 processor instructions first. Thus, next step is to feed this program to a
-*compiler*, which does this translation for us. There is a multitude of ways of
+:dfn:`compiler`, which does this translation for us. There is a multitude of ways of
 doing that, depending on the compiler. The compiler then takes the source file
 and “compiles” it into an executable program which you can then start.
 
 More complex programs will usually consist of multiple C++ files which are then
-separately compiled into intermediate output files (usually with a `.o`
-extension) and then “linked” together by a program called *linker* to an
-executable. In fact, even if just a single source file is compiled into an
+separately compiled into intermediate output files (usually with a ``.o`` or
+``.obj`` extension) and then “linked” together by a program called :dfn:`linker`
+to an executable. In fact, even if just a single source file is compiled into an
 executable, the compiler automatically invokes the linker behind the scenes.
 
 Thus, the steps are
 
 1. Write source code. Tool: editor; result: ``.cpp``-File
-2. Compile source code to object file. Tool: compiler; result: ``.o``-File
+2. Compile source code to object file. Tool: compiler; result: intermediate
+   object file
 3. Link object file to executable. Tool: linker; result: executable File
    (``.exe`` on Windows, without extension on Unix-like systems like MacOS and
    Linux).
@@ -344,20 +345,24 @@ How To: Install a compiler
 Windows
 -------
 
-On Windows, I recommend using Microsoft's free *Visual C++ Express for Windows
-Desktop* [#long-ms-names]_. At the time of this writing, the most recent version
-(which we will of course use) is 2013 Update 2, downloadable at
+On Windows, I recommend using Microsoft's free :program:`Visual C++ Express for
+Windows Desktop` [#long-ms-names]_. At the time of this writing, the most recent
+version (which we will of course use) is 2013 Update 3, downloadable at
 http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-8.
 Just click the “Install now!” link, and run the downloaded installer. You can
 untick any checkboxes saying something about Windows Phone or .NET.
 
+I will refer to this compiler as :abbr:`MSVC (Microsoft Visual C++)`.
+
 Debian/Ubuntu based Linux
 -------------------------
 
-On Linux, we will use g++. Installing is as easy as opening a terminal and
-typing ``sudo apt-get install g++``, but since you're using Linux, I assume you
-know what you're doing anyway. ;-)
+On Debian/Ubuntu based Linux, we will use the :program:`g++` compiler, a part of
+the :abbr:`GCC (GNU Compiler Collection)`. Installing is as easy as opening a
+terminal and typing ``sudo apt-get install g++``, but since you're using Linux,
+I assume you know what you're doing anyway. ;-)
 
+.. _gcc: https://gcc.gnu.org/
 
 .. _intro-compiler-howto:
 
@@ -369,15 +374,23 @@ How To: Compile your source code
 Windows
 -------
 
-Open the *VS2013 x86 Native Tools Command Prompt*. It is located in the start
-menu (or whatever you call it nowadays) at Visual Studio 2013 → Visual Studio
-Tools. Then change the current directory to the folder where you saved your file
-using ``cd``, e.g. ``cd C:\Users\YOURNAME\somefolder\somesubfolder``. Compiling
-is then done with the command ``cl /EHsc /W4 hello_world.cpp``. You should now
-see (among others) a new file ``hello_wold.exe``. You can check in the command
-prompt by typing ``dir``. If you want to execute your program now, type
-``hello_world``, and you should see a line ``Hello world!`` appearing in the
-console window.
+Open the :program:`VS2013 x86 Native Tools Command Prompt`. It is located in the
+start menu (or whatever you call it nowadays) at :menuselection:`Visual Studio
+2013 --> Visual Studio Tools`. Then change the current directory to the folder
+where you saved your file using ``cd``, e.g. :samp:`cd
+C:\Users\{YOURNAME}\somefolder\somesubfolder`.
+
+.. note::
+
+  If your source code is on a drive different from the one where the initial
+  directory of the command prompt is, use the :samp`cd /D {YOURDIRECTORY}`
+  command (the ``/D`` option means “change the Drive if necessary”).
+
+Compiling is then done with the
+command ``cl /EHsc /W4 hello_world.cpp``. You should now see (among others) a
+new file :file:`hello_wold.exe`. You can check in the command prompt by typing
+``dir``. If you want to execute your program now, type ``hello_world``, and you
+should see a line ``Hello world!`` appearing in the console window.
 
 The compiler command
 ^^^^^^^^^^^^^^^^^^^^
