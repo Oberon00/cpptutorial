@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>From source code to executables &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="../_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="../index.html" />
+    <link rel="up" title="The Basics: Procedural programming" href="index.html" />
+    <link rel="next" title="Types and Variables" href="types-and-vars.html" />
+    <link rel="prev" title="The Basics: Procedural programming" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="types-and-vars.html" title="Types and Variables"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="The Basics: Procedural programming"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="from-source-code-to-executables">
+<span id="intro-helloworld"></span><span id="intro-compiler"></span><h1>From source code to executables<a class="headerlink" href="#from-source-code-to-executables" title="Permalink to this headline">¶</a></h1>
+<p>When you write a C++ program, you start with the source code. That&#8217;s a
+human-readable notation of the program, in the C++ programming language. For
+example a program that writes the text “Hello world!” to a console window looks
+like</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You write this text using any plain text editor you like (e.g. <a class="reference external" href="http://notepad-plus-plus.org/">Notepad++</a> or <a class="reference external" href="http://www.vim.org/">Vim</a>,
+but not a rich text editor like Word or Open Office Writer). The colors are just
+added here and by good editors automatically to make the code more readable
+(that feature is called <em class="dfn">syntax highlighting</em>); you do not set them yourself in
+any way and they do not influence the program behaviour. The file is usually
+saved as with a <code class="docutils literal"><span class="pre">.cpp</span></code> file name extension to make it clear that this is a C++
+source code file. You might also encounter the <code class="docutils literal"><span class="pre">.cc</span></code> or <code class="docutils literal"><span class="pre">.cxx</span></code> extensions.</p>
+<p>Computers cannot execute such a source file, they must be translated into binary
+processor instructions first. Thus, next step is to feed this program to a
+<em class="dfn">compiler</em>, which does this translation for us. There is a multitude of ways of
+doing that, depending on the compiler. The compiler then takes the source file
+and “compiles” it into an executable program which you can then start.</p>
+<p>More complex programs will usually consist of multiple C++ files which are then
+separately compiled into intermediate output files (usually with a <code class="docutils literal"><span class="pre">.o</span></code> or
+<code class="docutils literal"><span class="pre">.obj</span></code> extension) and then “linked” together by a program called <em class="dfn">linker</em>
+to an executable. In fact, even if just a single source file is compiled into an
+executable, the compiler automatically invokes the linker behind the scenes.</p>
+<p>Thus, the steps are</p>
+<ol class="arabic simple">
+<li>Write source code. Tool: editor; result: <code class="docutils literal"><span class="pre">.cpp</span></code>-File</li>
+<li>Compile source code to object file. Tool: compiler; result: intermediate
+object file</li>
+<li>Link object file to executable. Tool: linker; result: executable File
+(<code class="docutils literal"><span class="pre">.exe</span></code> on Windows, without extension on Unix-like systems like MacOS and
+Linux).</li>
+</ol>
+<div class="figure">
+<p><img src="../_images/tikz-0832773d28c1fe7f613b4e6d18cb85967f9fd8cc.png" alt="[
+  -{Latex[length=4mm]}, auto, node distance=6em,
+  file/.style={rectangle, draw, align=center},
+  start/.style={circle, fill, draw}
+]
+\node (start) [start] {};
+\node (cpp) [file, right=of start]
+  {Source file\\\texttt{*.cpp}, \texttt{*.cc}};
+\node (obj) [file,right=of cpp] {Object file\\\texttt{*.o}, \texttt{*.obj}};
+\node (exe) [file,right=of obj]
+  {Executable file\\\texttt{*.exe}, w/o extension};
+
+\path (start) edge node {Editor} (cpp)
+      (cpp) edge node {Compiler} (obj)
+      (obj) edge node {Linker} (exe);" /></p>
+<p class="caption">From source code to executables.</p></div><div class="section" id="how-to-install-a-compiler">
+<h2>How To: Install a compiler<a class="headerlink" href="#how-to-install-a-compiler" title="Permalink to this headline">¶</a></h2>
+<p>Note that nowaydays every compiler comes with a linker, so there is no need to
+install an extra linker.</p>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>On Windows, I recommend using Microsoft&#8217;s free <strong class="program">Visual Studio Community
+Edition</strong>.  At the time of this writing, the most recent version (which we will
+of course use) is 2015 Update 3, downloadable at <a class="reference external" href="https://www.visualstudio.com/">https://www.visualstudio.com/</a>.
+When you download and run the installer, be sure to tick the checkbox under
+<span class="menuselection">Programming Languages ‣ Visual C++ ‣ Common Tools For Visual
+C++ 2015</span> (Visual Studio supports multiple programming languages and C++ is not
+among the defaults). You can untick any checkboxes saying something about
+Windows Phone or .NET.</p>
+<p>I will refer to this compiler as <abbr title="Microsoft Visual C++">MSVC</abbr>.</p>
+</div>
+<div class="section" id="debian-ubuntu-based-linux">
+<h3>Debian/Ubuntu based Linux<a class="headerlink" href="#debian-ubuntu-based-linux" title="Permalink to this headline">¶</a></h3>
+<p>On Debian/Ubuntu based Linux, we will use the <strong class="program">g++</strong> compiler, a part of
+the <abbr title="GNU Compiler Collection">GCC</abbr>. Installing is as easy as opening a
+terminal and typing <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">g++</span></code>, but since you&#8217;re using Linux,
+I assume you know what you&#8217;re doing anyway. ;-)</p>
+</div>
+</div>
+<div class="section" id="how-to-compile-your-source-code">
+<span id="intro-compiler-howto"></span><h2>How To: Compile your source code<a class="headerlink" href="#how-to-compile-your-source-code" title="Permalink to this headline">¶</a></h2>
+<p>(Assuming you saved your file as <code class="file docutils literal"><span class="pre">hello_world.cpp</span></code>)</p>
+<div class="section" id="id1">
+<h3>Windows<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Open the <strong class="program">VS2013 x86 Native Tools Command Prompt</strong>. It is located in the
+start menu (or whatever you call it nowadays) at <span class="menuselection">Visual Studio
+2013 ‣ Visual Studio Tools</span>. Then change the current directory to the folder
+where you saved your file using <code class="docutils literal"><span class="pre">cd</span></code>, e.g. <code class="samp docutils literal"><span class="pre">cd</span>
+<span class="pre">C:\Users\</span><em><span class="pre">YOURNAME</span></em><span class="pre">\somefolder\somesubfolder</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your source code is on a drive different from the one where the initial
+directory of the command prompt is, use the <code class="samp docutils literal"><span class="pre">cd</span> <span class="pre">/D</span> <em><span class="pre">YOURDIRECTORY</span></em></code>
+command (the <code class="docutils literal"><span class="pre">/D</span></code> option means “change the Drive if necessary”).</p>
+</div>
+<p>Compiling is then done with the
+command <code class="docutils literal"><span class="pre">cl</span> <span class="pre">/EHsc</span> <span class="pre">/W4</span> <span class="pre">hello_world.cpp</span></code>. You should now see (among others) a
+new file <code class="file docutils literal"><span class="pre">hello_wold.exe</span></code>. You can check in the command prompt by typing
+<code class="docutils literal"><span class="pre">dir</span></code>. If you want to execute your program now, type <code class="docutils literal"><span class="pre">hello_world</span></code>, and you
+should see a line <code class="docutils literal"><span class="pre">Hello</span> <span class="pre">world!</span></code> appearing in the console window.</p>
+<div class="section" id="the-compiler-command">
+<h4>The compiler command<a class="headerlink" href="#the-compiler-command" title="Permalink to this headline">¶</a></h4>
+<p>Let&#8217;s break down the compiler command.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">cl</span> <span class="o">/</span><span class="n">EHsc</span> <span class="o">/</span><span class="n">W4</span> <span class="n">hello_world</span><span class="p">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">cl</span></code> is the name of Microsoft&#8217;s compiler. The things preceded by slashes <code class="docutils literal"><span class="pre">/</span></code>
+are options which tell the compiler how to process your source code. <code class="docutils literal"><span class="pre">/EHsc</span></code>
+tells it to enable so called <em>exceptions</em>, which really should be enabled by
+default but isn&#8217;t. You don&#8217;t need to understand this, just remember to add this
+option whenever you compile C++ code. <code class="docutils literal"><span class="pre">/W4</span></code> stands for “warning level 4” and
+tells the compiler to tell you about any suspicious things it notices in your
+source code (this also should be a default but sadly isn&#8217;t in any compiler I
+know of).  <code class="docutils literal"><span class="pre">hello_world.cpp</span></code> is obviously the name of the source file to
+compile.</p>
+</div>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p>Open a terminal and change the current directory to the one containing your
+source file. Then execute
+<code class="docutils literal"><span class="pre">g++</span> <span class="pre">-std=c++14</span> <span class="pre">-Wall</span> <span class="pre">-Wextra</span> <span class="pre">-ohello_world</span> <span class="pre">hello_world.cpp</span></code>. An executable
+<code class="docutils literal"><span class="pre">hello_world</span></code> should now appear. You can check in the terminal by typing
+<code class="docutils literal"><span class="pre">ls</span></code>. If you want to execute your program now, type <code class="docutils literal"><span class="pre">./hello_world</span></code>, and you
+should see a line <code class="docutils literal"><span class="pre">Hello</span> <span class="pre">world!</span></code> appearing in the terminal.</p>
+<div class="section" id="id2">
+<h4>The compiler command<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Let&#8217;s break down the compiler command.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">g</span><span class="o">++</span> <span class="o">-</span><span class="n">std</span><span class="o">=</span><span class="n">c</span><span class="o">++</span><span class="mi">14</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">Wextra</span> <span class="o">-</span><span class="n">ohello_world</span> <span class="n">hello_world</span><span class="p">.</span><span class="n">cpp</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">g++</span></code> is the name of the compiler. The things preceded by dashes <code class="docutils literal"><span class="pre">-</span></code>
+are options which tell the compiler how to process your source code.
+<code class="docutils literal"><span class="pre">-std=c++14</span></code> tells it that we want to use the newest C++14 standard. <code class="docutils literal"><span class="pre">-Wall</span></code>
+and <code class="docutils literal"><span class="pre">-Wextra</span></code> tell the compiler to tell you about any suspicious things it
+notices in your source code (this should be a default but sadly isn&#8217;t in
+any compiler I know of). <code class="docutils literal"><span class="pre">-ohello_world</span></code> means “output (<code class="docutils literal"><span class="pre">-o</span></code>) as
+<code class="docutils literal"><span class="pre">hello_world</span></code> ” and simply specifies the name of the executable to produce. If
+you leave this option out, it will be called <code class="docutils literal"><span class="pre">a.out</span></code>.
+<code class="docutils literal"><span class="pre">hello_world.cpp</span></code> is obviously the name of the source file to compile.</p>
+</div>
+</div>
+<div class="section" id="a-few-command-line-tips">
+<h3>A few command line tips<a class="headerlink" href="#a-few-command-line-tips" title="Permalink to this headline">¶</a></h3>
+<p>To use the command line effectively, I recommend reading a good tutorial
+<a class="footnote-reference" href="#cmdtut" id="id3">[1]</a>. I will, however, give a few tips here:</p>
+<ul class="simple">
+<li>You can use the <code class="kbd docutils literal"><span class="pre">Up</span></code> and <code class="kbd docutils literal"><span class="pre">Down</span></code> keys to cycle through your last
+commands. For example, if you want to run the last command again, just press
+<code class="kbd docutils literal"><span class="pre">Up</span></code> again, and the command will reappear, ready to be edited or directly
+started with <code class="kbd docutils literal"><span class="pre">Return</span></code>.</li>
+<li>You can use the <code class="kbd docutils literal"><span class="pre">Tab</span></code> key to complete filenames: for instance, if you
+typed <code class="docutils literal"><span class="pre">hel</span></code> and the file <code class="file docutils literal"><span class="pre">hello_world.cpp</span></code> is in the current
+directory, you can press <code class="kbd docutils literal"><span class="pre">Tab</span></code> to complete the filename.</li>
+<li>Pressing <code class="kbd docutils literal"><span class="pre">Ctrl+C</span></code> quits the running console program and drops you back to
+the command prompt, without closing the console window.</li>
+<li>On Linux, use the <code class="docutils literal"><span class="pre">ls</span></code> or <code class="docutils literal"><span class="pre">ls</span> <span class="pre">-l</span></code> command to show the files and
+subdirectories in the current directory. On Windows, <code class="docutils literal"><span class="pre">dir</span></code> does that.</li>
+<li>To open the current directory in your GUI file system browser (e.g. Nautilus,
+Dolphin or Windows Explorer) Use <code class="docutils literal"><span class="pre">xdg-open</span> <span class="pre">.</span></code> on Linux and <code class="docutils literal"><span class="pre">explorer</span> <span class="pre">.</span></code> on
+Windows.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="the-hello-world-program-analyzed">
+<h1>The Hello World program analyzed<a class="headerlink" href="#the-hello-world-program-analyzed" title="Permalink to this headline">¶</a></h1>
+<p>Now that you have compiled and run the Hello World program, you are probably
+curious what all these cryptic lines in the source code mean. Let&#8217;s repeat our
+little program here:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="linewise-breakdown">
+<h2>Linewise breakdown<a class="headerlink" href="#linewise-breakdown" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="preprocessor-includes">
+<h3>Preprocessor #includes<a class="headerlink" href="#preprocessor-includes" title="Permalink to this headline">¶</a></h3>
+<p>Let&#8217;s start with the first line: This is a so-called <a class="reference internal" href="../glossary.html#term-preprocessor-directive"><span class="xref std std-term">preprocessor directive</span></a>
+more specifically an <em class="dfn">include directive</em>. It instructs to compiler to read the
+<code class="docutils literal"><span class="pre">iostream</span></code> file and paste it contents in place of the directive, just as if we
+had written the whole file&#8217;s content there instead of just the <code class="docutils literal"><span class="pre">#include</span></code>. We
+need this file because it tells the compiler what <code class="docutils literal"><span class="pre">std::cout</span></code> in line 5 means.
+It is part of the <em class="dfn">standard library</em>, a set of files that comes with every
+C++ compiler.</p>
+</div>
+<div class="section" id="whitespace">
+<span id="proc-hello-ws"></span><h3>Whitespace<a class="headerlink" href="#whitespace" title="Permalink to this headline">¶</a></h3>
+<p>The second line is empty, it has no special meaning. I just inserted it to make
+the source code look nicer. Generally, C++ ignores all <em class="dfn">whitespace</em> (that&#8217;s
+how programmers collectively call spaces, tab(ulator)s and line breaks), except
+that they are sometimes needed to separate words. The only time where this was
+needed in this program is the space between <code class="docutils literal"><span class="pre">int</span></code> and <code class="docutils literal"><span class="pre">main</span></code> in line 3. The
+second case where whitespace has a meaning is preprocessor directives: Here, a
+line break is needed to tell the compiler where it ends. This means that, if I
+wanted, I could have written the entire program as short as</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;}</span>
+</pre></div>
+</div>
+<p>and it would mean exactly the same as the long version. Oh yes, I have also left
+the space between <code class="docutils literal"><span class="pre">Hello</span></code> and <code class="docutils literal"><span class="pre">world</span></code> there, but that will become obvious
+when we get to line 5. One can also insert as many whitespace as one wants, for
+example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span>              <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+              <span class="kt">int</span>
+<span class="nf">main</span>
+                      <span class="p">(</span>
+               <span class="p">){</span>
+   <span class="n">std</span>  <span class="o">::</span>         <span class="n">cout</span> <span class="o">&lt;&lt;</span>
+<span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span>
+
+<span class="p">;</span>
+
+
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Pretty much the only place where you cant freely sprinkle whitespace is in
+preprocessor directives (the <code class="docutils literal"><span class="pre">#include</span></code>-directive in our Hello World program),
+where everything must be written on one line, meaning that exactly the following
+line breaks are illegal in the program above:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#</span>
+<span class="n">include</span>
+<span class="o">&lt;</span>
+<span class="n">iostream</span>
+<span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Of course, you also can&#8217;t insert whitespace in the middle of words like writing
+<code class="docutils literal"><span class="pre">c</span> <span class="pre">out</span></code> instead of <code class="docutils literal"><span class="pre">cout</span></code>, and there are a few other exceptions in the
+form of symbols that are written using more than one character, namely the <code class="docutils literal"><span class="pre">&lt;&lt;</span></code>
+and the <code class="docutils literal"><span class="pre">::</span></code> in the program above, that could not have been written as e.g.
+<code class="docutils literal"><span class="pre">&lt;</span> <span class="pre">&lt;</span></code> and <code class="docutils literal"><span class="pre">:</span>&nbsp; <span class="pre">:</span></code>.</p>
+<p>However, I think you see why I wrote the program like I did in the first place:
+it is just easier to read.</p>
+</div>
+<div class="section" id="defining-the-main-program">
+<h3>Defining the main program<a class="headerlink" href="#defining-the-main-program" title="Permalink to this headline">¶</a></h3>
+<p>Now it starts to get interesting!</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="hll"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span><span class="hll"><span class="p">{</span>
+</span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="hll"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>The third line basically says to the compiler: “Here comes the main program!”
+<a class="footnote-reference" href="#fdef" id="id4">[2]</a>, and the curly braces show the compiler where it starts (<code class="docutils literal"><span class="pre">{</span></code> in line
+4) and ends (<code class="docutils literal"><span class="pre">}</span></code> in line 6). Everything between them will be executed when the
+program is started.</p>
+</div>
+<div class="section" id="writing-to-the-console">
+<h3>Writing to the console<a class="headerlink" href="#writing-to-the-console" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This line really is the only one that is actually executed at runtime. It is a
+so called <em class="dfn">statement</em>. These are really “instructions”, or “commands” that
+instruct the computer to do something. In this case, it tells the computer to
+print the text “Hello world!” followed by a line break (<code class="docutils literal"><span class="pre">\n</span></code>) to the standard
+output (<code class="docutils literal"><span class="pre">std::cout</span></code>) <a class="footnote-reference" href="#tellcompiler" id="id5">[3]</a>. For now, you can thus think of the
+<code class="docutils literal"><span class="pre">&lt;&lt;</span></code> symbol symbol as meaning “Print the value at the right hand side to the
+thing on the left hand side”. <a class="footnote-reference" href="#convoluted" id="id6">[4]</a> The value here is the text between
+the quotes (<code class="docutils literal"><span class="pre">&quot;</span></code>). Such quoted text will be printed as you typed it, except
+that a backslash <code class="docutils literal"><span class="pre">\</span></code> is used to give the next character a special meaning
+(like the line break/newline character for <code class="docutils literal"><span class="pre">\n</span></code>).</p>
+<p>Statements are always terminated with a semicolon (<code class="docutils literal"><span class="pre">;</span></code>).</p>
+</div>
+</div>
+<div class="section" id="successive-statements">
+<h2>Successive Statements<a class="headerlink" href="#successive-statements" title="Permalink to this headline">¶</a></h2>
+<p>Of course we can write more than just one statement in the main program. Let&#8217;s
+throw in some more output statements:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This is executed first.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Then this,</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;And this at last.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As you probably expected, this will print:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>This is executed first.
+Hello world!
+Then this,
+And this at last.
+</pre></div>
+</div>
+<p>The statements are executed in the same order as you write them.</p>
+<p>It has no special meaning that I wrote the last two statements in the same line.
+As I already <a class="reference internal" href="#proc-hello-ws"><span class="std std-ref">said</span></a>, the compiler does not care about
+whitespace such as line breaks. It determines where one statement ends and the
+next one starts based on the semicolons. However, you should generally write
+only one statement per line. The above was just for demonstration purposes, it&#8217;s
+no good style.</p>
+</div>
+<div class="section" id="more-output">
+<h2>More output<a class="headerlink" href="#more-output" title="Permalink to this headline">¶</a></h2>
+<p>Here are are a two more things you can do with <code class="docutils literal"><span class="pre">cout</span></code>, which will be useful
+later on:</p>
+<p>You can omit the trailing <code class="docutils literal"><span class="pre">\n</span></code> in the output text, so that the next output
+statement will continue in the line started by the former:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This is &quot;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;on a single line.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>yields</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>This is on a single line.
+</pre></div>
+</div>
+<p>And you can use multiple <code class="docutils literal"><span class="pre">&lt;&lt;</span></code> in a single statement:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Something.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Something &quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;other.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>yields</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Something.
+Something other.
+</pre></div>
+</div>
+<p>Note that in the code examples above, I have only included what is written
+between the curly braces of the main program. You already know the rest and
+always reading/writing the same <a class="reference internal" href="../glossary.html#term-boilerplate-code"><span class="xref std std-term">boilerplate code</span></a> starts getting boring.</p>
+</div>
+<div class="section" id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<p>And while we are in the progress of introducing useful misc things, let&#8217;s do one
+more: A <em>comment</em> is a part of the code which is ignored by the compiler:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Hello World: Print a text to the terminal and exit.</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt; // For std::cout.</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="cm">/* The classic text: */</span> <span class="s">&quot;Hello world!&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This program really just prints “Hello world!”. The source code showcases the
+two kinds of comments in C++:</p>
+<ul class="simple">
+<li>Line comments start with <code class="docutils literal"><span class="pre">//</span></code> and extend until the line ends.</li>
+<li>C-Style comments start with <code class="docutils literal"><span class="pre">/*</span></code> and end with <code class="docutils literal"><span class="pre">*/</span></code>. Note that they
+cannot be nested, so the following is a syntax error:</li>
+</ul>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/* In comment. /* Still in comment. */ Already outside comment. */
+</pre></div>
+</div>
+<p>Use comments whenever you think that other people (including your future self)
+will have an easier time reading the code with them than without them. Always
+assume that these people know C++ and do not comment what the code already says.</p>
+<p>You can also use comments to temporarily disable (<em class="dfn">comment out</em>) parts of your
+code:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world!&quot;</span><span class="p">;</span>
+<span class="hll">   <span class="c1">//std::cout &lt;&lt; &quot;Won&#39;t be executed.&quot;;</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This still prints only “Hello world.”. Note that I have not put a space between
+the double slash and the comment&#8217;s content. That&#8217;s just my personal style: For a
+real comment, I separate the text from the comment sign, for commented out code,
+I don&#8217;t.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Spaces, tabs and line breaks are collectively called whitespace.</li>
+<li>Except in words, multi-character symbols and preprocessor directives, you can
+freely add whitespace (for the latter, you can still freely add spaces and
+tabs).</li>
+<li>The <code class="docutils literal"><span class="pre">#include</span></code> preprocessor directive inserts the contents of the file with
+the given name literally.</li>
+<li>The <code class="docutils literal"><span class="pre">iostream</span></code> file is necessary for <code class="docutils literal"><span class="pre">std::cout</span></code>.</li>
+<li>The main program is executed when the program starts. It is introduced by
+<code class="docutils literal"><span class="pre">int</span> <span class="pre">main()</span></code> and  surrounded by curly braces (<code class="docutils literal"><span class="pre">{</span></code> and <code class="docutils literal"><span class="pre">}</span></code>).</li>
+<li>A statement tells the computer to do something. The semicolon <code class="docutils literal"><span class="pre">;</span></code> tells the
+compiler where the statement ends.</li>
+<li>A program can contain multiple statements. They are executed in the order in
+which they occur in the source code.</li>
+<li>Text between <code class="docutils literal"><span class="pre">/*</span></code> and <code class="docutils literal"><span class="pre">*/</span></code> and the remainder of a line after <code class="docutils literal"><span class="pre">//</span></code> are
+comments: they are ignored by the compiler.</li>
+<li>A value can be printed to the screen with <code class="samp docutils literal"><span class="pre">std::cout</span> <span class="pre">&lt;&lt;</span> <em><span class="pre">value</span></em></code>.</li>
+<li><code class="docutils literal"><span class="pre">&lt;&lt;</span></code> can be used multiple times with <code class="docutils literal"><span class="pre">std::cout</span></code>, e.g. <code class="docutils literal"><span class="pre">std::cout</span> <span class="pre">&lt;&lt;</span>
+<span class="pre">&quot;x</span> <span class="pre">=</span> <span class="pre">&quot;</span> <span class="pre">&lt;&lt;</span> <span class="pre">42;</span></code></li>
+<li>Text (<em>strings</em>) that should be printed literally, has to be enclosed in double
+quotes like <code class="docutils literal"><span class="pre">&quot;Some</span> <span class="pre">text.&quot;</span></code>.</li>
+<li>A <code class="docutils literal"><span class="pre">\n</span></code> in a string will be printed as a line break.</li>
+</ul>
+<hr class="docutils" />
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="cmdtut" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>Although I have not read it and it uses PowerShell on Windows
+instead of the ordinary <code class="docutils literal"><span class="pre">cmd</span></code>, <a class="reference external" href="http://cli.learncodethehardway.org/book/">http://cli.learncodethehardway.org/book/</a>
+made a good first impression on me, if you can find nothing else.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="fdef" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[2]</a></td><td>More technically, it says “Here comes a <em>function</em> called <code class="docutils literal"><span class="pre">main</span></code>
+that <em>returns</em> an integer (<code class="docutils literal"><span class="pre">int</span></code>) and takes no <em>arguments</em> (<code class="docutils literal"><span class="pre">()</span></code>).”
+Because exactly such a function is defined by the standard as being the main
+program, it really does, in effect, say “Here comes the main program!”. We
+will get to the other parts later, step by step.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="tellcompiler" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[3]</a></td><td>To be more precise, it of course does not directly tell the
+computer to print anything; it tells the compiler to emit the binary machine
+instructions into the output executable that will cause the computer to print
+“Hello World” when the program is executed.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="convoluted" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td>In fact, this line uses many features of the C++ language
+that we will partly come to only very late, e.g. classes, namespaces and
+operator overloading.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">From source code to executables</a><ul>
+<li><a class="reference internal" href="#how-to-install-a-compiler">How To: Install a compiler</a><ul>
+<li><a class="reference internal" href="#windows">Windows</a></li>
+<li><a class="reference internal" href="#debian-ubuntu-based-linux">Debian/Ubuntu based Linux</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-compile-your-source-code">How To: Compile your source code</a><ul>
+<li><a class="reference internal" href="#id1">Windows</a><ul>
+<li><a class="reference internal" href="#the-compiler-command">The compiler command</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#linux">Linux</a><ul>
+<li><a class="reference internal" href="#id2">The compiler command</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-few-command-line-tips">A few command line tips</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-hello-world-program-analyzed">The Hello World program analyzed</a><ul>
+<li><a class="reference internal" href="#linewise-breakdown">Linewise breakdown</a><ul>
+<li><a class="reference internal" href="#preprocessor-includes">Preprocessor #includes</a></li>
+<li><a class="reference internal" href="#whitespace">Whitespace</a></li>
+<li><a class="reference internal" href="#defining-the-main-program">Defining the main program</a></li>
+<li><a class="reference internal" href="#writing-to-the-console">Writing to the console</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#successive-statements">Successive Statements</a></li>
+<li><a class="reference internal" href="#more-output">More output</a></li>
+<li><a class="reference internal" href="#comments">Comments</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="types-and-vars.html" title="Types and Variables"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="The Basics: Procedural programming"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/proc/hello-world.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

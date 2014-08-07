@@ -1,0 +1,11 @@
+********************************
+Dealing with collections of data
+********************************
+
+.. todo::
+
+  * ``std::vector``
+  * Basic algorithms: Min, max, reverse
+  * Binary search?
+  * Sorting?
+  * Connect 4?

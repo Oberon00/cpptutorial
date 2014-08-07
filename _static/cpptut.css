@@ -1,0 +1,19 @@
+@import "alabaster.css";
+
+div.figure {
+    background: #fafafa;
+    border: 2px solid #c6c9cb;
+    border-right-style: none;
+    border-left-style: none;
+    padding: 10px 20px 10px 60px;
+    margin: 10px;
+    text-align: center;
+}
+
+p.taskref { text-align: right }
+div.admonition p.admonition-title { display: inline }
+div.admonition-task {
+    background-image: url(dialog-todo.png);
+    background-repeat: no-repeat;
+    background-position: 10px 8px;
+}

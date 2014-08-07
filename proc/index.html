@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Basics: Procedural programming &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="../_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="../index.html" />
+    <link rel="next" title="From source code to executables" href="hello-world.html" />
+    <link rel="prev" title="Introduction" href="../intro.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="hello-world.html" title="From source code to executables"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-basics-procedural-programming">
+<h1>The Basics: Procedural programming<a class="headerlink" href="#the-basics-procedural-programming" title="Permalink to this headline">¶</a></h1>
+<p>This part will teach you the basics of programming and C++. Beware, some
+chapters might be a bit dry as only the material from later chapters makes it
+possible to put it to interesting usages.</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="hello-world.html">From source code to executables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#how-to-install-a-compiler">How To: Install a compiler</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#windows">Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#debian-ubuntu-based-linux">Debian/Ubuntu based Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#how-to-compile-your-source-code">How To: Compile your source code</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#id1">Windows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hello-world.html#the-compiler-command">The compiler command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#linux">Linux</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="hello-world.html#id2">The compiler command</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#a-few-command-line-tips">A few command line tips</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hello-world.html#the-hello-world-program-analyzed">The Hello World program analyzed</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#linewise-breakdown">Linewise breakdown</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#preprocessor-includes">Preprocessor #includes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#whitespace">Whitespace</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#defining-the-main-program">Defining the main program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hello-world.html#writing-to-the-console">Writing to the console</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#successive-statements">Successive Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#more-output">More output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="types-and-vars.html">Types and Variables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#calculating-with-c">Calculating with C++</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="types-and-vars.html#the-remainder-operator">The remainder operator <code class="docutils literal"><span class="pre">%</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#remembering-values">Remembering values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#changing-memories">Changing memories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="types-and-vars.html#compound-assignment">Compound assignment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#more-on-variables">More on variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#primitive-number-types">Primitive number types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="types-and-vars.html#floating-point-numbers">Floating point numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types-and-vars.html#integer-numbers">Integer numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types-and-vars.html#characters">Characters</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#explicitly-typed-variables">Explicitly typed variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#defining-multiple-variables-at-once">Defining multiple variables at once</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#user-input">User input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#constants">Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#background-information-temporary-variables">Background information: Temporary variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="types-and-vars.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logic.html">Logic and more on operators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logic.html#the-bool-type">The <code class="docutils literal"><span class="pre">bool</span></code> type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html#calculating-with-booleans">“Calculating” with Booleans</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html#comparison-operators">Comparison operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html#mixed-expressions-and-more-on-operators">Mixed expressions and more on operators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="logic.html#operator-associativity-and-multi-assignment">Operator associativity and “multi-assignment”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logic.html#background-the-input-output-operators">Background: The input/output operators (<code class="docutils literal"><span class="pre">&gt;&gt;</span></code>/<code class="docutils literal"><span class="pre">&lt;&lt;</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html#the-ternary-conditional-operator">The ternary conditional operator <code class="docutils literal"><span class="pre">?</span> <span class="pre">:</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="logic.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="control-flow.html">Control flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#conditional-execution-if-and-else">Conditional execution: <code class="docutils literal"><span class="pre">if</span></code> and <code class="docutils literal"><span class="pre">else</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#if"><code class="docutils literal"><span class="pre">if</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#else"><code class="docutils literal"><span class="pre">else</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#block-statements">Block statements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#brace-style">Brace style</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#swapping">Swapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#scope">Scope</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#nested-control-flow-and-else-if">Nested control flow and <code class="docutils literal"><span class="pre">else</span> <span class="pre">if</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#the-dangling-else-problem">The dangling <code class="docutils literal"><span class="pre">else</span></code> problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#else-if"><code class="docutils literal"><span class="pre">else</span> <span class="pre">if</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#multi-way-branching-switch">Multi-way branching: <code class="docutils literal"><span class="pre">switch</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#the-simple-truth-about-switch">The simple truth about <code class="docutils literal"><span class="pre">switch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#loops">Loops</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#repeat-conditionally-while">Repeat conditionally: <code class="docutils literal"><span class="pre">while</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#do-while"><code class="docutils literal"><span class="pre">do</span> <span class="pre">…</span> <span class="pre">while</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#counter-loops-for">Counter loops: <code class="docutils literal"><span class="pre">for</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="control-flow.html#implementing-for-with-while">Implementing <code class="docutils literal"><span class="pre">for</span></code> with <code class="docutils literal"><span class="pre">while</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="control-flow.html#the-increment-and-decrement-operators">The increment <code class="docutils literal"><span class="pre">++</span></code> and decrement <code class="docutils literal"><span class="pre">--</span></code> operators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="control-flow.html#the-for-loop">The <code class="docutils literal"><span class="pre">for</span></code> loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="control-flow.html#stripping-for-s-head">Stripping <code class="docutils literal"><span class="pre">for</span></code>&#8216;s head</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#break-and-continue"><code class="docutils literal"><span class="pre">break</span></code> and <code class="docutils literal"><span class="pre">continue</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="control-flow.html#ending-a-loop-with-break">Ending a loop with <code class="docutils literal"><span class="pre">break</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="control-flow.html#skipping-part-of-a-loop-body-with-continue">Skipping part of a loop body with <code class="docutils literal"><span class="pre">continue</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="control-flow.html#solutions-for-tasks">Solutions for Tasks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#task-sorting-three-numbers-solved">Solved task: Sorting three numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#task-mini-calculator-solved">Solved task: Mini calculator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#task-pyramids-with-for-solved">Solved task: Pyramids with <code class="docutils literal"><span class="pre">for</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#task-break-with-if-else-solved">Solved task: <code class="docutils literal"><span class="pre">break</span></code> with <code class="docutils literal"><span class="pre">if</span></code>/<code class="docutils literal"><span class="pre">else</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#task-average-with-break-less-variant-solved">Solved task: Average with <code class="docutils literal"><span class="pre">break</span></code>-less variant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="control-flow.html#task-continue-with-if-else-solved">Solved task: <code class="docutils literal"><span class="pre">continue</span></code> with <code class="docutils literal"><span class="pre">if</span></code>/<code class="docutils literal"><span class="pre">else</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#basic-usage">Basic usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#parameters-and-arguments">Parameters and arguments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#default-arguments">Default arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#pass-by-value">Pass by value</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#return-values">Return values</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#main-s-return-value"><code class="docutils literal"><span class="pre">main</span></code>&#8216;s return value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#return-as-a-control-flow-statement"><code class="docutils literal"><span class="pre">return</span></code> as a control flow statement</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#changing-parameters-and-references">Changing parameters and references</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#pass-by-reference">Pass by reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#reference-types">Reference types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#why-are-functions-useful">Why are functions useful?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#global-variables-and-why-you-should-not-use-them">Global variables and why you should not use them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#side-effects-and-their-order">Side effects and their order</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-circuit-evaluation-and">Short circuit evaluation and <code class="docutils literal"><span class="pre">?:</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#background-information-the-stack">Background Information: The stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#recursion">Recursion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#a-simple-recursion-factorials">A simple recursion: Factorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#a-more-complex-recursion-fibonacci-numbers">A more complex recursion: Fibonacci numbers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions.html#task-sorting-three-numbers-with-a-swap-function-solved">Solved task: Sorting three numbers with a swap function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user-types.html">Defining new types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user-types.html#simple-compound-types-struct">Simple compound types: <code class="docutils literal"><span class="pre">struct</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#struct-initialization-with"><code class="docutils literal"><span class="pre">struct</span></code> initialization with <code class="docutils literal"><span class="pre">{}</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#const-and-structs"><code class="docutils literal"><span class="pre">const</span></code> and <code class="docutils literal"><span class="pre">struct</span></code>s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#nested-structs">Nested structs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#efficiently-passing-structs-to-functions">Efficiently passing <code class="docutils literal"><span class="pre">struct</span></code>s to functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user-types.html#encapsulation-and-member-functions">Encapsulation and member functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#member-functions">Member functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#encapsulation-and-access-control">Encapsulation and access control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#constructors">Constructors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user-types.html#a-quick-glance-at-templates">A quick glance at templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#class-templates">Class templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-types.html#function-templates">Function templates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vector-intro.html">Dealing with collections of data</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="hello-world.html" title="From source code to executables"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/proc/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

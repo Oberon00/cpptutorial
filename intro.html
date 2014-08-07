@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="index.html" />
+    <link rel="next" title="The Basics: Procedural programming" href="proc/index.html" />
+    <link rel="prev" title="On C++" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="proc/index.html" title="The Basics: Procedural programming"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="On C++"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">On C++</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-this-tutorial">
+<h2>About this tutorial<a class="headerlink" href="#about-this-tutorial" title="Permalink to this headline">¶</a></h2>
+<p>There exist many good tutorials and articles about specific parts and features
+of C++ but I have never heard of any good tutorial on the Language as a whole.
+Of course, <a class="reference internal" href="#intro-res-tutorials"><span class="std std-ref">attempts</span></a> have been made but often, the
+tutorials cover only what the author(s) found particularly interesting, and only
+superficially touch the rest or are incomplete altogether. Still more tutorials
+are outdated, or advocate bad coding style.</p>
+<p>If you ask anywhere on the web for a good tutorial on C++, you will thus
+inevitably be pointed to <a class="reference internal" href="#intro-res-books"><span class="std std-ref">books</span></a>, of which there <em>are</em>
+many good ones.</p>
+<p>This tutorial aims to fill the gap, or at least make it into the category of
+tutorials with good partial coverage.</p>
+<div class="section" id="target-audience">
+<h3>Target audience<a class="headerlink" href="#target-audience" title="Permalink to this headline">¶</a></h3>
+<p>If you have never programmed before and want to learn C++ as your first language
+<a class="footnote-reference" href="#cppfirst" id="id1">[1]</a>, this tutorial is for you. You should, however, have a solid
+knowledge of your computer and operating system, as I wont give instructions on
+how to move files, extract archives, etc.</p>
+<p>If you have experience in another programming language, I hope that this
+tutorial is useful to you nevertheless, as I try to highlight concepts and
+techniques not found in other languages, or put them in dedicated sections, so
+that you can skip the parts that you already know.</p>
+</div>
+</div>
+<div class="section" id="programming-languages">
+<span id="intro-proglangs"></span><h2>Programming languages<a class="headerlink" href="#programming-languages" title="Permalink to this headline">¶</a></h2>
+<p>At the lowest (logical) level, a computer processes only a series of zeros and
+ones (<em class="dfn">bits</em>). Both data and programs thus have to be represented as such.
+However, as you can probably imagine, developing software by entering just zeros
+and ones is not really feasible: it is very hard to write such <em class="dfn">machine
+code</em> correctly, and even harder to read. To solve this problem, <em class="dfn">assembler
+languages</em> were created. I use the plural here, because, like with bitwise
+programming, every processor (or processor family) had its own assembler
+language. Such “languages” allow programmers to use words instead of bit
+patterns for the instructions that the corresponding CPU supports. For example,
+to add the constant 4 to the value that is saved in the 123th memory cell, the
+bit pattern that the CPU understands might look like (completely made up)
+<code class="docutils literal"><span class="pre">00000100</span> <span class="pre">00000010</span> <span class="pre">01111011</span></code>. In assembler language you could write that as
+something like <code class="docutils literal"><span class="pre">ADD</span> <span class="pre">123,</span> <span class="pre">$4</span></code>. You would then use a special program (an
+<em class="dfn">assembler</em>) that reads this text and outputs an executable program that
+contains the bit patterns you would otherwise have to write yourself.</p>
+<p>However, such assembler languages are still very primitive. You have to tell the
+computer <em>exactly</em> what it should do, using only the instructions that the CPU
+can understand. And that&#8217;s not very much. For example, to tell the CPU to do
+<em>something</em> 10 times you would have to write in assembler language the
+equivalent of</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Reserve one byte of memory and let me refer to it as “i”.
+Write 0 (one byte) to “i”.
+ASSEMBLER: Remember this point in the program as “loop start”.
+(Do something.)
+Add (using one byte numbers) 1 to “i”.
+Test (using one byte numbers) if “i” is less than 10.
+If the last test resulted in false, continue at “loop start”.
+</pre></div>
+</div>
+<p>Of course you would not write it like this; the above is just <em class="dfn">pseudocode</em>,
+to give you an idea of how verbosely precise assembler programs are, even
+conceptually. If you wrote this program in the correct way, i.e. using a syntax
+that an actual assembler can understand, the lines would shorter but also more
+arcane. There are several things to note about this pseudocode:</p>
+<ul class="simple">
+<li>You have to explicitly tell the assembler to reserve memory.</li>
+<li>You always have to explicitly tell the assembler explicitly how much memory
+“i” occupies: Of course when initially reserving the memory, but also when
+initializing it with zero, when adding to it and when comparing it.</li>
+<li>There is no instruction for doing something a certain number of times. There
+is not even an instruction for doing something as long as a certain
+condition is true: Instead, you explicitly have to label a “loop start”,
+increment the counter, test the condition and jump conditionally.</li>
+<li>Each of these lines, except the one labeled with <code class="docutils literal"><span class="pre">ASSEMBLER:</span></code> will cause
+the assembler program to emit exactly one CPU instruction.</li>
+</ul>
+<p>Also, the ability to refer to locations in the program code or memory
+locations with names instead of numbers can already be considered as pretty
+advanced for assembly languages. More basic ones require you to write
+“The memory at the address I reserved last” instead of “i”, and something
+like “3 instructions back” instead of “loop start”.</p>
+<p>High-level programming languages, like C++, allow you to write this conceptually
+like the following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>For 10 times:
+  (Do something.)
+</pre></div>
+</div>
+<p>This is far closer to plain English than assembler. Additionally, the program
+flow is immediately visible from the indent. This might not be a very great
+advantage for this tiny program, but imagine writing the following in an assembly
+language:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>For each i from 1 to 10:
+  If i is odd:
+    (Do something.)
+  Else:
+    (Do somehing other.)
+  (Do something more (no matter if i is odd or even)).
+</pre></div>
+</div>
+<p>Like for assembly languages, high-level languages need a program that translates
+the human readable (and writeable) <em class="dfn">source code</em> into machine code. But
+these are not called assemblers but <em class="dfn">compilers</em>. The process itself is
+consequently called <em class="dfn">compiling</em>.</p>
+<p>Note that while machine code and assembly languages work only for a specific set
+of CPUs and operating systems, high-level languages allow to write a program
+just once and then compile it for an run it on all systems for which there is a
+compiler (e.g. a Windows PC and an Android Smartphone). This is another
+great advantage of high-level languages.</p>
+<div class="section" id="abstraction">
+<h3>Abstraction<a class="headerlink" href="#abstraction" title="Permalink to this headline">¶</a></h3>
+<p>High-level programming languages hide the specifics of a particular CPU from us,
+so that we do not have to care about it. However they still provide us with a
+set of well defined instructions that enable us to do whatever we want. The
+compiler then makes sure that the CPU understands these instructions. This
+hiding is an application of <em class="dfn">abstraction</em>: Hiding the things that we do not
+want to care about (the available CPU instructions) for our problem (e.g. doing
+something 10 times or calculating the tax or simulating a game world) behind a
+simpler, more expressive, more portable (across CPUs and operating systems)
+language.</p>
+<p>But an important part of this expressiveness is to provide us with the means to
+make our own abstractions. For example, let&#8217;s take the following instructions
+for making Sphagetti alla Carbonara <a class="reference internal" href="#wikispaghetti" id="id2">[WikiSpaghetti]</a>:</p>
+<ol class="arabic simple">
+<li>Dice the pancetta into small pieces.</li>
+<li>Bring a big pot of water to a boil and add salt when it begins to simmer.</li>
+<li>Cook the spaghetti until it is al dente and drain it, reserving ½ cup of
+water.</li>
+<li>As spaghetti is cooking, heat the olive oil in a large skillet over a
+medium-high heat. When the oil is hot, add the pancetta and cook for about 10
+minutes over a low flame.</li>
+<li>In a bowl, slowly whisk about ½ cup of the pasta water into the egg yolks,
+using a fork. Add the Parmesan cheese and pepper. Mix with a fork.</li>
+<li>Transfer the spaghetti immediately to the skillet with the pancetta. Toss it
+and turn off the heat. Add the egg mixture to the skillet with the pasta and
+toss all the ingredients to coat the pasta. Taste the pasta and add salt and
+black pepper, if necessary.</li>
+</ol>
+<p>If you read carefully you will notice that not everything is explicitly spelled
+out: E.g. the recipe does not say how dicing works, how to boil the water,
+how to whisk the egg yolks and so on; the recipe would be quite unreadably long
+if it minutely told you all that. Instead, it is assumed that you know how to do
+that or at least know where to look it up. The instructions could even be
+refined further: For example, you could look in your stove&#8217;s manual to find out
+out how exactly to turn it on and if you had to program a robot to do this you
+would probably have to tell it exactly how to move every finger. The abstraction
+could also be expanded into the other direction: The Spaghetti could be part of
+a whole meal. This stepwise refinement is the concept of procedural abstraction,
+and the main features in programming languages to support it are <a class="reference internal" href="proc/functions.html#proc-functions"><span class="std std-ref">functions</span></a>.</p>
+<p>There is also data (object) abstraction in the above recipe: One does not need
+to know, for example, the ingredients of the noodles to use them in the recipe.
+It is enough to know that you can boil them, and when they are al dente.
+Programming languages that support this kind of abstraction are called
+<span class="xref std std-ref">object oriented</span>.</p>
+<p>When something cannot (or need not) be refined further, it is called a
+<em class="dfn">primitive</em>. Generally, it is in the eye of the beholder if something is a
+primitive or an abstraction. For programming languages however, there is a well
+defined set of things the compiler understands and upon which you can thus build
+your abstractions. Most of the time, your programs will use much more
+abstractions than primitives.</p>
+<table class="docutils citation" frame="void" id="wikispaghetti" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[WikiSpaghetti]</a></td><td><a class="reference external" href="http://en.wikibooks.org/wiki/Cookbook:Spaghetti_alla_Carbonara">http://en.wikibooks.org/wiki/Cookbook:Spaghetti_alla_Carbonara</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="why-c">
+<span id="intro-whycpp"></span><h2>Why C++?<a class="headerlink" href="#why-c" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="advantages">
+<h3>Advantages<a class="headerlink" href="#advantages" title="Permalink to this headline">¶</a></h3>
+<p>Why should you learn (or use) C++? Because C++ is a widely used general purpose
+language with an unique set of advantages (the following reflects only my
+personal priorities; it is not intended to be complete):</p>
+<ol class="arabic simple">
+<li>Powerful abstraction with multiple supported paradigms</li>
+<li>Many available libraries for nearly all tasks you can think of</li>
+<li>Very good runtime performance</li>
+<li>Direct access to C-APIs</li>
+<li>Possibility to directly access system resources</li>
+<li>Requires no installed runtime (or only minimal)</li>
+</ol>
+<p>There are programming languages which do better in some of these aspect, but
+no single one (at least not in wide use) that has all of the advantages.</p>
+<p>For example, C# fails #6, by requiring the .NET Framework or Mono to be
+installed.  It&#8217;s also not completely on par with C++ in terms of performance. The
+same applies to Java, which requires a JRE (Java Runtime Environment) to be
+installed.</p>
+<p>C, the predecessor language of C++, is not really known for its abstraction
+capabilities (#1), which is arguably the most important feature of a programming
+language.</p>
+</div>
+<div class="section" id="disadvantages-and-why-learning-c-is-still-a-good-idea">
+<h3>Disadvantages and why learning C++ is still a good idea<a class="headerlink" href="#disadvantages-and-why-learning-c-is-still-a-good-idea" title="Permalink to this headline">¶</a></h3>
+<p>It has to be said that C++ also does not lack disadvantages:</p>
+<ol class="arabic simple">
+<li>Hard to learn</li>
+<li>Easy to make mistakes and introduce bugs</li>
+<li>Lacks a real module system, making it often difficult to install or use
+libraries, and leading to greatly increased <a class="reference internal" href="proc/hello-world.html#intro-compiler"><span class="std std-ref">compile</span></a> times</li>
+</ol>
+<p>Thus, learning C++ as a first language is a bad idea if you do not need all of
+the advantages mentioned before and just want to get a particular application
+done quickly. However, learning C++ has the advantage that afterwards, you know
+nearly all concepts that can be found in the usual imperative programming
+languages and will find it quite easy to learn them. Additionally, C++ promotes
+a good understanding of the technical foundations of abstract concepts by
+providing the primitive tools to investigate them or even to implement them
+yourself (as we will see for example with object oriented programming).</p>
+<p>Thus, if you really want to become a proficient programmer, C++ is a very
+reasonable choice as a first language.</p>
+</div>
+</div>
+<div class="section" id="a-tiny-bit-of-history">
+<h2>A tiny bit of history<a class="headerlink" href="#a-tiny-bit-of-history" title="Permalink to this headline">¶</a></h2>
+<p>The roots of C++ date back to 1979, when Bjarne Stroustrup needed a language
+that was both suitable for writing highly efficient programs and provided
+abstraction mechanisms comparable to Simula. The language he began to develop
+then was called “C with Classes” as it mainly added basic object oriented
+capabilities to the C programming language. In 1983, the name was changed to
+C++, as more features were added.  In 1985, Stroustrup wrote first edition of
+<a class="reference external" href="http://www.stroustrup.com/4th.html">The C++ programming Language</a> codifying the language for the first time.</p>
+<div class="section" id="the-iso-standard">
+<h3>The ISO Standard<a class="headerlink" href="#the-iso-standard" title="Permalink to this headline">¶</a></h3>
+<p>In 1998, the <abbr title="International Organization for Standardization">ISO</abbr>
+standardized C++. A new version of the standard, which contained only a few
+fixes was released in 2003. These standards are commonly referred to as C++98.</p>
+<div class="sidebar">
+<p class="first sidebar-title">Why is a standard important?</p>
+<p class="last">Before standardization, programs written for one compiler could often not be
+compiled by other ones, because each supported different features or supported
+the same features differently (each implemented its own <em class="dfn">dialect</em> of
+C++).  Since the standardization of C++, these differences have vastly
+decreased, and nearly all programs can be compiled on all C++-compilers with
+no changes.</p>
+</div>
+<p>In 2011, the next version of C++ was standardized: C++11 adds many enhancements
+that, make C++ “feel like a new language” <a class="reference internal" href="#stroustrup01" id="id3">[Stroustrup01]</a>. A new minor (though
+by far not as minor as C++03) update was released in 2014 and the next major one
+is planned for 2017, which shows that since C++11 the speed of the
+standardization committee has greatly increased. See
+<a class="reference external" href="http://isocpp.org/std/status">http://isocpp.org/std/status</a> for more on this.</p>
+<p>The standard is intended mainly for <a class="reference internal" href="proc/hello-world.html#intro-compiler"><span class="std std-ref">compiler</span></a> writers but
+it may also be useful to experienced C++ programmers who seek authoritative,
+formal, detailed information. See <a class="reference external" href="http://isocpp.org/std/the-standard">http://isocpp.org/std/the-standard</a> for how to
+get it. But note that the standard is hard to read even for those already
+knowing C++. It is not intended for learning the language.</p>
+<table class="docutils citation" frame="void" id="stroustrup01" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[Stroustrup01]</a></td><td>Bjarne Stroustrup in his <a class="reference external" href="http://www.stroustrup.com/C++11FAQ.html#think">C++11 FAQ</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h2>
+<p id="intro-res-books">There are many good resources for C++, both on the web and in printed form. For
+the latter, I will just refer <a class="reference external" href="http://stackoverflow.com/q/388242/2128694">The Definitive C++ Book Guide and List</a> on
+<a class="reference external" href="http://stackoverflow.com">Stackoverflow</a> , which, if you ask me, really <em>is</em> the definitive list of good
+C++ books (at least in the English language).</p>
+<p>For reference purposes, e.g. when you want to look up a standard library
+function, I recommend <a class="reference external" href="http://cppreference.com">http://cppreference.com</a>. You might also find
+<a class="reference external" href="http://www.cplusplus.com/reference/">http://www.cplusplus.com/reference/</a> useful, though I consider it largely
+superseded by cppreference.com. However, the descriptions there are often more
+informal and thus maybe better suited for beginners.</p>
+<p>For general information about the standard and the C++ community I want to point
+to <a class="reference external" href="http://isocpp.org/">http://isocpp.org/</a>, a page set up by Microsoft.</p>
+<p>Bjarne Stroustrup, the creator of C++ also has a homepage with some interesting
+information at <a class="reference external" href="http://www.stroustrup.com/">http://www.stroustrup.com/</a>.</p>
+<p>Reading the C++ FAQ (originally by Marshall Cline) at <a class="reference external" href="https://isocpp.org/faq">https://isocpp.org/faq</a> can
+keep you from falling into many pitfalls of C++ and also does a good job on
+explaining the practical aspects of many of C++&#8217;s concepts. It also has a
+section on <a class="reference external" href="https://isocpp.org/wiki/faq/big-picture">Big Picture Issues</a>, which answers questions like <a class="reference external" href="https://isocpp.org/wiki/faq/big-picture#overview-cpp">What are some
+features of C++ from a business perspective?</a>.</p>
+<p><a class="reference external" href="http://stackoverflow.com">Stackoverflow</a> is a valuable resource for almost any programming language. C++
+questions usually have the tag <a class="reference external" href="http://stackoverflow.com/questions/tagged/c++">[c++]</a>. Apart from asking and
+answering questions yourself, you can also read questions and answers by others.
+The most interesting ones are gathered at the <a class="reference external" href="http://stackoverflow.com/questions/tagged/c++-faq">[c++-faq]</a> tag.</p>
+<div class="section" id="tutorials">
+<span id="intro-res-tutorials"></span><h3>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h3>
+<p>There are some other C++-Tutorials on the web, e.g.:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://en.wikibooks.org/wiki/C++_Programming">On Wikibooks</a></li>
+<li><a class="reference external" href="http://www.cplusplus.com/doc/tutorial/">On cplusplus.com</a></li>
+</ul>
+<p>Before reading any tutorial (including this!) make sure to do some searching on
+how well this tutorial is accepted in the C++ community, or ask yourself, e.g.
+on <a class="reference external" href="http://stackoverflow.com">Stackoverflow</a>. The danger of reading a bad tutorial teaching bad coding
+habits is great with C++.</p>
+<hr class="docutils" />
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="cppfirst" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>See <a class="reference internal" href="#intro-whycpp"><span class="std std-ref">Why C++?</span></a> for whether this is a good idea.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#about-this-tutorial">About this tutorial</a><ul>
+<li><a class="reference internal" href="#target-audience">Target audience</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#programming-languages">Programming languages</a><ul>
+<li><a class="reference internal" href="#abstraction">Abstraction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#why-c">Why C++?</a><ul>
+<li><a class="reference internal" href="#advantages">Advantages</a></li>
+<li><a class="reference internal" href="#disadvantages-and-why-learning-c-is-still-a-good-idea">Disadvantages and why learning C++ is still a good idea</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-tiny-bit-of-history">A tiny bit of history</a><ul>
+<li><a class="reference internal" href="#the-iso-standard">The ISO Standard</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resources">Resources</a><ul>
+<li><a class="reference internal" href="#tutorials">Tutorials</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="proc/index.html" title="The Basics: Procedural programming"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="On C++"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">On C++</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/intro.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

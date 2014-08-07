@@ -1,0 +1,941 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Types and Variables &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="../_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="../index.html" />
+    <link rel="up" title="The Basics: Procedural programming" href="index.html" />
+    <link rel="next" title="Logic and more on operators" href="logic.html" />
+    <link rel="prev" title="From source code to executables" href="hello-world.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="logic.html" title="Logic and more on operators"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="hello-world.html" title="From source code to executables"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="types-and-variables">
+<h1>Types and Variables<a class="headerlink" href="#types-and-variables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="calculating-with-c">
+<h2>Calculating with C++<a class="headerlink" href="#calculating-with-c" title="Permalink to this headline">¶</a></h2>
+<p>Of course you can not only print text in C++, but you also have numbers at your
+disposal!</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostram&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;1&quot;</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This unspectacularly prints</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>1 = 1
+</pre></div>
+</div>
+<p>So it seems one can omit the quotes around numbers when printing. But what does
+that buy us? Well, in C++ everything has a type. Things between quotes have a
+text (<em>string</em>) type (regardless of the content between them), and numbers have
+a number type. Among other things, the type of a value determines what you can
+do with it: With strings like we have seen them until now, you can do little
+more than printing them. With numbers, however you can do a lot more, e.g.
+calculating:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;1 +  2 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">+</span>  <span class="mi">2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;3 -  1 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span> <span class="o">-</span>  <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;3 -  4 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span> <span class="o">-</span>  <span class="mi">4</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;7 *  7 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span> <span class="o">*</span>  <span class="mi">7</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;7 * -1 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">7</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;8 /  2 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">/</span>  <span class="mi">2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;8 /  3 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">/</span>  <span class="mi">3</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;8 /  3.0 = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span> <span class="o">/</span>  <span class="mf">3.0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">-</span><span class="p">(</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">34</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Observe the output:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>1 +  2 = 3
+3 -  1 = 2
+3 -  4 = -1
+7 *  7 = 49
+7 * -1 = -7
+8 /  2 = 4
+
+8 /  3 = 2
+8 /  3.0 = 2.66667
+
+42
+</pre></div>
+</div>
+<p>This program uses the four basic arithmetic operators:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">+</span></code> (plus) for addition,</li>
+<li><code class="docutils literal"><span class="pre">-</span></code> (minus) for subtraction,</li>
+<li><code class="docutils literal"><span class="pre">*</span></code> (times) for multiplication (the asterisk <code class="docutils literal"><span class="pre">*</span></code> resembles a times symbol
+<span class="math">\(\times\)</span> or a multiplication dot <span class="math">\(\cdot\)</span>), and</li>
+<li><code class="docutils literal"><span class="pre">/</span></code> (over) for division (the forward slash <code class="docutils literal"><span class="pre">/</span></code> resembles a fraction bar,
+as in ¾ or <span class="math">\(\frac 3 4\)</span>).</li>
+</ul>
+<p>The <em class="dfn">syntax</em> (the notation; the way of writing this) should look pretty
+familiar from mathematics: The operator is written between a left-hand side and
+a right-hand side operand. Such operators are called <em class="dfn">binary</em> operators
+because they have two operands and <em class="dfn">infix</em> operators because they are
+written between them.</p>
+<p>The two lines containing a division are particularly interesting.
+With <code class="docutils literal"><span class="pre">8</span> <span class="pre">/</span> <span class="pre">3</span></code> we get a rounded-down result, while with <code class="docutils literal"><span class="pre">8</span> <span class="pre">/</span> <span class="pre">3.0</span></code> we get the
+“correct”, fractional result. The reason is that there are really two main types
+of numbers in C++: integers and floating point (approximate fractional) numbers.</p>
+<p>When you write a literal number in your code, this <em class="dfn">literal</em>&#8216;s type is
+determined by how exactly you write it: If you include a fractional part (i.e. a
+decimal point) it is a floating point number, otherwise an integer.  When you
+write an operator between two numbers, i.e. use an expression of the form
+<code class="samp docutils literal"><span class="pre">x</span> <em><span class="pre">operator</span></em> <span class="pre">y</span></code>, where <code class="samp docutils literal"><em><span class="pre">operator</span></em></code> is a symbol like +, -, * or /,
+the result will have the operands (i.e. <code class="docutils literal"><span class="pre">x</span></code>&#8216;s and <code class="docutils literal"><span class="pre">y</span></code>&#8216;s) type. Thus, with
+<code class="docutils literal"><span class="pre">8</span></code> and <code class="docutils literal"><span class="pre">3</span></code> being both integer literals, the result of dividing them is also
+calculated with integer division, yielding an integer result. If the operands
+have different types, the one that is more likely to correctly represent the
+result is taken, and the other operand is converted to to this type before
+computing the result. For floating point vs. integer, this is always floating
+point which is why in the above example program writing <code class="docutils literal"><span class="pre">8</span> <span class="pre">/</span> <span class="pre">3.0</span></code> was enough
+(but <code class="docutils literal"><span class="pre">8.0</span> <span class="pre">/</span> <span class="pre">3.0</span></code> would also work, of course).</p>
+<p>The last line demonstrates that you can use arbitrarily complex expressions that
+may contain multiple operators (including unary <code class="docutils literal"><span class="pre">-</span></code>, i.e. negation) and
+parenthesis. They are evaluated like you probably know from school: <code class="docutils literal"><span class="pre">+</span></code> and
+<code class="docutils literal"><span class="pre">-</span></code> are computed after <code class="docutils literal"><span class="pre">*</span></code> and <code class="docutils literal"><span class="pre">/</span></code>, the contents of parentheses are
+evaluated before the containing expression and otherwise evaluation is done from
+left to right.</p>
+<div class="section" id="the-remainder-operator">
+<h3>The remainder operator <code class="docutils literal"><span class="pre">%</span></code><a class="headerlink" href="#the-remainder-operator" title="Permalink to this headline">¶</a></h3>
+<p>There is one more operator that is often quite useful: The <code class="docutils literal"><span class="pre">%</span></code> operator
+calculates the remainder of a division. For example, <code class="docutils literal"><span class="pre">9</span> <span class="pre">%</span> <span class="pre">4</span></code> is <code class="docutils literal"><span class="pre">1</span></code> because
+the integer division <code class="docutils literal"><span class="pre">9</span> <span class="pre">/</span> <span class="pre">4</span></code> has the result <code class="docutils literal"><span class="pre">2</span></code> and <code class="docutils literal"><span class="pre">9</span> <span class="pre">-</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">4</span></code> equals
+<code class="docutils literal"><span class="pre">1</span></code>. <code class="docutils literal"><span class="pre">9</span> <span class="pre">%</span> <span class="pre">3</span></code> on the other hand, is <code class="docutils literal"><span class="pre">0</span></code> because <code class="docutils literal"><span class="pre">3</span></code> divides <code class="docutils literal"><span class="pre">9</span></code> evenly.
+Mathematically, <code class="docutils literal"><span class="pre">(a</span> <span class="pre">/</span> <span class="pre">b)</span> <span class="pre">*</span> <span class="pre">b</span> <span class="pre">+</span> <span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span></code> (with <code class="docutils literal"><span class="pre">/</span></code> denoting rounded down
+integer division) will always equal <code class="docutils literal"><span class="pre">a</span></code>. Note that the remainder operator is
+often called modulo operator and pronounced as “mod”, after the mathematical
+operator of the same name. It is, however, not quite the same, because C++&#8217;s
+<code class="docutils literal"><span class="pre">%</span></code> operator has results different from the usual mathematical definition of
+mod if a negative number is used. From the above equation, we can deduce that:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">3</span> <span class="pre">%</span> <span class="pre">-2</span></code> is <code class="docutils literal"><span class="pre">1</span></code> because <code class="docutils literal"><span class="pre">(3</span> <span class="pre">/</span> <span class="pre">-2)</span> <span class="pre">*</span> <span class="pre">-2</span> <span class="pre">+</span> <span class="pre">x</span></code> equals <code class="docutils literal"><span class="pre">2</span> <span class="pre">+</span> <span class="pre">x</span></code> and for
+this to equal <code class="docutils literal"><span class="pre">3</span></code>, <code class="docutils literal"><span class="pre">x</span></code> must be <code class="docutils literal"><span class="pre">1</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">-3</span> <span class="pre">%</span> <span class="pre">2</span></code> is <code class="docutils literal"><span class="pre">-1</span></code> (same reasoning).</li>
+<li><code class="docutils literal"><span class="pre">-3</span> <span class="pre">%</span> <span class="pre">-2</span></code> is also <code class="docutils literal"><span class="pre">-1</span></code> (same reasoning again).</li>
+</ul>
+<p>Since these are all different cases of operand signs, we can conclude that the
+sign of <code class="docutils literal"><span class="pre">a</span> <span class="pre">%</span> <span class="pre">b</span></code> is the same as that of <code class="docutils literal"><span class="pre">a</span></code>.</p>
+<p>Note that <code class="docutils literal"><span class="pre">%</span></code> only works with integers, since there is not really a remainder
+when dividing floating point numbers.</p>
+<p>The following code uses the <code class="docutils literal"><span class="pre">%</span></code> operator to convert minutes to minutes and
+hours:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;172 min = &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">172</span> <span class="o">/</span> <span class="mi">60</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; h &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">172</span> <span class="o">%</span> <span class="mi">60</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; min</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The output would be <code class="docutils literal"><span class="pre">172</span> <span class="pre">min</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">h</span> <span class="pre">52</span> <span class="pre">min</span></code>.</p>
+<div class="admonition-task admonition">
+<p class="first admonition-title">Task</p>
+<p class="last">Incorporate the <code class="docutils literal"><span class="pre">%</span></code> operator in the above example program!</p>
+</div>
+</div>
+</div>
+<div class="section" id="remembering-values">
+<h2>Remembering values<a class="headerlink" href="#remembering-values" title="Permalink to this headline">¶</a></h2>
+<p>Often, it is more readable to give names to intermediate results instead of
+putting all in a single, complicated expression. Also, there are many situations
+where multiple end results are calculated based on an intermediate value. The
+following demonstrates how to do this, using various calculations on a circle as
+an example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159265359</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">radius</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">area</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">// radius * radius = radius squared</span>
+    <span class="k">auto</span> <span class="n">diameter</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">perimeter</span> <span class="o">=</span> <span class="n">diameter</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;r = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">radius</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; ==&gt; &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;d = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">diameter</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, A = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">area</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, P = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">perimeter</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This outputs:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>r = 3 ==&gt;  A = 28.2743, P = 18.8496
+</pre></div>
+</div>
+<p>The source code uses the <code class="docutils literal"><span class="pre">auto</span></code> keyword. This tells the compiler: “Evaluate
+the expression on the right hand side of the <code class="docutils literal"><span class="pre">=</span></code> and save the result as the
+name on the left hand side.” Afterwards, you are able to use the given name in
+place of the result. Note that the expression is evaluated only once, when
+defining it with <code class="docutils literal"><span class="pre">auto</span></code>, but not again when using it (the name refers to the
+result, not to the expression). Such a named value is called <em class="dfn">variable</em>,
+and the introduction of a new variable (e.g. with the <code class="docutils literal"><span class="pre">auto</span></code> keyword) is
+called a variable <em class="dfn">definition</em>.</p>
+<p>The name of a variable must start with a letter or underscore and can be
+followed by any number of letters, numbers or underscores (but not two or more
+underscores in a row). The following names are valid:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">circle_radius</span> <span class="n">circleRadius</span> <span class="n">Html5Text</span> <span class="n">MAX_INTEGER_VALUE</span> <span class="n">temp</span> <span class="n">i</span> <span class="n">h</span> <span class="n">h2</span>  <span class="n">_y</span> <span class="n">_1</span> <span class="n">_</span>
+</pre></div>
+</div>
+<p>While valid, names like the last ones (from <code class="docutils literal"><span class="pre">temp</span></code> on) should, in general,
+better be avoided: The purpose of a name is to let the reader know what the
+variable means, but these names tell nothing.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">More time is spent on reading than on writing source code. You
+should thus strive for the most readable source code rather than e.g. using
+short names just for the sake of typing speed.</p>
+</div>
+<p>These are invalid names:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>42 99bottles $amount client@network first.name next-value file__content _Dummy
+</pre></div>
+</div>
+<p>The last one violates a special rule: Variables may not start with an
+underscore followed by an uppercase letter <a class="footnote-reference" href="#underscorenames" id="id1">[1]</a>.</p>
+</div>
+<div class="section" id="changing-memories">
+<h2>Changing memories<a class="headerlink" href="#changing-memories" title="Permalink to this headline">¶</a></h2>
+<p>In C++, contrary to mathematics, variables are mutable. That is, you can change
+their value by assigning a new one using the assignment operator <code class="docutils literal"><span class="pre">=</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">auto</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// In cent.</span>
+  <span class="n">price</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+  <span class="n">price</span> <span class="o">=</span> <span class="n">price</span> <span class="o">+</span>   <span class="mi">90</span><span class="p">;</span> <span class="c1">// Buy ice cream.</span>
+  <span class="n">price</span> <span class="o">=</span> <span class="n">price</span> <span class="o">+</span> <span class="mi">1399</span><span class="p">;</span> <span class="c1">// Buy SD-card.</span>
+  <span class="n">price</span> <span class="o">=</span> <span class="n">price</span> <span class="o">+</span>  <span class="mi">345</span><span class="p">;</span> <span class="c1">// Buy apples.</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Total price: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">price</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Total price: 18.34
+</pre></div>
+</div>
+<div class="sidebar">
+<p class="first sidebar-title">Floating point numbers and money</p>
+<p class="last">You may wonder why I calculated the price in cent and divided by
+100.0 for output, instead of just using a floating point currency value. The
+reason is that doing calculations on floating point values is not completely
+exact and the more calculations you do, the more will the floating point
+result deviate from the real one. Also, some decimal fractions like 0.5
+<a class="reference external" href="http://en.wikipedia.org/wiki/Binary_number#Decimal">cannot be exactly represented</a> as binary numbers,
+because they are periodic to this base. Because money is one of the things
+where people tend to be really picky, floating point variables are basically
+unusable here. However, a single division for output is only just okay.</p>
+</div>
+<p>Note that the <code class="docutils literal"><span class="pre">auto</span></code> keyword is used only once here: No new variables are
+introduced thereafter; it is really the value that is saved in the variable that
+changes. The <cite>=</cite> is the assignment operator: It assigns the value of the
+expression on its right side to its left side, which must be a variable. An
+assignment like <code class="docutils literal"><span class="pre">3</span> <span class="pre">=</span> <span class="pre">4</span> <span class="pre">+</span> <span class="pre">3</span></code> or <code class="docutils literal"><span class="pre">1</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">2</span></code> will not compile (after all, what
+should be the meaning of this?).</p>
+<p>Do not mistake the meaning of the assignment operator for the mathematical
+equals sign: while both use the same character, they don&#8217;t mean the same.
+Mathematically, <span class="math">\(p = p + 90\)</span> is a proposition that is false (at least for
+real numbers), because it can be reduced to the obviously false <span class="math">\(0 = 90\)</span>
+by subtracting <span class="math">\(p\)</span> on both sides. In C++, however, <code class="docutils literal"><span class="pre">p</span> <span class="pre">=</span> <span class="pre">p</span> <span class="pre">+</span> <span class="pre">90</span></code> is a
+command that tells the computer to compute the result of the expression <code class="docutils literal"><span class="pre">p</span> <span class="pre">+</span>
+<span class="pre">90</span></code> and save it in the variable <code class="docutils literal"><span class="pre">p</span></code>.</p>
+<div class="section" id="compound-assignment">
+<h3>Compound assignment<a class="headerlink" href="#compound-assignment" title="Permalink to this headline">¶</a></h3>
+<p>Since statements of the form <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code> or generally, <code class="samp docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <em><span class="pre">operator</span></em>
+<span class="pre">y</span></code> are so common, C++ has a shorthand for them. The compound assignment
+operators: <code class="docutils literal"><span class="pre">x</span> <span class="pre">+=</span> <span class="pre">y</span></code> means the same as <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code>, <code class="docutils literal"><span class="pre">x</span> <span class="pre">-=</span> <span class="pre">y</span></code> means <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">x</span>
+<span class="pre">-</span> <span class="pre">y</span></code> and so on for <code class="docutils literal"><span class="pre">*=</span></code>, <code class="docutils literal"><span class="pre">/=</span></code> and <code class="docutils literal"><span class="pre">%=</span></code>. Using them, the above program
+could have been written as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// In cent.</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="n">price</span> <span class="o">+=</span>   <span class="mi">90</span><span class="p">;</span> <span class="c1">// Buy ice cream.</span>
+    <span class="n">price</span> <span class="o">+=</span> <span class="mi">1399</span><span class="p">;</span> <span class="c1">// Buy SD-card.</span>
+    <span class="n">price</span> <span class="o">+=</span>  <span class="mi">345</span><span class="p">;</span> <span class="c1">// Buy apples.</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Total price: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">price</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="more-on-variables">
+<h2>More on variables<a class="headerlink" href="#more-on-variables" title="Permalink to this headline">¶</a></h2>
+<p>Before I go on with explaining the observable behavior of variables, you should
+know what a variable really is: It is a named, typed area of memory. The “named”
+should be clear, since we explicitly gave the variable a name (e.g. <code class="docutils literal"><span class="pre">price</span></code>).
+The “area of memory” is needed to save the variables value. The type of a
+variable determines how big this area is, which operations are allowed on
+it and how they should to be performed (note that types should be nothing new to
+you by now; a variables type is the very same concept as a literal&#8217;s or an
+expression&#8217;s type). The type of a variable is determined at compile time (i.e.
+when compiling the program, not when running it), when defining it. Unlike a
+variable&#8217;s value, its type never changes. Thus in the program above, the type
+of <code class="docutils literal"><span class="pre">price</span></code> is determined solely by the line</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">price</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="figure">
+<p><img src="../_images/tikz-3183b2c684cecd156d35fcca4ab18cd1c9cd3517.png" alt="\node (type) [draw, magnifying glass, line width=0.3em,
+  fill=blue, fill opacity=0.1, text opacity=1]
+  {\tikz \node [draw,rectangle] {Memory location};};
+\node [rotate=-45, below right=2em of type] {Type};
+\node (name) [left=of type, inner sep=0.1em] {Name};
+\path[-{Latex}] (name) edge (type);" /></p>
+<p class="caption">A variable. The type determines the interpretation of the bits
+stored at the memory location, and its size.</p></div><p>How exactly is the type determined? A variable defined using <code class="docutils literal"><span class="pre">auto</span></code>
+automatically (hence the keyword) gets the type of the expression at the
+right hand side of the <code class="docutils literal"><span class="pre">=</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The fact that types are determined completely at compile time and that
+they cannot change at runtime is what makes C++ a <em class="dfn">statically typed</em>
+language. Languages like C, C#, Java and Haskell are also statically typed.
+Python, Ruby, Lua and Javascript on the other hand, are <em class="dfn">dynamically
+typed</em> languages: In them, variables have no types, only their values have.
+Thus types can change at runtime, exactly like values. Dynamic typing is one
+of the main characteristics of the only vaguely defined term <em class="dfn">scripting
+language</em>.</p>
+<p class="last">While dynamic typing often allows for more conscise programs (though the
+advantage tends to get smaller as the programs grow bigger), static typing
+has the advantage of improved compile-time error checking and usually better
+runtime performance of the compiled program.</p>
+</div>
+<p>Using this knowledge, you may now guess if the following program compiles:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.9</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you thought that it will not compile, I wish you were right. But
+unfortunately (if you ask me) it does compile and prints</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>x = 0
+</pre></div>
+</div>
+<p>What&#8217;s going on here? In the first line of the main program, the compiler
+determines that the literal <code class="docutils literal"><span class="pre">0</span></code> has an integer type and therefore <code class="docutils literal"><span class="pre">x</span></code> too
+is an integer. In the next line for the addition <code class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">0.9</span></code>, <code class="docutils literal"><span class="pre">0.9</span></code> is
+determined to be a floating point literal, causing the value of <code class="docutils literal"><span class="pre">x</span></code> to be
+converted to a floating point value (i.e. temporary memory is reserved and a
+floating point representation of <code class="docutils literal"><span class="pre">x</span></code>&#8216;s value is saved there. <code class="docutils literal"><span class="pre">x</span></code> itself is
+unchanged). Then a floating point addition is performed which results in the
+floating point value <code class="docutils literal"><span class="pre">0.9</span></code>. But here is the problem: the assignment has an
+integer type at its left hand side, and a type, once determined, will never be
+changed. What C++ does instead, is converting the right hand side&#8217;s value into
+the type of the variable, in this case in an integer. This causes the floating
+point value to be rounded down, resulting in the value <code class="docutils literal"><span class="pre">0</span></code>, which is then
+printed in the next line. If you use the warning options I <a class="reference internal" href="hello-world.html#intro-compiler-howto"><span class="std std-ref">told</span></a> you while compiling, your compiler should tell you that
+there is a problem here.  Microsoft&#8217;s compiler, for example, emits this waning:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>warning C4244: &#39;=&#39; : conversion from &#39;double&#39; to &#39;int&#39;, possible loss of data
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Always enable your compiler&#8217;s warning messages!</p>
+</div>
+<p>You will probably wonder why it says “double” and “int” instead of something
+like “floating point number” and “integer”. The next section should explain
+this.</p>
+</div>
+<div class="section" id="primitive-number-types">
+<h2>Primitive number types<a class="headerlink" href="#primitive-number-types" title="Permalink to this headline">¶</a></h2>
+<p>Until now, I have always talked about “floating point numbers” and “integers”. I
+have also said that these are the <em>main</em> types of numbers. The truth is that
+these were just categories of types:</p>
+<div class="section" id="floating-point-numbers">
+<h3>Floating point numbers<a class="headerlink" href="#floating-point-numbers" title="Permalink to this headline">¶</a></h3>
+<p>For floating point numbers, C++ has the <code class="docutils literal"><span class="pre">float</span></code>, <code class="docutils literal"><span class="pre">double</span></code> types. The
+difference between them is their precision and the minimum/maximum values they
+can contain.  As the name implies, a <code class="docutils literal"><span class="pre">double</span></code> usually occupies twice as much
+bytes as a <code class="docutils literal"><span class="pre">float</span></code> and thus has a higher precision and a greater range of
+representable numbers. There is also <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> which can have an even
+greater range and precision (and size), but it is used very seldom and with
+Microsoft&#8217;s compiler it is the same as <code class="docutils literal"><span class="pre">double</span></code>. By default, if you write a
+number with a fractional part, like <code class="docutils literal"><span class="pre">1.2</span></code> or <code class="docutils literal"><span class="pre">1.0</span></code> <a class="footnote-reference" href="#emptyfractional" id="id2">[2]</a> it is
+a <code class="docutils literal"><span class="pre">double</span></code>.  If you want the literal to have the type <code class="docutils literal"><span class="pre">float</span></code>, append a
+<code class="docutils literal"><span class="pre">f</span></code> or <code class="docutils literal"><span class="pre">F</span></code>. So while <code class="docutils literal"><span class="pre">1.0</span></code> is of type <code class="docutils literal"><span class="pre">double</span></code>, <code class="docutils literal"><span class="pre">1.0f</span></code> is a float. The
+same goes for <code class="docutils literal"><span class="pre">long</span> <span class="pre">double</span></code> only with <code class="docutils literal"><span class="pre">l</span></code> or <code class="docutils literal"><span class="pre">L</span></code> instead of <code class="docutils literal"><span class="pre">f</span></code> or
+<code class="docutils literal"><span class="pre">F</span></code>. I recommend using the uppercase variant here, because lowercase <code class="docutils literal"><span class="pre">l</span></code>
+looks very similar to <code class="docutils literal"><span class="pre">1</span></code> (compare <code class="docutils literal"><span class="pre">1.1l</span></code> and <code class="docutils literal"><span class="pre">1.1L</span></code>). I recommend to
+always use <code class="docutils literal"><span class="pre">double</span></code> for floating point numbers, unless you have specific
+reasons not to.</p>
+</div>
+<div class="section" id="integer-numbers">
+<h3>Integer numbers<a class="headerlink" href="#integer-numbers" title="Permalink to this headline">¶</a></h3>
+<p>Unlike floating point numbers, which are approximations, integers
+are, as you have probably expected, exact within their supported range.</p>
+<p>Integer number can be further categorized in <em class="dfn">signed</em> and <em class="dfn">unsigned</em>
+integers. The formers can represent negative numbers, while the latters cannot,
+but instead can represent twice as large positive numbers. By default, integers
+are signed. You can add the suffix <code class="docutils literal"><span class="pre">u</span></code> or <code class="docutils literal"><span class="pre">U</span></code> after a literal to make it
+unsigned, e.g. <code class="docutils literal"><span class="pre">512u</span></code> or <code class="docutils literal"><span class="pre">512U</span></code>. The integer types differ in the supported
+range and the number of bytes they occupy. From smallest to largest, there are:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">short</span> <span class="pre">int</span></code>, or just <code class="docutils literal"><span class="pre">short</span></code>, typically 16 bit long, allowing numbers from
+<span class="math">\(-2^{16 - 1} = -32768\)</span> to <span class="math">\(2^{16 - 1} - 1 = 32767\)</span> in their signed
+variant and from <span class="math">\(0\)</span> to <span class="math">\(2^{16} = 65536\)</span> in their unsigned variant</li>
+<li><code class="docutils literal"><span class="pre">int</span></code>, typically 32 bit long, allowing numbers from -2,147,483,648 to
+2,147,483,647</li>
+<li><code class="docutils literal"><span class="pre">long</span> <span class="pre">int</span></code>, or just <code class="docutils literal"><span class="pre">long</span></code>, typically 32 or 64 bit long</li>
+<li><code class="docutils literal"><span class="pre">long</span> <span class="pre">long</span> <span class="pre">int</span></code>, or just <code class="docutils literal"><span class="pre">long</span> <span class="pre">long</span></code>, typically 64 bit long, allowing
+absolute numbers as big as circa <span class="math">\(9.2 \cdot 10^{18}\)</span> (that is, a number
+with 19 decimal digits).</li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">If you are unfamiliar with <a class="reference external" href="http://en.wikipedia.org/wiki/Binary_number">binary numbers</a> and the mathematics
+behind <a class="reference external" href="http://en.wikipedia.org/wiki/Positional_notation">positional notation</a> in general, I recommend you do some research
+on this topic.</p>
+</div>
+<p>I said “typically” for the sizes and valid ranges because this is one of the
+things that are <em class="dfn">implementation defined</em>, i.e. the C++ Standard does not say how
+large the types are; it only guarantees that <code class="docutils literal"><span class="pre">int</span></code> is at least as large as
+<code class="docutils literal"><span class="pre">short</span></code>, <code class="docutils literal"><span class="pre">long</span></code> is at least as large as <code class="docutils literal"><span class="pre">int</span></code> and <code class="docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> at least
+as large as <code class="docutils literal"><span class="pre">long</span></code>. Additionally, it says that the smallest integer type must
+be at least 1 byte long and that one byte must have at least 8 bit <a class="footnote-reference" href="#oddbits" id="id3">[4]</a>.
+And lastly, the standard mandates (and that is actually the general definition
+of “implementation defined”) that all compilers document how large the types
+are, and which ranges they support. For example, the documentation for MSVC is
+at <a class="reference external" href="http://msdn.microsoft.com/en-us/library/s3f49ktz.aspx">http://msdn.microsoft.com/en-us/library/s3f49ktz.aspx</a>.</p>
+<p>For each of these types, an unsigned variant exists, that has the same type name
+as the signed type above, but with <code class="docutils literal"><span class="pre">unsigned</span></code> prepended, e.g. <code class="docutils literal"><span class="pre">unsigned</span>
+<span class="pre">long</span></code>. The type <code class="docutils literal"><span class="pre">unsigned</span> <span class="pre">int</span></code> can also be called just <code class="docutils literal"><span class="pre">unsigned</span></code>.</p>
+<p>The type of a literal is never <code class="docutils literal"><span class="pre">short</span></code> but otherwise it is the smallest of the
+above types that can hold the value. You can use the <code class="docutils literal"><span class="pre">l</span></code> or <code class="docutils literal"><span class="pre">L</span></code> suffix to
+force using at least <code class="docutils literal"><span class="pre">long</span></code> (e.g. <code class="docutils literal"><span class="pre">42L</span></code>) and <code class="docutils literal"><span class="pre">ll</span></code> or <code class="docutils literal"><span class="pre">LL</span></code> to force a
+<code class="docutils literal"><span class="pre">long</span> <span class="pre">long</span></code> (all also in addition to <code class="docutils literal"><span class="pre">u</span></code> or <code class="docutils literal"><span class="pre">U</span></code>, e.g. <code class="docutils literal"><span class="pre">42uL</span></code> or
+<code class="docutils literal"><span class="pre">42LLu</span></code>).</p>
+</div>
+<div class="section" id="characters">
+<h3>Characters<a class="headerlink" href="#characters" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">char</span></code> type can hold a single one byte character, or a one byte integer
+number.</p>
+<p>Because computers can only handle numbers, characters must be <em class="dfn">encoded</em> as
+such. The mapping between a character (like “a”) and a number (like 65) is
+called the <em class="dfn">character encoding</em>. There are many of them but all that are
+widely used today are based on <a class="reference external" href="http://en.wikipedia.org/wiki/ASCII">ASCII</a>. While different encodings are able to
+encode different characters (for example there are encodings for Cyrillic
+characters and other ones that include extended Latin characters like Á, ü, ß or
+ï) almost all encodings can represent the <abbr title="American Standard Code for Information Interchange">ASCII</abbr> characters. They are:</p>
+<ul class="simple">
+<li>The digits <code class="docutils literal"><span class="pre">0</span></code> to <code class="docutils literal"><span class="pre">9</span></code> (digit symbols are not the same as real numeric
+values, although they are used to represent them)</li>
+<li>The uppercase letters <code class="docutils literal"><span class="pre">A</span></code> to <code class="docutils literal"><span class="pre">Z</span></code></li>
+<li>The lowercase letters <code class="docutils literal"><span class="pre">a</span></code> to <code class="docutils literal"><span class="pre">z</span></code></li>
+<li>Punctuation characters: <code class="docutils literal"><span class="pre">!?.:,;</span></code></li>
+<li>Brackets: <code class="docutils literal"><span class="pre">([{}])</span></code></li>
+<li>Other symbols: <code class="docutils literal"><span class="pre">&quot;#$%&amp;'*+/&lt;=&gt;&#64;\^_`|~</span></code></li>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/ASCII#ASCII_control_characters">Control characters</a> like line break, tabulator or form feed (page break).</li>
+</ul>
+<p>So since characters and numbers are stored exactly the same way, it is up to you
+how you interpret the <code class="docutils literal"><span class="pre">char</span></code> type: C++ let&#8217;s you use all the arithmetic
+operators like <code class="docutils literal"><span class="pre">+</span></code> and <code class="docutils literal"><span class="pre">%</span></code> on <code class="docutils literal"><span class="pre">char</span></code>s but <code class="docutils literal"><span class="pre">std::cout</span></code> prints them as
+characters. Also, the char literals are written as <code class="samp docutils literal"><span class="pre">'</span><em><span class="pre">x</span></em><span class="pre">'</span></code> where
+<code class="samp docutils literal"><em><span class="pre">x</span></em></code> can be any (single) ASCII character or escape sequence like <code class="docutils literal"><span class="pre">\n</span></code>.
+Compilers might also accept other characters but the C++ standard does not
+require them to, so you should restrict yourself to ASCII if you want your
+source code to be portable across different compilers.</p>
+<p>If you use <code class="docutils literal"><span class="pre">char</span></code> for integers, be aware that it is implementation defined
+whether they are <code class="docutils literal"><span class="pre">signed</span></code> or <code class="docutils literal"><span class="pre">unsigned</span></code>, so you should better explicitly
+use <code class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span></code> (for numbers from -128 to 127) or <code class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></code> (for
+numbers from 0 to 255), depending on your needs. Note that <code class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span></code> and
+<code class="docutils literal"><span class="pre">unsigned</span> <span class="pre">char</span></code> are always both their own types, different from plain
+<code class="docutils literal"><span class="pre">char</span></code>, unlike the other integer types for which e.g. <code class="docutils literal"><span class="pre">signed</span> <span class="pre">int</span></code> is just
+another name for <code class="docutils literal"><span class="pre">int</span></code>.</p>
+<p>As an example of <code class="docutils literal"><span class="pre">char</span></code> used as character, the following is an inconvenient
+way to print “Hello!”:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;H&#39;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;e&#39;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;l&#39;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;l&#39;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;o&#39;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;!&#39;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="explicitly-typed-variables">
+<h2>Explicitly typed variables<a class="headerlink" href="#explicitly-typed-variables" title="Permalink to this headline">¶</a></h2>
+<p>Instead of using <code class="docutils literal"><span class="pre">auto</span></code>, you can also explicitly give a variable a type. You
+do this, simply by writing the type instead of <code class="docutils literal"><span class="pre">auto</span></code>. The expression on the
+right side of the <code class="docutils literal"><span class="pre">=</span></code> will be converted, if necessary. For example, our circle
+program could be written as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159265359</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">radius</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+
+    <span class="kt">double</span> <span class="n">area</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">// radius * radius = radius squared</span>
+    <span class="kt">double</span> <span class="n">diameter</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">perimeter</span> <span class="o">=</span> <span class="n">diameter</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;r = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">radius</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; ==&gt; &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;d = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">diameter</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, A = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">area</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, P = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">perimeter</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>I have chosen the types in such a way that no conversion occurs, but you could
+also use e.g. <code class="docutils literal"><span class="pre">double</span></code> for the radius&#8217; type, or use <code class="docutils literal"><span class="pre">float</span></code> everywhere.</p>
+<p>For variables with explicit types, you do not have to give an initial value.
+E.g. the following line is valid C++ and defines the variable <code class="docutils literal"><span class="pre">sum</span></code> of type
+<code class="docutils literal"><span class="pre">usigned</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="n">sum</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can later assign a value to it using <code class="docutils literal"><span class="pre">=</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">sum</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>However, it is usually a good idea to always initialize variables when
+defining them, as reading from an uninitialized variable (e.g. by printing it
+with <code class="docutils literal"><span class="pre">std::cout</span></code> or by using its value in an expression) is <em class="dfn">undefined
+behavior</em>. That&#8217;s the C++ standard&#8217;s way of saying that if you do this, your
+program might compile but might do anything when run: It can crash your computer
+or, as the saying goes, reformat your hard drive or make demons fly out of your
+nose. The latter two are a bit unlikely, but in fact there are really <a class="reference external" href="http://blog.regehr.org/archives/759">strange
+things</a> that can happen when you have undefined behavior in your program. For
+uninitialized variables, you will <a class="reference external" href="http://kqueue.org/blog/2012/06/25/more-randomness-or-less/">most likely</a> just get some garbage value
+(whatever bits previously were in the memory area that is now occupied by the
+variable).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To clear up the terminology here:</p>
+<ul class="last simple">
+<li>You <em class="dfn">initialize</em> a variable when you assign a value in the same
+statement where it is defined.</li>
+<li>You <em class="dfn">assign</em> a variable by using the <code class="docutils literal"><span class="pre">=</span></code> operator afterwards.</li>
+<li>A variable is <em class="dfn">initialized</em> both if you have assigned a value to it or
+really did initialize it. Otherwise it is <em class="dfn">uninitialized</em>.</li>
+</ul>
+</div>
+<p>Nevertheless, variables can be “assigned” in other ways than using the
+assignment operator <code class="docutils literal"><span class="pre">=</span></code>, and leaving out the initial value can be used as a
+sign to the reader that such an assignment is intended. The most prominent
+example for this is user input.</p>
+<p>You may now ask when you should use explicitly typed variables vs. <code class="docutils literal"><span class="pre">auto</span></code>. I
+recommend to use explicitly typed variables only when you want a conversion, or
+when you dont&#8217;t initialize the variable with the <code class="docutils literal"><span class="pre">=</span></code> operator. If you want to
+know more, I recommend reading this blog post by the prominent C++ expert Herb
+Sutter: <a class="reference external" href="http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/">http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/</a>.
+You may want to do this later, when you know more of C++, as this blog post is
+intended for developers who already know the language.</p>
+</div>
+<div class="section" id="defining-multiple-variables-at-once">
+<h2>Defining multiple variables at once<a class="headerlink" href="#defining-multiple-variables-at-once" title="Permalink to this headline">¶</a></h2>
+<p>You can define multiple variables at once. Using explicitly typed variables this
+is really straightforward:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>declares the variables <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> of type <code class="docutils literal"><span class="pre">int</span></code> without initializing
+them. It means the same as</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can, however also initialize these variables, or initialize only some of
+them:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>initializes <code class="docutils literal"><span class="pre">x</span></code> to <code class="docutils literal"><span class="pre">0</span></code> but leaves <code class="docutils literal"><span class="pre">y</span></code> uninitialized.</p>
+<p>This syntax can also be used with <code class="docutils literal"><span class="pre">auto</span></code>. As usual, all variables declared
+must be initialized:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>works, but</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>doesn&#8217;t, for the same reason that the equivalent</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>doesn&#8217;t work.</p>
+<p>However, there is an additional catch with <code class="docutils literal"><span class="pre">auto</span></code>: All variables declared in
+the same statement must have the same type. That is, while</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>works because both <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> are deduced to be <code class="docutils literal"><span class="pre">int</span></code>s, the following
+is an error, because different types are deduced for <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>You can remember this by imagining that the compiler replaces <code class="docutils literal"><span class="pre">auto</span></code> with the
+type name and does not allow conversions there.</p>
+</div>
+<div class="section" id="user-input">
+<h2>User input<a class="headerlink" href="#user-input" title="Permalink to this headline">¶</a></h2>
+<p>So far, our programs produced output but took no input from the user. For
+example, if you wanted to calculate the area of a circle with a different value,
+you would have to change the source code and recompile the program. That&#8217;s not
+acceptable! Let&#8217;s solve this problem:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159265359</span><span class="p">;</span>
+
+    <span class="kt">double</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter the circle&#39;s radius: &quot;</span><span class="p">;</span>
+<span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">radius</span><span class="p">;</span>
+</span>
+    <span class="k">auto</span> <span class="n">area</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">// radius * radius = radius squared</span>
+    <span class="k">auto</span> <span class="n">diameter</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">perimeter</span> <span class="o">=</span> <span class="n">diameter</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;r = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">radius</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; ==&gt; &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;d = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">diameter</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, A = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">area</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, P = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">perimeter</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you compile and run this program, it will first display the text “Enter the
+circle&#8217;s radius: ”. Then you can enter a floating point number (similarly to how
+you would write it in source code, but of course, no type suffixes are
+supported). <code class="docutils literal"><span class="pre">std::cin</span></code> will then examine the string you entered, and calculate
+number of the given variable&#8217;s type from it and stores the result there <a class="footnote-reference" href="#inputerr" id="id4">[3]</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>All types are fixed at compile time.
+When you run the program and enter a value, there is no way to influence the
+type; whatever you enter will be interpreted according to the type of the
+variable passed to <code class="docutils literal"><span class="pre">std::cin</span></code>.  Thus, the following does not work:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">radius</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">radius</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">std::cin</span></code> must know how to interpret the input string at compile time, and
+the compiler must know at compile time what type <code class="docutils literal"><span class="pre">radius</span></code> has (e.g. for
+knowing how much memory is needed for it or where to insert instructions for
+conversions, etc.). In fact, not even the following works:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">radius</span><span class="p">;</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="last">Variables defined using <code class="docutils literal"><span class="pre">auto</span></code> must always be initialized, i.e. assigned
+directly in the definition statement.</p>
+</div>
+<p>The program then goes on, as in the previous version, calculating the diameter,
+perimeter and area of the circle with the entered radius and printing them.</p>
+<p>An example session looks like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Enter the circle&#39;s radius: 2.3
+r = 2.3 ==&gt; d = 4.6, A = 16.619, P = 14.4513
+</pre></div>
+</div>
+<p>Note that you have to end your input (2.3 in the example above) by pressing
+<code class="kbd docutils literal"><span class="pre">Return</span></code> on your keyboard.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">char</span></code> variables are always interpreted as characters by
+<code class="docutils literal"><span class="pre">std::cin</span></code>, meaning that only a single character can be read. Thus,
+entering 32 for <code class="docutils literal"><span class="pre">std::cin</span> <span class="pre">&gt;&gt;</span> <span class="pre">c</span></code> (where <code class="docutils literal"><span class="pre">c</span></code> is a <code class="docutils literal"><span class="pre">char</span></code>) causes <code class="docutils literal"><span class="pre">c</span></code> to
+become the character <code class="docutils literal"><span class="pre">'3'</span></code> not the character whose encoded value is 32. The
+<code class="docutils literal"><span class="pre">2</span></code> will be left in the input stream and retrieved when <code class="docutils literal"><span class="pre">std::cin</span></code> is
+used the next time.</p>
+</div>
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<p>Variables are mutable, but sometimes you don&#8217;t want a value to change, e.g for
+natural constants like <span class="math">\(\pi\)</span> (pi). C++ supports this with the <code class="docutils literal"><span class="pre">const</span></code>
+keyword: By writing it before <code class="docutils literal"><span class="pre">auto</span></code> or the type name, the variable is defined
+to be constant. Such a constant must always be directly initialized at the point
+of definition, like <code class="docutils literal"><span class="pre">auto</span></code> variables, even when it is explicitly typed.</p>
+<p>In our circle program we could use <code class="docutils literal"><span class="pre">const</span></code> everywhere except for the input
+variable <code class="docutils literal"><span class="pre">radius</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159265359</span><span class="p">;</span>
+
+    <span class="kt">double</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter the circle&#39;s radius: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">radius</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">area</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span> <span class="c1">// radius * radius = radius squared</span>
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">diameter</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">radius</span><span class="p">;</span>
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">perimeter</span> <span class="o">=</span> <span class="n">diameter</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;r = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">radius</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; ==&gt; &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;d = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">diameter</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, A = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">area</span>
+              <span class="o">&lt;&lt;</span> <span class="s">&quot;, P = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">perimeter</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>I recommend using <code class="docutils literal"><span class="pre">const</span></code> variables anywhere you can, but others like to use
+it only for these variables that are logically immutable, e.g. natural constants
+like <code class="docutils literal"><span class="pre">pi</span></code>. Do whatever you think is more readable.</p>
+<p>In the price calculation program, <code class="docutils literal"><span class="pre">const</span></code> could not be used, since we are
+changing the only variable <code class="docutils literal"><span class="pre">price</span></code>.</p>
+<p>You should almost always use constants instead of writing numeric literals
+directly in your code: We have seen that for <code class="docutils literal"><span class="pre">pi</span></code>, but this applies to almost
+any number (other than 0 and 1 which often have no special meaning beyond being
+zero and one). Numeric literals used for other things than initializing a
+constant are thus often called <em class="dfn">magic numbers</em> because their meaning is
+unknown to the uninitiated reader.</p>
+</div>
+<div class="section" id="background-information-temporary-variables">
+<h2>Background information: Temporary variables<a class="headerlink" href="#background-information-temporary-variables" title="Permalink to this headline">¶</a></h2>
+<p>In the introduction&#8217;s chapter <a class="reference internal" href="../intro.html#intro-proglangs"><span class="std std-ref">Programming languages</span></a>, I explained that C++ is
+compiled into CPU instructions. I also said that such instructions are very
+primitive. Consider for example the following line of C++:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Clearly, there is no single CPU instruction that can do this whole calculation.
+In fact, all CPU instructions for calculations take only two operands. The C++
+compiler will thus translate the code in the equivalent of the following (the
+names are just for demonstration purposes):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">__t1</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">__t2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">t1</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">__t3</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">t2</span><span class="p">;</span>
+<span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">t3</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>That is, the intermediate results of the calculations are saved in invisible,
+temporary variables.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>This is just conceptually so. When there is no observable difference
+in the program&#8217;s behavior, the compiler can always do something different.
+E.g. in the above code it will probably detect that no temporaries are
+necessary, since the calculation&#8217;s intermediate values can be accumulated in
+<code class="docutils literal"><span class="pre">x</span></code>:</p>
+<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">x</span><span class="p">;</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">z</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p id="proc-vars-obj">An other way to look at this is realizing that the difference between a
+(sub)expression&#8217;s value and a variable&#8217;s is only that the former has no name. It
+does, however, have the two other characteristics of a variable: it&#8217;s stored in
+a certain area of memory and has a type. A typed area of memory is called an
+<em class="dfn">object</em>. A variable can thus also be described as a named object.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Literals are values that are literally written into the source code, like
+<code class="docutils literal"><span class="pre">42</span></code>, <code class="docutils literal"><span class="pre">3.14</span></code>, or <code class="docutils literal"><span class="pre">&quot;Hello&quot;</span></code>.</li>
+<li>The operators <code class="docutils literal"><span class="pre">+</span></code>, <code class="docutils literal"><span class="pre">-</span></code>, <code class="docutils literal"><span class="pre">*</span></code> and <code class="docutils literal"><span class="pre">/</span></code> can be used to add, subtract,
+multiply and divide two numeric operands.</li>
+<li><code class="docutils literal"><span class="pre">x</span> <span class="pre">%</span> <span class="pre">y</span></code> calculates the remainder when dividing the integers <code class="docutils literal"><span class="pre">x</span></code> by <code class="docutils literal"><span class="pre">y</span></code>.
+The result has the same sign as <code class="docutils literal"><span class="pre">x</span></code>.</li>
+<li>Variables are named, typed, mutable areas of memory.</li>
+<li>Variable names must start with a letter or underscore and can then be followed
+by any number of letters, digits and/or underscores.</li>
+<li>Complex expressions can be built by combining literals and variables using
+operators and parentheses.</li>
+<li>Everything has a type: Literals, variables, expressions and subexpressions
+(like the <code class="docutils literal"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">4</span></code> in <code class="docutils literal"><span class="pre">2</span> <span class="pre">+</span> <span class="pre">3</span> <span class="pre">*</span> <span class="pre">4</span></code>).</li>
+<li>Types are fixed at compile time.</li>
+<li>A literal&#8217;s type can be influenced by appending a suffix (e.g. <code class="docutils literal"><span class="pre">1.0f</span></code>).</li>
+<li>For numbers, there are floating point and signed and unsigned integer types of
+varying precision and supported range.</li>
+<li>The <code class="docutils literal"><span class="pre">char</span></code> type can represent characters or one byte integers.</li>
+<li>A variable&#8217;s type can be deduced automatically by the compiler from the
+initialization expression by using the <code class="docutils literal"><span class="pre">auto</span></code> keyword.</li>
+<li>A variable&#8217;s type can be defined explicitly by writing a type name instead of
+<code class="docutils literal"><span class="pre">auto</span></code>, but <code class="docutils literal"><span class="pre">auto</span></code> should usually be preferred.</li>
+<li>Using an uninitialized variable&#8217;s value is a dangerous error that is not
+detected by the compiler.</li>
+<li>A variable&#8217;s value can be set from user input by using <code class="docutils literal"><span class="pre">std::cin</span></code> like
+<code class="samp docutils literal"><span class="pre">std::cin</span> <span class="pre">&gt;&gt;</span> <em><span class="pre">var</span></em></code>.</li>
+<li><code class="docutils literal"><span class="pre">const</span></code> can be prepended to a variable&#8217;s type name or to <code class="docutils literal"><span class="pre">auto</span></code> to define
+a constant that cannot be changed.</li>
+</ul>
+<p>Your knowledge of C++ is now sufficient for developing programs that replace
+e.g. simple spreadsheet documents.</p>
+<hr class="docutils" />
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="underscorenames" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>In fact, such names are not actually invalid but they are
+reserved for <em class="dfn">the implementation</em>, that is the compiler and the
+standard library. The same applies to names containing multiple underscores
+in a row.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="emptyfractional" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>You can leave out the <code class="docutils literal"><span class="pre">0</span></code> after the <code class="docutils literal"><span class="pre">.</span></code>, i.e. <code class="docutils literal"><span class="pre">1.</span></code>
+means the same as <code class="docutils literal"><span class="pre">1.0</span></code>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="inputerr" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td>We will cover what happens when you enter an invalid value
+later; for now, just enter something correct.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="oddbits" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[4]</a></td><td>Yes, there are/were exotic platforms were a byte does
+not have 8 bit.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Types and Variables</a><ul>
+<li><a class="reference internal" href="#calculating-with-c">Calculating with C++</a><ul>
+<li><a class="reference internal" href="#the-remainder-operator">The remainder operator <code class="docutils literal"><span class="pre">%</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remembering-values">Remembering values</a></li>
+<li><a class="reference internal" href="#changing-memories">Changing memories</a><ul>
+<li><a class="reference internal" href="#compound-assignment">Compound assignment</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-on-variables">More on variables</a></li>
+<li><a class="reference internal" href="#primitive-number-types">Primitive number types</a><ul>
+<li><a class="reference internal" href="#floating-point-numbers">Floating point numbers</a></li>
+<li><a class="reference internal" href="#integer-numbers">Integer numbers</a></li>
+<li><a class="reference internal" href="#characters">Characters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#explicitly-typed-variables">Explicitly typed variables</a></li>
+<li><a class="reference internal" href="#defining-multiple-variables-at-once">Defining multiple variables at once</a></li>
+<li><a class="reference internal" href="#user-input">User input</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#background-information-temporary-variables">Background information: Temporary variables</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="logic.html" title="Logic and more on operators"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="hello-world.html" title="From source code to executables"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/proc/types-and-vars.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

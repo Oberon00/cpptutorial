@@ -1,0 +1,722 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Logic and more on operators &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="../_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="../index.html" />
+    <link rel="up" title="The Basics: Procedural programming" href="index.html" />
+    <link rel="next" title="Control flow" href="control-flow.html" />
+    <link rel="prev" title="Types and Variables" href="types-and-vars.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="control-flow.html" title="Control flow"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="types-and-vars.html" title="Types and Variables"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="logic-and-more-on-operators">
+<h1>Logic and more on operators<a class="headerlink" href="#logic-and-more-on-operators" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="the-bool-type">
+<h2>The <code class="docutils literal"><span class="pre">bool</span></code> type<a class="headerlink" href="#the-bool-type" title="Permalink to this headline">¶</a></h2>
+<p>Apart from numbers and text, there is one more fundamental type in C++: The
+truth value. They have the type name <code class="docutils literal"><span class="pre">bool</span></code> (which is short for <em class="dfn">Boolean
+value</em>, named after the mathematician <a class="reference external" href="http://en.wikipedia.org/wiki/George_Boole">George Boole</a>) and can have one of two
+values: <code class="docutils literal"><span class="pre">true</span></code> or <code class="docutils literal"><span class="pre">false</span></code>. Booleans are crucial to every program, as they
+allow to make decisions, as we will see in later sections of this chapter.</p>
+<p>The syntax for declaring, assigning, and so on is the same as for other types.
+The only difference is that the literals are the keywords <code class="docutils literal"><span class="pre">true</span></code> and <code class="docutils literal"><span class="pre">false</span></code>
+instead of numbers or quoted strings. <code class="docutils literal"><span class="pre">cout</span></code> and <code class="docutils literal"><span class="pre">cin</span></code>, however, will
+print/accept “0” and “1” (mainly for historical reasons).</p>
+<div class="sidebar">
+<p class="first sidebar-title">Integers as booleans</p>
+<p>The historical reasons for the 0/1 instead of false/true lie in C, the
+language on which C++ is built. C had no <code class="docutils literal"><span class="pre">bool</span></code> type. Instead, one would
+use an integer type like <code class="docutils literal"><span class="pre">int</span></code> and let, by convention, 0 represent
+false and 1 true. Even today, one can assign <code class="docutils literal"><span class="pre">0</span></code> to a <code class="docutils literal"><span class="pre">bool</span></code> in C++ and
+it will be converted to <code class="docutils literal"><span class="pre">false</span></code> and any nonzero value will become <code class="docutils literal"><span class="pre">true</span></code>.
+This is the same principle as with floating point numbers being converted to
+integers. In fact, C++ even does the conversion from floating point to
+boolean, as in</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">foo</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span> <span class="c1">// foo becomes true</span>
+</pre></div>
+</div>
+<p>The language is even crazy enough to accept text (for reasons we will come to
+when talking about strings):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">bar</span> <span class="o">=</span> <span class="s">&quot;Some text&quot;</span><span class="p">;</span> <span class="c1">// Both true</span>
+<span class="kt">bool</span> <span class="n">baz</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>          <span class="c1">//</span>
+</pre></div>
+</div>
+<p class="last">Of course, you usually don&#8217;t want that and your compiler will, if given the
+right command line options, warn you about such mistakes.</p>
+</div>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;true : &quot;</span> <span class="o">&lt;&lt;</span> <span class="nb">true</span>  <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;false: &quot;</span> <span class="o">&lt;&lt;</span> <span class="nb">false</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">is_valid</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="c1">// is_valid gets the type bool.</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Valid? &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">is_valid</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">is_valid</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Still valid? &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">is_valid</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">some_bool</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter a boolean value (0 for false, 1 for true): &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">some_bool</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;You entered &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">some_bool</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example output (with input “0”):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>true : 1
+false: 0
+
+Valid? 1
+Still valid? 0
+
+Enter a boolean value (0 for false, 1 for true): 0
+You entered 0.
+</pre></div>
+</div>
+</div>
+<div class="section" id="calculating-with-booleans">
+<h2>“Calculating” with Booleans<a class="headerlink" href="#calculating-with-booleans" title="Permalink to this headline">¶</a></h2>
+<p>There exist three useful operations which you can perform on Booleans. The first
+one is <a class="reference external" href="http://en.wikipedia.org/wiki/Negation">logical negation</a> aka <em class="dfn">not</em> with the unary <code class="docutils literal"><span class="pre">!</span></code> operator. It
+makes <code class="docutils literal"><span class="pre">true</span></code> values <code class="docutils literal"><span class="pre">false</span></code> and vice versa (it is true if x is <em>not</em> true):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">x</th>
+<th class="head">!x</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>false</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>true</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p>The second one is <a class="reference external" href="http://en.wikipedia.org/wiki/Logical_conjunction">logical conjunction</a> aka <em class="dfn">and</em>. The binary <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>
+operator results in true if and only if <a class="footnote-reference" href="#iff" id="id1">[1]</a> both of its operands are
+<code class="docutils literal"><span class="pre">true</span></code> (if x <em>and</em> y are true):</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="28%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">x</th>
+<th class="head">y</th>
+<th class="head">x &amp;&amp; y</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>false</td>
+<td>false</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>false</td>
+<td>true</td>
+<td>false</td>
+</tr>
+<tr class="row-even"><td>true</td>
+<td>false</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>true</td>
+<td>true</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>The third one is <a class="reference external" href="http://en.wikipedia.org/wiki/Logical_disjunction">logical disjunction</a> aka (inclusive) <em class="dfn">or</em>. The binary
+<code class="docutils literal"><span class="pre">||</span></code> operator is true if at least one operand is <code class="docutils literal"><span class="pre">true</span></code>. Note that this is
+also true if both operands are <code class="docutils literal"><span class="pre">true</span></code>; that is, it&#8217;s not an “either x or y”,
+(exclusive or) it&#8217;s “x or y or both” (inclusive or).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="31%" />
+<col width="38%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">x</th>
+<th class="head">y</th>
+<th class="head">x || y</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>false</td>
+<td>false</td>
+<td>false</td>
+</tr>
+<tr class="row-odd"><td>false</td>
+<td>true</td>
+<td>true</td>
+</tr>
+<tr class="row-even"><td>true</td>
+<td>false</td>
+<td>true</td>
+</tr>
+<tr class="row-odd"><td>true</td>
+<td>true</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
+<p>In composite expressions like <code class="docutils literal"><span class="pre">x</span> <span class="pre">||</span> <span class="pre">y</span> <span class="pre">&amp;&amp;</span> <span class="pre">!z</span></code>, <code class="docutils literal"><span class="pre">!</span></code> is evaluated first (in
+general, unary operators are evaluated before binary ones in C++) and <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> is
+evaluated before <code class="docutils literal"><span class="pre">||</span></code>. That is, the aforementioned expression has the same
+meaning as <code class="docutils literal"><span class="pre">x</span> <span class="pre">||</span> <span class="pre">(y</span> <span class="pre">&amp;&amp;</span> <span class="pre">(!z))</span></code>.</p>
+<p>The following program demonstrates some uses of these operators:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">has_armor</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">has_sword</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;In need of equipment: &quot;</span> <span class="o">&lt;&lt;</span> <span class="o">!</span><span class="p">(</span><span class="n">has_armor</span> <span class="o">||</span> <span class="n">has_sword</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">quest_complete</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Have you found the potion yet? &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">quest_complete</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">is_member</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Are you a member of the guild? &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">is_member</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">paid_bribe</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ready for boss fight: &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">has_armor</span> <span class="o">&amp;&amp;</span> <span class="n">has_sword</span> <span class="o">&amp;&amp;</span> <span class="n">quest_complete</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Gets offered guild items: &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">is_member</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">quest_complete</span> <span class="o">||</span> <span class="n">paid_bribe</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that we had to put the expressions in parentheses for output. That&#8217;s
+because the compiler would otherwise try to generate instructions that evaluate
+<code class="docutils literal"><span class="pre">&lt;&lt;</span></code> first, reading the code like e.g.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ready for boss fight: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">has_armor</span><span class="p">)</span>
+<span class="o">&amp;&amp;</span> <span class="n">has_sword</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">quest_complete</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>which is, of course, bogus and leads to a compile error.</p>
+</div>
+<div class="section" id="comparison-operators">
+<h2>Comparison operators<a class="headerlink" href="#comparison-operators" title="Permalink to this headline">¶</a></h2>
+<p>We already saw the arithmetic operators <code class="docutils literal"><span class="pre">+</span></code>, <code class="docutils literal"><span class="pre">-</span></code>, <code class="docutils literal"><span class="pre">*</span></code> and <code class="docutils literal"><span class="pre">/</span></code> on
+numbers. These took two numbers, converted it to a common type if necessary,
+and returned a number of that common type. There is, however, another category
+of operators which are used to compare numbers. Like the arithmetic operators,
+they take two numbers, converting to a common type if necessary. However, they
+do not return a number, but a truth value: a <code class="docutils literal"><span class="pre">bool</span></code>. Here they are:</p>
+<ul class="simple">
+<li>The equality operators:<ul>
+<li><code class="docutils literal"><span class="pre">==</span></code> (that&#8217;s a double equals sign) returns <code class="docutils literal"><span class="pre">true</span></code> if its operands are
+the same. E.g. <code class="docutils literal"><span class="pre">1</span> <span class="pre">==</span> <span class="pre">1</span></code> yields <code class="docutils literal"><span class="pre">true</span></code>, while <code class="docutils literal"><span class="pre">1</span> <span class="pre">==</span> <span class="pre">2</span></code> yields false.</li>
+<li><code class="docutils literal"><span class="pre">!=</span></code> means not-equal (≠) and is the opposite of <code class="docutils literal"><span class="pre">==</span></code>: it returns
+<code class="docutils literal"><span class="pre">true</span></code> if its operands are <em>not</em> the same. E.g. <code class="docutils literal"><span class="pre">1</span> <span class="pre">!=</span> <span class="pre">2</span></code> returns
+<code class="docutils literal"><span class="pre">true</span></code>, while <code class="docutils literal"><span class="pre">1</span> <span class="pre">!=</span> <span class="pre">1</span></code> is false.</li>
+</ul>
+</li>
+<li>The relational operators:<ul>
+<li>Less-than <code class="docutils literal"><span class="pre">&lt;</span></code> returns <code class="docutils literal"><span class="pre">true</span></code> if its left-hand side operand is smaller
+than its right-hand side operand. E.g. <code class="docutils literal"><span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">2</span></code> is true, while <code class="docutils literal"><span class="pre">2</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>
+and <code class="docutils literal"><span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">1</span></code> are both false.</li>
+<li>Less-than-or-equal <code class="docutils literal"><span class="pre">&lt;=</span></code> tests if the right-hand side is at least as big as
+the left-hand side: <code class="docutils literal"><span class="pre">1</span> <span class="pre">&lt;=</span> <span class="pre">2</span></code> and <code class="docutils literal"><span class="pre">1</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code> are <code class="docutils literal"><span class="pre">true</span></code>, while <code class="docutils literal"><span class="pre">2</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code>
+is not.</li>
+<li>Greater-than <code class="docutils literal"><span class="pre">&gt;</span></code> tests if the left-hand side is greater than the
+right-hand side. E.g. <code class="docutils literal"><span class="pre">2</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> is true, while <code class="docutils literal"><span class="pre">1</span> <span class="pre">&gt;</span> <span class="pre">2</span></code> and <code class="docutils literal"><span class="pre">1</span> <span class="pre">&gt;</span> <span class="pre">1</span></code>
+aren&#8217;t. It always returns the opposite of <code class="docutils literal"><span class="pre">&lt;=</span></code> (and not of <code class="docutils literal"><span class="pre">&lt;</span></code>, as one
+might think; this is not a quirk, it&#8217;s perfectly, mathematically logical).</li>
+<li>Greater-than-or-equal <code class="docutils literal"><span class="pre">&gt;=</span></code> tests if the left-hand side is at least as big as
+the right-hand side: <code class="docutils literal"><span class="pre">2</span> <span class="pre">&gt;=</span> <span class="pre">1</span></code> and <code class="docutils literal"><span class="pre">1</span> <span class="pre">&gt;=</span> <span class="pre">1</span></code> are <code class="docutils literal"><span class="pre">true</span></code>, while <code class="docutils literal"><span class="pre">1</span> <span class="pre">&gt;=</span> <span class="pre">2</span></code>
+is not. It always returns the opposite of <code class="docutils literal"><span class="pre">&lt;</span></code>.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Don&#8217;t confuse the equality test operator <code class="docutils literal"><span class="pre">==</span></code> with the assignment
+operator <code class="docutils literal"><span class="pre">=</span></code> which is written with just a single equals sign. Often, both
+will compile because all basic types can be converted to booleans (<code class="docutils literal"><span class="pre">true</span></code>
+when not equal to zero) and <code class="docutils literal"><span class="pre">=</span></code> returns the assigned-to variable. The
+following will always print <code class="docutils literal"><span class="pre">1</span></code> and set <code class="docutils literal"><span class="pre">a</span></code> to <code class="docutils literal"><span class="pre">1</span></code> (the integer
+value of <code class="docutils literal"><span class="pre">true</span></code>):</p>
+<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">42</span> <span class="o">||</span> <span class="n">some_condition</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Be careful when comparing floating point values for equality!</p>
+<p class="last">Due to their inexactness, this can have unexpected results.  The usual way to
+deal with this (if you cannot avoid equality comparison) is to check if the
+difference between two numbers is below a certain threshold (e.g. <code class="docutils literal"><span class="pre">0.00001</span></code>)
+instead.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Comparison operators can&#8217;t be chained. While mathematically e.g.
+the expression <span class="math">\(0 &lt; x &lt; m\)</span> is true iff <span class="math">\(x\)</span> is between <span class="math">\(0\)</span>
+and <span class="math">\(m\)</span> exclusively, in C++ <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">m</span></code> would compare the boolean
+result of the expression <code class="docutils literal"><span class="pre">0</span> <span class="pre">&lt;</span> <span class="pre">x</span></code> to <code class="docutils literal"><span class="pre">m</span></code>. Sadly, due to <code class="docutils literal"><span class="pre">bool</span></code> being
+convertible to (other) numeric types, this and similar expressions compile
+(with a warning you would hopefully have enabled and notice!) but certainly
+dont&#8217;t do what you want.</p>
+</div>
+<p>This example program let&#8217;s you enter two numbers and outputs the results of all
+comparison operators on them as a table:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Get numbers from user:</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter x: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter y: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">y</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="c1">// Test equality:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x == y? &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x != y? &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="c1">// Print relation table:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Relation: &lt;   &lt;=  &gt;   &gt;=</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;------------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x OP y? | &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;   &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;   &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;   &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;y OP x? | &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;   &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;   &quot;</span>
+              <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;   &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example output for inputs x = 1 and y = 2:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Enter x: 1
+Enter y: 2
+
+x == y? 0
+x != y? 1
+
+Relation: &lt;   &lt;=  &gt;   &gt;=
+------------------------
+x OP y? | 1   1   0   0
+y OP x? | 0   0   1   1
+</pre></div>
+</div>
+<p>Example output for x and y both 1:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Enter x: 1
+Enter y: 1
+
+x == y? 1
+x != y? 0
+
+Relation: &lt;   &lt;=  &gt;   &gt;=
+------------------------
+x OP y? | 0   1   0   1
+y OP x? | 0   1   0   1
+</pre></div>
+</div>
+</div>
+<div class="section" id="mixed-expressions-and-more-on-operators">
+<h2>Mixed expressions and more on operators<a class="headerlink" href="#mixed-expressions-and-more-on-operators" title="Permalink to this headline">¶</a></h2>
+<p>Before we go on with using Booleans to influence which parts of our programs
+execute, you should know some more things about operators and expressions.</p>
+<p>It is entirely possible and often useful do arithmetic calculations in
+expressions with comparison operators and use logical connectives on their
+Boolean results:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">monster_level</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">player_level</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter your level: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">player_level</span><span class="p">;</span>
+    
+    <span class="kt">int</span> <span class="n">sword_strength</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter your sword&#39;s strength: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">sword_strength</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">is_player_in_god_mode</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Are you a cheater? &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">is_player_in_god_mode</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">winning</span> <span class="o">=</span> <span class="n">is_player_in_god_mode</span>
+                   <span class="o">||</span> <span class="n">player_level</span> <span class="o">+</span> <span class="n">sword_strength</span> <span class="o">&gt;</span> <span class="n">monster_level</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;You beat the monster: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">winning</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Example output with player level 5 and sword strength 6 (no cheating):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Enter your level: 5
+Enter your sword&#39;s strength: 6
+Are you a cheater? 0
+You beat the monster: 0
+</pre></div>
+</div>
+<p>Note that operators are evaluated in this order:</p>
+<ol class="arabic simple">
+<li>Unary operators (unary <code class="docutils literal"><span class="pre">-</span></code> and <code class="docutils literal"><span class="pre">!</span></code>)</li>
+<li>Arithmetic operators (first <code class="docutils literal"><span class="pre">*</span></code>, <code class="docutils literal"><span class="pre">/</span></code> and <code class="docutils literal"><span class="pre">%</span></code> then <code class="docutils literal"><span class="pre">+</span></code> and <code class="docutils literal"><span class="pre">-</span></code>)</li>
+<li>“Input and output” operators (<code class="docutils literal"><span class="pre">&gt;&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;&lt;</span></code>)</li>
+<li>Comparison operators (first <code class="docutils literal"><span class="pre">&lt;</span></code>, <code class="docutils literal"><span class="pre">&lt;=</span></code>, <code class="docutils literal"><span class="pre">&gt;</span></code> and <code class="docutils literal"><span class="pre">&gt;=</span></code>
+then <code class="docutils literal"><span class="pre">==</span></code> and <code class="docutils literal"><span class="pre">!=</span></code>)</li>
+<li>Logical connectives (first <code class="docutils literal"><span class="pre">&amp;&amp;</span></code>, then <code class="docutils literal"><span class="pre">||</span></code>)</li>
+<li>Ternary conditional operator <code class="docutils literal"><span class="pre">?</span> <span class="pre">:</span></code> (see <a class="reference internal" href="#proc-logic-ternary"><span class="std std-ref">later section</span></a>)</li>
+<li>Assignment operator (<code class="docutils literal"><span class="pre">=</span></code>) and compound assignment operators (<code class="docutils literal"><span class="pre">+=</span></code>,
+<code class="docutils literal"><span class="pre">-=</span></code>, <code class="docutils literal"><span class="pre">*=</span></code>, <code class="docutils literal"><span class="pre">/=</span></code> and <code class="docutils literal"><span class="pre">%=</span></code>)</li>
+</ol>
+<p>That is, the initialization expression of <code class="docutils literal"><span class="pre">winning</span></code> has the same meaning as</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">is_player_in_god_mode</span>
+<span class="o">||</span> <span class="p">((</span><span class="n">player_level</span> <span class="o">+</span> <span class="n">sword_strength</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">monster_level</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>C++&#8217;s order of operator evaluation is intended to allow omitting parentheses in
+most cases; however, I recommend using better too many than too few parentheses:
+not everyone can always correctly remember the order of operator evaluation and
+parentheses make the order of evaluation unambiguous to the reader.</p>
+<p>How early an operator is evaluated in relation to other operators is a property
+that has its own name: the <em class="dfn">precedence</em> (level) of an operator. The higher
+the level, the earlier an operator is evaluated.</p>
+<div class="section" id="operator-associativity-and-multi-assignment">
+<h3>Operator associativity and “multi-assignment”<a class="headerlink" href="#operator-associativity-and-multi-assignment" title="Permalink to this headline">¶</a></h3>
+<p>As the complement to its precedence, there is also the <em class="dfn">associativity</em> of
+a binary operator: It tells you in which order operators of the same
+precedence level are evaluated (thus all operators of the same precedence
+level must have the same associativity). Most operators we know yet are
+left-associative; that is they are evaluated from left to right. For example
+the expression <code class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">y</span> <span class="pre">-</span> <span class="pre">z</span></code> is evaluated as <code class="docutils literal"><span class="pre">(x</span> <span class="pre">-</span> <span class="pre">y)</span> <span class="pre">-</span> <span class="pre">z</span></code>. If <code class="docutils literal"><span class="pre">-</span></code> was
+right-associative, this expression would be evaluated as <code class="docutils literal"><span class="pre">x</span> <span class="pre">-</span> <span class="pre">(y</span> <span class="pre">-</span> <span class="pre">z)</span></code>.</p>
+<p>The only right-associative operators we have seen until now are the assignment
+operators. Thus the expression <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">z</span></code> is evaluated as <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">(y</span> <span class="pre">=</span> <span class="pre">z)</span></code>.
+What does it mean?</p>
+<p>The assignment operator does two things (in this order): first, it (obviously)
+assigns the right-hand side operand to the variable on the left-hand side. And
+second, it returns the assigned-to variable. Thus <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">z;</span></code> is the same as
+<code class="docutils literal"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">z;</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">y;</span></code>: <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> both get the value of <code class="docutils literal"><span class="pre">z</span></code>. If <code class="docutils literal"><span class="pre">=</span></code> was
+left-associative, <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">z</span></code> would be evaluated as <code class="docutils literal"><span class="pre">(x</span> <span class="pre">=</span> <span class="pre">y)</span> <span class="pre">=</span> <span class="pre">z</span></code>, which is
+the same as <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y;</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">z;</span></code>, leaving <code class="docutils literal"><span class="pre">y</span></code> unchanged and assigning to <code class="docutils literal"><span class="pre">x</span></code>
+twice in a row. Fortunately, this is not the case. You can thus use statements
+of the form</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="cm">/* = … */</span> <span class="o">=</span> <span class="n">z</span> <span class="o">=</span> <span class="n">some_expression</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>to assign the value <code class="docutils literal"><span class="pre">some_expression</span></code> to all of the variables <code class="docutils literal"><span class="pre">a</span></code> through
+<code class="docutils literal"><span class="pre">z</span></code>.</p>
+<p>The same that has been said about <code class="docutils literal"><span class="pre">=</span></code> also applies to the compound assignment
+operators <code class="docutils literal"><span class="pre">+=</span></code>, <code class="docutils literal"><span class="pre">-=</span></code>, <code class="docutils literal"><span class="pre">*=</span></code>, <code class="docutils literal"><span class="pre">/=</span></code> and <code class="docutils literal"><span class="pre">%=</span></code>. However, while <code class="docutils literal"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">b</span> <span class="pre">=</span>
+<span class="pre">c</span></code> has an intuitive and easy-to-read meaning, <code class="docutils literal"><span class="pre">a</span> <span class="pre">+=</span> <span class="pre">b</span> <span class="pre">+=</span> <span class="pre">c</span></code> does not. I thus
+recommend using either one or multiple “simple” assignment operators <code class="docutils literal"><span class="pre">=</span></code> or
+only one compound assignment operator.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you should ever come across a situation where the multiple compound
+assignments would make the code a lot shorter, this would be a good
+opportunity for a comment, like:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Calculate a1 as the sum of a1..a9;</span>
+<span class="c1">// ai will contain the intermediate value a9 + a 8 + ... + ai</span>
+<span class="n">a1</span> <span class="o">+=</span> <span class="n">a2</span> <span class="o">+=</span> <span class="n">a3</span> <span class="o">+=</span> <span class="n">a4</span> <span class="o">+=</span> <span class="n">a5</span> <span class="o">+=</span> <span class="n">a6</span> <span class="o">+=</span> <span class="n">a7</span> <span class="o">+=</span> <span class="n">a8</span> <span class="o">+=</span> <span class="n">a9</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="last">However, the above would most certainly be better written using two concepts
+we will cover later, namely loops and arrays.</p>
+</div>
+</div>
+<div class="section" id="background-the-input-output-operators">
+<span id="proc-logic-io"></span><h3>Background: The input/output operators (<code class="docutils literal"><span class="pre">&gt;&gt;</span></code>/<code class="docutils literal"><span class="pre">&lt;&lt;</span></code>)<a class="headerlink" href="#background-the-input-output-operators" title="Permalink to this headline">¶</a></h3>
+<p>The statement</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>consists solely of an expression: The <code class="docutils literal"><span class="pre">&lt;&lt;</span></code>s are the operators and
+<code class="docutils literal"><span class="pre">std::cout</span></code>, <code class="docutils literal"><span class="pre">&quot;x</span> <span class="pre">=</span> <span class="pre">&quot;</span></code>, <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">&quot;\n&quot;</span></code> are the operands. Because <code class="docutils literal"><span class="pre">&lt;&lt;</span></code> is
+left-associative, this expression means the same as</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">((</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x = &quot;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The trick here is that <code class="docutils literal"><span class="pre">std::cout</span></code> is an object of a special type (a
+<code class="docutils literal"><span class="pre">std::ostream</span></code>, i.e. output stream <a class="footnote-reference" href="#stream" id="id2">[2]</a>) for which the <code class="docutils literal"><span class="pre">&lt;&lt;</span></code> is defined
+as “Output the ritht-hand side operand (on the stream on the left-hand side) and
+then return the left-hand side”. Thus, the expression <code class="docutils literal"><span class="pre">std::cout</span> <span class="pre">&lt;&lt;</span> <span class="pre">&quot;x</span> <span class="pre">=</span> <span class="pre">&quot;</span></code>
+returns <code class="docutils literal"><span class="pre">std::cout</span></code> after printing <code class="docutils literal"><span class="pre">&quot;x</span> <span class="pre">=</span> <span class="pre">&quot;</span></code>, and what is left of the
+original expression is equivalent to</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>this process continues with <code class="docutils literal"><span class="pre">std::cout</span> <span class="pre">&lt;&lt;</span> <span class="pre">x</span></code> returning <code class="docutils literal"><span class="pre">std::cout</span></code> (after
+printing <code class="docutils literal"><span class="pre">x</span></code>&#8216; value) leaving just</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This prints the linebreak and then returns <code class="docutils literal"><span class="pre">std::cout</span></code> again, but this time
+the expression&#8217;s value is not used, which is legal in C++: you can even write
+statements like <code class="docutils literal"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2;</span></code> as-is in your source code and it will compile and do
+nothing (this is one more thing where (at least some) compilers can warn you;
+more often than not, such pointless statements result from typing mistakes or
+copy &amp; paste errors).</p>
+<p>Analogously the same applies to <code class="docutils literal"><span class="pre">std::cin</span></code> (which is of type
+<code class="docutils literal"><span class="pre">std::istreaam</span></code>, i.e. input stream) and the <code class="docutils literal"><span class="pre">&gt;&gt;</span></code> operator; that is you can
+read more than one variable in one expression (and thus statement), like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter the x and y coordinates: &quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-ternary-conditional-operator">
+<span id="proc-logic-ternary"></span><h2>The ternary conditional operator <code class="docutils literal"><span class="pre">?</span> <span class="pre">:</span></code><a class="headerlink" href="#the-ternary-conditional-operator" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s start with an example program that uses the ternary operator:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="k">const</span> <span class="n">correct_pin</span> <span class="o">=</span> <span class="mi">1234</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="n">pin</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter PIN: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">pin</span><span class="p">;</span>
+<span class="hll">    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">pin</span> <span class="o">==</span> <span class="n">correct_pin</span> <span class="o">?</span> <span class="s">&quot;OK&quot;</span> <span class="o">:</span> <span class="s">&quot;Invalid!&quot;</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Example outputs:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Enter PIN: 1234
+OK
+</pre></div>
+</div>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Enter PIN: 2334
+Invalid!
+</pre></div>
+</div>
+<p>That is, the ternary operator has the following syntax:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">boolean_expression</span> <span class="o">?</span> <span class="nl">true_expression</span> <span class="p">:</span> <span class="n">false_expression</span>
+</pre></div>
+</div>
+<p>In fact <em class="dfn">ternary</em> means just that the operator has three operands (the
+succession is thus unary: 1, binary: 2, ternary: 3 operands) ‒ this is an
+unique property in C++. The operator works as follows:</p>
+<p>First, evaluate <code class="docutils literal"><span class="pre">boolean_expression</span></code>. Then, if it was true, evaluate and yield
+<code class="docutils literal"><span class="pre">true_expression</span></code>. Otherwise evaluate and yield <code class="docutils literal"><span class="pre">false_expression</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">true_expression</span></code> and <code class="docutils literal"><span class="pre">false_expression</span></code> must thus be convertible to a
+common type. For numbers the same rules as for the arithmetic operators apply,
+e.g. <code class="docutils literal"><span class="pre">condition</span> <span class="pre">?</span> <span class="pre">3</span> <span class="pre">:</span> <span class="pre">0.4</span></code> will have the type <code class="docutils literal"><span class="pre">double</span></code>; it does not matter
+which value gets actually selected by <code class="docutils literal"><span class="pre">condition</span></code> since, as you already know,
+types are determined at compile time.</p>
+<p>The <code class="docutils literal"><span class="pre">?</span> <span class="pre">:</span></code> is right associative and it&#8217;s precedence is just above the
+assignment operators <a class="footnote-reference" href="#midpar" id="id3">[3]</a>. It is also right associative, so that
+expressions containing multiple <code class="docutils literal"><span class="pre">?:</span></code>s have a useful meaning. E.g. the
+following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">num_str</span> <span class="o">=</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="s">&quot;one&quot;</span> <span class="o">:</span>
+               <span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">?</span> <span class="s">&quot;two&quot;</span> <span class="o">:</span>
+               <span class="n">x</span> <span class="o">==</span> <span class="mi">3</span> <span class="o">?</span> <span class="s">&quot;three&quot;</span> <span class="o">:</span>
+                        <span class="s">&quot;many&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>means the same as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">num_str</span> <span class="o">=</span>  <span class="n">x</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="s">&quot;one&quot;</span> <span class="o">:</span>
+               <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">?</span> <span class="s">&quot;two&quot;</span> <span class="o">:</span>
+               <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">3</span> <span class="o">?</span> <span class="s">&quot;three&quot;</span> <span class="o">:</span>
+                         <span class="s">&quot;many&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>I.e. if <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">1</span></code> set <code class="docutils literal"><span class="pre">num_str</span></code> to <code class="docutils literal"><span class="pre">&quot;one&quot;</span></code>, otherwise if <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">2</span></code> to
+<code class="docutils literal"><span class="pre">&quot;two&quot;</span></code>, otherwise if <code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">3</span></code> to <code class="docutils literal"><span class="pre">&quot;three&quot;</span></code>, otherwise to <code class="docutils literal"><span class="pre">&quot;many&quot;</span></code>.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">bool</span></code>(ean) type can store the truth values <code class="docutils literal"><span class="pre">true</span></code> and <code class="docutils literal"><span class="pre">false</span></code>.</li>
+<li>For <code class="docutils literal"><span class="pre">std::cin</span></code> and <code class="docutils literal"><span class="pre">std::cout</span></code>, <code class="docutils literal"><span class="pre">true</span></code> is <code class="docutils literal"><span class="pre">1</span></code> and <code class="docutils literal"><span class="pre">false</span></code> is <code class="docutils literal"><span class="pre">0</span></code>.</li>
+<li>The unary logical negation operator <code class="docutils literal"><span class="pre">!</span></code> makes <code class="docutils literal"><span class="pre">true</span></code> <code class="docutils literal"><span class="pre">false</span></code> and vice
+versa.</li>
+<li>The and-operator <code class="docutils literal"><span class="pre">x</span> <span class="pre">&amp;&amp;</span> <span class="pre">y</span></code> yields <code class="docutils literal"><span class="pre">true</span></code> iff <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> are both
+<code class="docutils literal"><span class="pre">true</span></code>.</li>
+<li>The or-operator <code class="docutils literal"><span class="pre">x</span> <span class="pre">||</span> <span class="pre">y</span></code> yields <code class="docutils literal"><span class="pre">true</span></code> if <code class="docutils literal"><span class="pre">x</span></code> or <code class="docutils literal"><span class="pre">y</span></code> or both are
+<code class="docutils literal"><span class="pre">true</span></code>.</li>
+<li>Comparison operators take numeric values and yield boolean ones.</li>
+<li>The equality comparison operators are <code class="docutils literal"><span class="pre">==</span></code> for “equals” and <code class="docutils literal"><span class="pre">!=</span></code> for “not
+equals” (≠). Don&#8217;t confuse equality comparison <code class="docutils literal"><span class="pre">==</span></code> and assignment <code class="docutils literal"><span class="pre">=</span></code>!</li>
+<li>The relational comparison operators are <code class="docutils literal"><span class="pre">&lt;</span></code> (less-than), <code class="docutils literal"><span class="pre">&gt;</span></code>
+(greater-than), <code class="docutils literal"><span class="pre">&lt;=</span></code> (less-than-or-equal) and
+<code class="docutils literal"><span class="pre">&gt;=</span></code> (greater-than-or-equal).</li>
+<li>Operators are evaluated in order of their precedence. Operators of the same
+precedence are evaluated according to their associativity (left or right).</li>
+<li><code class="docutils literal"><span class="pre">=</span></code> can be used multiple times in the same expression to assign multiple
+variables the same value (e.g. <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">42</span></code>).</li>
+<li>The ternary conditional operator <code class="docutils literal"><span class="pre">c</span> <span class="pre">?</span> <span class="pre">t</span> <span class="pre">:</span> <span class="pre">f</span></code> evaluates to <code class="docutils literal"><span class="pre">t</span></code> if <code class="docutils literal"><span class="pre">c</span></code> is
+<code class="docutils literal"><span class="pre">true</span></code> and to <code class="docutils literal"><span class="pre">f</span></code> otherwise. It is right associative and can thus be
+composed like <code class="docutils literal"><span class="pre">c1</span> <span class="pre">?</span> <span class="pre">t1</span> <span class="pre">:</span> <span class="pre">c2</span> <span class="pre">?</span> <span class="pre">t2</span> <span class="pre">:</span> <span class="pre">f</span></code>, meaning <code class="docutils literal"><span class="pre">t1</span></code> if <code class="docutils literal"><span class="pre">c1</span></code>, otherwise
+<code class="docutils literal"><span class="pre">t2</span></code> if <code class="docutils literal"><span class="pre">c2</span></code>, otherwise <code class="docutils literal"><span class="pre">f</span></code>.</li>
+</ul>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="iff" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The phrase “if and only if” is so common in mathematics and logic
+that it is shortened to the single word <em class="dfn">iff</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="stream" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>You can imagine a stream as a pipeline where you put data in at one
+end (e.g. your program or the keyboard) and it comes out at the other end
+(e.g. the screen or in the variable given to <code class="docutils literal"><span class="pre">std::cin</span></code>).</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="midpar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>However, in <code class="docutils literal"><span class="pre">c</span> <span class="pre">?</span> <span class="pre">t</span> <span class="pre">:</span> <span class="pre">f</span></code> the <code class="docutils literal"><span class="pre">t</span></code> is “parenthesized” between the
+<code class="docutils literal"><span class="pre">?</span></code> and the <code class="docutils literal"><span class="pre">:</span></code>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Logic and more on operators</a><ul>
+<li><a class="reference internal" href="#the-bool-type">The <code class="docutils literal"><span class="pre">bool</span></code> type</a></li>
+<li><a class="reference internal" href="#calculating-with-booleans">“Calculating” with Booleans</a></li>
+<li><a class="reference internal" href="#comparison-operators">Comparison operators</a></li>
+<li><a class="reference internal" href="#mixed-expressions-and-more-on-operators">Mixed expressions and more on operators</a><ul>
+<li><a class="reference internal" href="#operator-associativity-and-multi-assignment">Operator associativity and “multi-assignment”</a></li>
+<li><a class="reference internal" href="#background-the-input-output-operators">Background: The input/output operators (<code class="docutils literal"><span class="pre">&gt;&gt;</span></code>/<code class="docutils literal"><span class="pre">&lt;&lt;</span></code>)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-ternary-conditional-operator">The ternary conditional operator <code class="docutils literal"><span class="pre">?</span> <span class="pre">:</span></code></a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="control-flow.html" title="Control flow"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="types-and-vars.html" title="Types and Variables"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/proc/logic.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

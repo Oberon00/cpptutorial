@@ -1,0 +1,1325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Functions &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="../_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="../index.html" />
+    <link rel="up" title="The Basics: Procedural programming" href="index.html" />
+    <link rel="next" title="Defining new types" href="user-types.html" />
+    <link rel="prev" title="Control flow" href="control-flow.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="user-types.html" title="Defining new types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="control-flow.html" title="Control flow"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="functions">
+<span id="proc-functions"></span><h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<p><em class="dfn">Functions</em>, in some form, are the prime abstraction mechanism of all programming
+languages. They are also called procedures, (sub-)routines or, in some cases,
+methods. With functions, you can name a piece of code and use that name to
+execute the code in multiple places in your program. To make this mechanism even
+more usable, the code in functions can receive values that are specified by the
+user of the function and return a value that can be utilized by the user.</p>
+<div class="section" id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>The following program defines and uses a function called <code class="docutils literal"><span class="pre">print_sepline</span></code> that
+prints a separator line to <code class="docutils literal"><span class="pre">std::cout</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">print_sepline</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">sep_char</span> <span class="o">=</span> <span class="sc">&#39;-&#39;</span><span class="p">;</span>
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">sep_len</span> <span class="o">=</span> <span class="mi">60u</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sep_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sep_char</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Above separator lines.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">print_sepline</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Between separator lines.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="n">print_sepline</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Below separator lines.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The program&#8217;s output is:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Above separator lines.
+------------------------------------------------------------
+Between separator lines.
+------------------------------------------------------------
+Below separator lines.
+</pre></div>
+</div>
+<p>The first new thing is the definition of the function. It start with the
+functions head:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">print_sepline</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This means that we want to define a function that returns nothing (<code class="docutils literal"><span class="pre">void</span></code>),
+is called <code class="docutils literal"><span class="pre">print_sepline</span></code> and takes no input. (If this reminds you of <code class="docutils literal"><span class="pre">int</span>
+<span class="pre">main()</span></code>, you&#8217;re completely right, but hold on until we cover the specialities
+of the <code class="docutils literal"><span class="pre">main</span></code> function.) The rules for function names are the same as for
+variable names. In practice, function names should be verbs while
+variable names should be nouns.</p>
+<p>Next, there is the function&#8217;s <em class="dfn">body</em>, enclosed in curly braces <code class="docutils literal"><span class="pre">{}</span></code>.
+These are the statements that get executed when the function is <em class="dfn">called</em>.
+There are two such calls in the main program, looking like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">print_sepline</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>The empty parentheses discriminate them from ordinary references to
+variables.</p>
+<p id="proc-func-retaddr">What happens when you call a function? First the exact location of the current
+processor instruction is remembered as the <em class="dfn">return address</em>. Then execution
+jumps to the beginning of the function&#8217;s body. After executing it, the
+previously remembered return address is used to jump back and execution
+continues in the calling function (the main program, in the above example).</p>
+<p>One thing to note is that when execution jumps to the called function (the
+<em class="dfn">callee</em>) the calling function&#8217;s (the <em class="dfn">caller</em>&#8216;s) <a class="reference internal" href="control-flow.html#proc-ctrl-scope"><span class="std std-ref">scope</span></a> is left and the callee&#8217;s, is entered. Then, after completing
+the callee&#8217;s body, execution resumes in the callers scope. At runtime, this
+involves creating all variables defined inside the callee (reserving memory for
+them) when it is entered and destroying them (freeing the memory for them so
+that it can be reused later) when it exits (but not when it is just temporarily
+left for calling another function). This will be detailed further, when we also
+know about input parameters and return values.</p>
+</div>
+<div class="section" id="parameters-and-arguments">
+<h2>Parameters and arguments<a class="headerlink" href="#parameters-and-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Often, we do not want to do <em>exactly</em> the same thing multiple times but reuse a
+certain behaviour with some small variations. That&#8217;s where function parameters
+come in. For example, for <code class="docutils literal"><span class="pre">print_sepline</span></code> we could want to parametrize the
+length of the separator line and the character of which it is made. The
+following program demonstrates that:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="hll"><span class="kt">void</span> <span class="nf">print_sepline</span><span class="p">(</span><span class="kt">char</span> <span class="n">sep_char</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">sep_len</span><span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">sep_len</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">sep_char</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;First separator line:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="hll">    <span class="n">print_sepline</span><span class="p">(</span><span class="sc">&#39;=&#39;</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+</span>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Second separator line:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="hll">    <span class="n">print_sepline</span><span class="p">(</span><span class="sc">&#39;_&#39;</span><span class="p">,</span> <span class="mi">80</span> <span class="o">/</span> <span class="mi">4</span><span class="p">);</span>
+</span>
+    <span class="kt">char</span> <span class="n">sepline_char</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter separator character: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">sepline_char</span><span class="p">;</span>
+
+    <span class="kt">unsigned</span> <span class="n">sepline_length</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter length of separator line: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">sepline_length</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Your custom seperator line:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="hll">    <span class="n">print_sepline</span><span class="p">(</span><span class="n">sepline_char</span><span class="p">,</span> <span class="n">sepline_length</span><span class="p">);</span>
+</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Double the length:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="hll">    <span class="n">print_sepline</span><span class="p">(</span><span class="n">sepline_char</span><span class="p">,</span> <span class="n">sepline_length</span> <span class="o">*</span> <span class="mi">2</span><span class="p">);</span>
+</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Example output:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>First separator line:
+============================================================
+Second separator line:
+____________________
+Enter separator character: ~
+Enter length of separator line: 35
+Your custom separator line:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Double the length:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+</pre></div>
+</div>
+<p>Now <code class="docutils literal"><span class="pre">print_sepline</span></code> is defined as a function that takes two <em class="dfn">parameters</em>
+(also called <em class="dfn">formal parameters</em> or <em class="dfn">formal arguments</em>). These
+parameters, in this case the <code class="docutils literal"><span class="pre">char</span></code> parameter <code class="docutils literal"><span class="pre">sep_char</span></code> and the
+<code class="docutils literal"><span class="pre">unsigned</span></code> parameter <code class="docutils literal"><span class="pre">sep_len</span></code>, are like ordinary variables inside
+<code class="docutils literal"><span class="pre">print_sepline</span></code>, but they are not initialized inside this function but by the
+caller. This can easily be seen in the highlighted lines in <code class="docutils literal"><span class="pre">main</span></code> where the
+<em class="dfn">arguments</em> (also called <em class="dfn">actual arguments</em> or <em class="dfn">actual
+parameters</em>) for the parameters are supplied. These can be any expressions whose
+value can be converted to the parameter type. Which argument initializes which
+value is determined by the order. The first argument (in this case e.g.
+<code class="docutils literal"><span class="pre">'='</span></code>) initializes the first parameter (in this case <code class="docutils literal"><span class="pre">sep_char</span></code>), the second
+argument (in this case e.g. <code class="docutils literal"><span class="pre">60</span></code>) the second parameter (in this case
+<code class="docutils literal"><span class="pre">sep_len</span></code>) and so on.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Often you will find that people mix up the terms <em>parameter</em> and
+<em>argument</em> and use them like they were synonyms.</p>
+</div>
+<p>Note that parameters must always be explicitly typed, so <code class="docutils literal"><span class="pre">auto</span></code> can&#8217;t be used
+there. The reason is (mainly) that functions can be called from different places
+with arguments of different types, e.g.:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="k">auto</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span> <span class="c1">// auto invalid here!</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// int</span>
+    <span class="n">f</span><span class="p">(</span><span class="mi">1u</span><span class="p">);</span> <span class="c1">// unsigned</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="default-arguments">
+<span id="ssec-default-args"></span><h3>Default arguments<a class="headerlink" href="#default-arguments" title="Permalink to this headline">¶</a></h3>
+<p>A nice and simple feature of C++ are function default arguments. The
+<code class="docutils literal"><span class="pre">print_sepline</span></code> function is a good example: Probably we want to use the same
+separator line most of the time, and always needing to specify all parameters is
+cumbersome. To remedy this, we can define <code class="docutils literal"><span class="pre">print_sepline</span></code> as follows:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_sepline</span><span class="p">(</span><span class="kt">char</span> <span class="n">sep_char</span> <span class="o">=</span> <span class="sc">&#39;~&#39;</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">sep_len</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ... (as before)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we can can call the function like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">print_sepline</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>to print a line with 80 tildes (“~”). We can also specify the first argument to
+use defaults only for all arguments after that or we can just specify all
+arguments:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">print_sepline</span><span class="p">(</span><span class="sc">&#39;_&#39;</span><span class="p">);</span> <span class="c1">// 80 * &#39;_&#39;</span>
+<span class="n">print_sepline</span><span class="p">(</span><span class="sc">&#39;=&#39;</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span> <span class="c1">// 30 * &#39;=&#39;</span>
+</pre></div>
+</div>
+<p>If we concluded that there is no sensible default for <code class="docutils literal"><span class="pre">sep_char</span></code>, we could
+also have provided a default argument only for <code class="docutils literal"><span class="pre">sep_len</span></code> when defining
+<code class="docutils literal"><span class="pre">print_sepline</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_sepline</span><span class="p">(</span><span class="kt">char</span> <span class="n">sep_char</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">sep_len</span> <span class="o">=</span> <span class="mi">80</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>However, we could <em>not</em> define the function like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_sepline</span><span class="p">(</span><span class="kt">char</span> <span class="n">sep_char</span> <span class="o">=</span> <span class="sc">&#39;~&#39;</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">sep_len</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This would mean that the second argument must always be provided but the first
+can be left out but it is logically impossible to have a second argument without
+a first one. Thus, when a parameter has a default argument value, C++ requires
+all parameters after that to also have a default, i.e. the default arguments
+must always come at the end.</p>
+</div>
+<div class="section" id="pass-by-value">
+<h3>Pass by value<a class="headerlink" href="#pass-by-value" title="Permalink to this headline">¶</a></h3>
+<p>What does the following program print?</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;entered f: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;leaving f: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;entered g: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;leaving g: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;after f: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;after g: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Parameters of functions are, as said above, variables inside the callee that are
+initialized by the caller. This implies that the values the caller supplies must
+be copied to the variables of the callee, since any expression and not only
+variables can be used as arguments for the parameter variable. Thus, <code class="docutils literal"><span class="pre">f</span></code> and
+<code class="docutils literal"><span class="pre">g</span></code> in the program above only change their own copies of their arguments, but
+the <code class="docutils literal"><span class="pre">x</span></code> variable in <code class="docutils literal"><span class="pre">main</span></code> remains unchanged, leading to the output:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>entered f: 42
+leaving f: 23
+after f: 42
+entered g: 42
+leaving g: 23
+after g: 42
+</pre></div>
+</div>
+<p>It does not matter that the names of <code class="docutils literal"><span class="pre">g</span></code>&#8216;s parameter and the variable that is
+supplied as the argument expression match ‒ they are still distinct variables
+with their own memory locations.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Because only the values of the argument expression are passed to the
+callee and not a variable including memory location, the behavior described
+in this section is called <em class="dfn">pass by value</em>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="return-values">
+<h2>Return values<a class="headerlink" href="#return-values" title="Permalink to this headline">¶</a></h2>
+<p>Function cannot only receive arguments, they can also return a value. For
+example, the following program uses a function to compute the square of a
+number:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+
+<span class="kt">double</span> <span class="nf">sqr</span><span class="p">(</span><span class="kt">double</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">5.</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; squared: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sqr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; to the 4th power: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sqr</span><span class="p">(</span><span class="n">sqr</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="k">const</span> <span class="k">auto</span> <span class="n">pi</span> <span class="o">=</span> <span class="mf">3.14159265359</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">radius</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="s">&quot;area of circle with r=&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">r</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sqr</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">pi</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The return value&#8217;s type (here <code class="docutils literal"><span class="pre">double</span></code>) takes the place where formerly we have
+always written <code class="docutils literal"><span class="pre">void</span></code>. Inside the function, the <code class="docutils literal"><span class="pre">return</span></code> keyword is used to
+return the desired value. The syntax is <code class="samp docutils literal"><span class="pre">return</span> <em><span class="pre">expression</span></em></code>, where
+expression must have a type convertible to the specified return type. This then
+becomes the value that the caller receives: the function call (e.g. <code class="docutils literal"><span class="pre">sqr(n)</span></code>)
+can then be used anywhere in expressions, like a literal of the same type.</p>
+<p>Of course, a function with return value is not restricted to a single <code class="docutils literal"><span class="pre">return</span></code>
+statement. For example, we could put the calculation of the <a class="reference internal" href="control-flow.html#proc-ctrl-factorial"><span class="std std-ref">factorial</span></a> inside a function:</p>
+<div class="highlight-cpp" id="proc-func-factorial"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="nf">factorial</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1uLL</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1uLL</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">*=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="sidebar">
+<p class="first sidebar-title">Default argument expressions</p>
+<p>Interestingly, <a class="reference internal" href="#ssec-default-args"><span class="std std-ref">default arguments</span></a> are not
+restricted to simple literals. You can put in arbitrary expressions there,
+including function calls. For example if we had a function <code class="docutils literal"><span class="pre">console_width</span></code>
+that returned the width of the console window, we could declare the
+<code class="docutils literal"><span class="pre">print_sepline</span></code> function as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_sepline</span><span class="p">(</span><span class="kt">char</span> <span class="n">sep_char</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">sep_len</span> <span class="o">=</span> <span class="n">console_width</span><span class="p">())</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This might raise a question: When is <code class="docutils literal"><span class="pre">console_width()</span></code> actually called? The
+answer is that it is called every time <code class="docutils literal"><span class="pre">print_sepline</span></code> is called because the
+compiler processes default argument values by inserting the expression after
+the <code class="docutils literal"><span class="pre">=</span></code> into the function call. That is, when the compiler later sees a call
+like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">print_sepline</span><span class="p">(</span><span class="sc">&#39;+&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>this is transformed into:</p>
+<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="n">print_sepline</span><span class="p">(</span><span class="sc">&#39;+&#39;</span><span class="p">,</span> <span class="n">console_width</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="main-s-return-value">
+<h3><code class="docutils literal"><span class="pre">main</span></code>&#8216;s return value<a class="headerlink" href="#main-s-return-value" title="Permalink to this headline">¶</a></h3>
+<p>You might now wonder what&#8217;s up with the return value of <code class="docutils literal"><span class="pre">main</span></code> which should be
+an <code class="docutils literal"><span class="pre">int</span></code>. Why didn&#8217;t we have to return anything? And who gets to process this
+return value anyway?</p>
+<p>The return value of <code class="docutils literal"><span class="pre">main</span></code> is passed to the operating system. You can print
+it in the terminal/command prompt after running your program by typing <code class="docutils literal"><span class="pre">echo</span>
+<span class="pre">%ERRORLEVEL%</span></code> on Windows or <code class="docutils literal"><span class="pre">echo</span> <span class="pre">$?</span></code> on Linux. It is conventionally used to
+indicate success or failure (and sometimes the kind of error) of the program.
+Zero indicates success and any other value usually means failure. As for why we
+didn&#8217;t had to return anything from <code class="docutils literal"><span class="pre">main</span></code>: There is a special rule for this
+function that says that if you don&#8217;t return a value from <code class="docutils literal"><span class="pre">main</span></code>, zero is
+returned automatically. Indeed, if you want to indicate failure, you can return
+something different, or, if you like, you can also return zero manually.</p>
+</div>
+<div class="section" id="return-as-a-control-flow-statement">
+<h3><code class="docutils literal"><span class="pre">return</span></code> as a control flow statement<a class="headerlink" href="#return-as-a-control-flow-statement" title="Permalink to this headline">¶</a></h3>
+<p>Return can be used not only at the end of a function, but anywhere. It can also
+be used multiple times. Apart from returning a value for non-<code class="docutils literal"><span class="pre">void</span></code> functions,
+<code class="docutils literal"><span class="pre">return</span></code> is to functions what <code class="docutils literal"><span class="pre">break</span></code> is to loops (and to <code class="docutils literal"><span class="pre">switch</span></code>).
+For example, we could use <code class="docutils literal"><span class="pre">return</span></code> in <code class="docutils literal"><span class="pre">main</span></code> to abort the program on invalid
+input (See <a class="reference internal" href="control-flow.html#proc-ctrl-check-cin"><span class="std std-ref">Checking if std::cin succeeded</span></a>):</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter x: &quot;</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;E: Invalid number.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;E: x is zero.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Reciprocal: &quot;</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="c1">//return 0; // Inserted automatically by the compiler.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note the parantheses around <code class="docutils literal"><span class="pre">std::cin</span> <span class="pre">&gt;&gt;</span> <span class="pre">x</span></code>. If they were left
+out, the code would be evaluated as <code class="docutils literal"><span class="pre">(!std::cin)</span> <span class="pre">&gt;&gt;</span> <span class="pre">x</span></code>. Unfortunately, this
+is not a compiler error but has an undesired meaning (e.g. it leaves <code class="docutils literal"><span class="pre">x</span></code>
+uninitialized).</p>
+</div>
+<p>Another common usage of <code class="docutils literal"><span class="pre">return</span></code> is to return from a function as soon as you
+“found” something, e.g. in the following (inefficient) function <code class="docutils literal"><span class="pre">next_prime</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="nf">next_prime</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">start</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">max</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="n">start</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">max</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">is_prime</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="c1">// Left as an exercise to the reader.</span>
+            <span class="k">return</span> <span class="n">i</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// No prime found.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Without <code class="docutils literal"><span class="pre">return</span></code> we would have to use <code class="docutils literal"><span class="pre">break</span></code> (or, even more verbose, a
+boolean control variable) and define a result variable outside the loop, taking
+care that <code class="docutils literal"><span class="pre">0</span></code> is returned when no prime has been found.outside the loop,
+taking care that <code class="docutils literal"><span class="pre">0</span></code> is returned when no prime has been found.</p>
+<p><code class="docutils literal"><span class="pre">return</span></code> can also be used for the “guard pattern”, to return from a function
+as soon as you detect that a parameter is invalid:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="nf">print_quotient</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">,</span> <span class="kt">double</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">y</span> <span class="sc">&#39;=&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">/</span> <span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">return</span></code> can also be used in <code class="docutils literal"><span class="pre">void</span></code> functions, but of course you may not
+specify a value then. The following silly example demonstrates that:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Before return.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">42</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;After return.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Often you will hear that a function should have exactly one exit
+point, and thus no return except for one at the end. While it is certainly
+true that too many <code class="docutils literal"><span class="pre">return</span></code>s (and <code class="docutils literal"><span class="pre">break</span></code>s and <code class="docutils literal"><span class="pre">continue</span></code>s)
+obfuscate your code, I think that this applies even more to deeply nested
+<code class="docutils literal"><span class="pre">if</span></code>/<code class="docutils literal"><span class="pre">else</span></code> and extra control variables. A good way to avoid both is to
+break up a function into smaller functions so that e.g. wrapping half the
+function in a <code class="docutils literal"><span class="pre">if</span></code> is feasible.</p>
+</div>
+</div>
+</div>
+<div class="section" id="changing-parameters-and-references">
+<h2>Changing parameters and references<a class="headerlink" href="#changing-parameters-and-references" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pass-by-reference">
+<h3>Pass by reference<a class="headerlink" href="#pass-by-reference" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes you need to return more than one value, or want to change a parameter
+so that the change effects the variable that the caller passed (because your
+function would otherwise always be used like <code class="docutils literal"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">f(x)</span></code> anyway). That&#8217;s where
+reference parameters can be used. For example:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="hll"><span class="kt">void</span> <span class="nf">absolutize</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">)</span>
+</span><span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">v</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="o">-</span><span class="n">v</span><span class="p">;</span> <span class="c1">// Make v positive</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;x: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="n">absolutize</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;absolutized x: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To make a parameter a reference parameter, write a <code class="docutils literal"><span class="pre">&amp;</span></code> (ampersand) after the
+type. With a reference parameter, not a value but a reference to the passed
+<a class="reference internal" href="types-and-vars.html#proc-vars-obj"><span class="std std-ref">object</span></a> is passed (<em class="dfn">pass by reference</em>). This way,
+the arguments must not be arbitrary expressions but actual variables, or, more
+precisely, <em class="dfn">lvalues</em>. For example, you cannot call <code class="docutils literal"><span class="pre">absolutize(x</span> <span class="pre">+</span> <span class="pre">3)</span></code>
+since the <code class="docutils literal"><span class="pre">+</span></code> operator returns a <em class="dfn">rvalue</em>. The names lvalue and rvalue
+stem from the fact that a lvalue may appear on the left side of an assignment
+operator, while a rvalue may only appear only on the right side. This is also an
+intuitive way of distinguishing them: when looking at <code class="docutils literal"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">4</span></code> it should be
+immediately clear that this assignment makes no sense, so <code class="docutils literal"><span class="pre">absolutize(x</span> <span class="pre">+</span> <span class="pre">3)</span></code>
+does not make sense either. It is only logical that the rules for assignment and
+reference parameters are the same, since the special thing about reference
+parameters is that you can assign to them affecting the argument passed. You
+also cannot pass <code class="docutils literal"><span class="pre">const</span></code> variables as reference arguments, which makes sense
+when you think about it: If this was allowed, a “constant” could be changed by
+passing it to a function by reference.</p>
+<p>A use case for multiple return values could be a function that returns both the
+minimum and the maximum of its parameters:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">minmax</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">min</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">min</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">max</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">min</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+        <span class="n">max</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">14</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">;</span>
+    <span class="n">minmax</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Lower: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">lo</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Higher: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">hi</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition-task admonition" id="task-sorting-three-numbers-with-a-swap-function">
+<p class="first admonition-title">Task: Sorting three numbers with a swap function</p>
+<p>In <a class="reference internal" href="control-flow.html#t-sort3"><span class="std std-ref">a previous task</span></a>, you wrote a program to sort three
+numbers. Improve this program by writing a function that swaps two numbers
+and replace all manual swaps in the program with it. Think about:</p>
+<blockquote>
+<div><ul class="simple">
+<li>how to call the function that does the swapping</li>
+<li>what signature (arguments and return values) the function should have</li>
+</ul>
+</div></blockquote>
+<p>When you are done, evaluate the improvements:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Is the program shorter than the original? Or even longer?</li>
+<li>What about the readability of the program?</li>
+<li>What would change in your evaluation if you adapted the shorter program
+that swaps just three numbers instead?</li>
+</ul>
+</div></blockquote>
+<p class="taskref tasksolref last">(<a class="reference external" href="#task-sorting-three-numbers-with-a-swap-function-solution">Solution</a>)</p>
+</div>
+</div>
+<div class="section" id="reference-types">
+<h3>Reference types<a class="headerlink" href="#reference-types" title="Permalink to this headline">¶</a></h3>
+<p>In fact, the <code class="docutils literal"><span class="pre">&amp;</span></code> is a so called <em class="dfn">declarator</em>, meaning it can be
+attached to a type and “creates” a new type. That is, <code class="docutils literal"><span class="pre">int&amp;</span></code> is a type on it&#8217;s
+own, (slightly) distinct from plain <code class="docutils literal"><span class="pre">int</span></code>. This means that you can define
+variables of that type, but you must immediately initialize them with another
+variable:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kt">int</span><span class="o">&amp;</span> <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// rx and x refer to the same object (and thus memory location)</span>
+<span class="n">rx</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="c1">// Also affects x</span>
+<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="c1">// y is a new object whose value is initialized to x&#39;</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Only affects y</span>
+<span class="n">rx</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span> <span class="c1">// rx still refers to x, so rx and x are both set to 0.</span>
+</pre></div>
+</div>
+<p>You can also do that with <code class="docutils literal"><span class="pre">auto</span></code> by attaching the <code class="docutils literal"><span class="pre">&amp;</span></code> to it:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">auto</span><span class="o">&amp;</span> <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+<span class="c1">// …</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>There is no such thing as a reference to a reference:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">r2x</span> <span class="o">=</span> <span class="n">rx</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="last">is still just an ordinary reference to the same object as <code class="docutils literal"><span class="pre">rx</span></code>: <code class="docutils literal"><span class="pre">x</span></code>.</p>
+</div>
+<p>This can be useful in conjunction with <code class="docutils literal"><span class="pre">?:</span></code> to select a variable that should
+be changed:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="o">&amp;</span> <span class="n">r</span> <span class="o">=</span> <span class="n">c</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Now changing <code class="docutils literal"><span class="pre">r</span></code> will change <code class="docutils literal"><span class="pre">x</span></code> or <code class="docutils literal"><span class="pre">y</span></code>, depending on <code class="docutils literal"><span class="pre">c</span></code>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Do not return references to variables inside functions (including
+to non-reference parameters). For example, the following causes undefined
+behavior:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">f</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">somevar</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">somevar</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="o">&amp;</span> <span class="n">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">someparam</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">someparam</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p class="last">After <code class="docutils literal"><span class="pre">f</span></code> and <code class="docutils literal"><span class="pre">g</span></code> return, the memory for their variables is freed and/or
+reused so that the return value will refer to invalid memory or, worse, memory
+that now holds an entirely different object. Your compiler should warn you
+about this error.</p>
+</div>
+</div>
+</div>
+<div class="section" id="why-are-functions-useful">
+<h2>Why are functions useful?<a class="headerlink" href="#why-are-functions-useful" title="Permalink to this headline">¶</a></h2>
+<p>There are many problems you can (mostly) avoid by using functions:</p>
+<ul class="simple">
+<li>Having to write the same or nearly the same code over and over again (you
+write it once in a function and just call it multiple times)</li>
+<li>Having to read the same code over and over again (you read the function
+once).</li>
+<li>Having to fix the same problem or make the same improvement in several
+places in a program (you fix/improve the just the function).</li>
+<li>Having a huge <code class="docutils literal"><span class="pre">main()</span></code> function (you split it into multiple functions that
+are called from it).</li>
+<li>Having deeply nested control structures (you flatten them by splitting them
+into multiple functions).</li>
+<li>Having absolutely no idea what some piece of code does (with functions, the
+name should you give at least the basic idea).</li>
+</ul>
+</div>
+<div class="section" id="global-variables-and-why-you-should-not-use-them">
+<h2>Global variables and why you should not use them<a class="headerlink" href="#global-variables-and-why-you-should-not-use-them" title="Permalink to this headline">¶</a></h2>
+<p>Until now, we have only seen variables that were defined inside functions
+(including <code class="docutils literal"><span class="pre">main</span></code>). This makes them <em class="dfn">local variables</em>. The opposite are
+<em class="dfn">global variables</em> which are defined outside functions. Their scope extends
+from the definition to the end of the file and they can thus be accessed by all
+functions in this area. Global variables are usually a bad idea because</p>
+<ul class="simple">
+<li>If you find that your global variable has a unexpected value, you have to
+check all functions that can access it to find the cause.</li>
+<li>It hides the actual inputs and outputs of functions: Parameters and return
+values are always better than global variables.</li>
+</ul>
+<p>A bad example would be following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="n">g_sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">add_to_sum</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">g_sum</span> <span class="o">+=</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">double_sum</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">g_sum</span> <span class="o">*=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">add_to_sum</span><span class="p">(</span><span class="mi">32</span><span class="p">);</span>
+    <span class="n">double_sum</span><span class="p">();</span>
+    <span class="n">add_to_sum</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;sum = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">g_sum</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This would better be rewritten using reference parameters, and a local <code class="docutils literal"><span class="pre">sum</span></code>
+in <code class="docutils literal"><span class="pre">main</span></code>.</p>
+<p>However, having a global constant like π is usually no problem: The first of the
+aforementioned problem does not apply for any constant since a constant cannot
+be changed and the second does apply to constants like pi since a dependency on
+pi is more or less a dependency on “the reality”. In general however, deciding
+whether or not a global constant hides an input that should better be made
+explicit requires a bit of experience. A good rule of thumb is to ask the
+question: Is it ever possible that I need to have different constants/values for
+different calls in the same program? If you can answer this with true, you
+should definitely use a parameter.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">std::cout</span></code> and <code class="docutils literal"><span class="pre">std::cin</span></code> are global variables. Since the
+standard output and input stream to which they refer can exist only once per
+program and in many programs many functions will refer to them, this can be
+considered acceptable. However it is still annoying when some function you
+want to only return a value suddenly prints an error message to the screen
+instead of e.g. reporting the error to the caller using a special return
+value. This could not happen if <code class="docutils literal"><span class="pre">std::cout</span></code> was not globally available.</p>
+</div>
+</div>
+<div class="section" id="side-effects-and-their-order">
+<span id="sec-sideeffect"></span><h2>Side effects and their order<a class="headerlink" href="#side-effects-and-their-order" title="Permalink to this headline">¶</a></h2>
+<p>If you looked carefully at the functions with return values and the functions
+without one you may have noticed a fundamental difference: The functions with
+return value we wrote have no effect at all apart from returning a value. The
+<code class="docutils literal"><span class="pre">void</span></code> functions on the other hand did have an effect: They wrote to
+<code class="docutils literal"><span class="pre">std::cout</span></code>. Such <em class="dfn">side effects</em> could also include reading from
+<code class="docutils literal"><span class="pre">std::cin</span></code> or maybe playing a sound, rendering an image or changing a global
+variable or an reference parameter.</p>
+<p>Now there&#8217;s a gotcha in C++: If you call multiple functions in the same
+statement, the order in which they are executed is not necessarily defined. That
+is, for example in the stament:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>it is up to the compiler to decide whether to evaluate the call to <code class="docutils literal"><span class="pre">f</span></code> or to
+<code class="docutils literal"><span class="pre">g</span></code> first. This freedom for the compiler is one of the things that are pretty
+unique to C and C++ among today&#8217;s commonly used programming languages. It
+allows the compiler to generate more efficient code but also forces programmers
+to be careful about side effects. For example, if <code class="docutils literal"><span class="pre">f</span></code> and <code class="docutils literal"><span class="pre">g</span></code> above changed a
+global variable, the final value of that variable after the above statement is
+undefined: it might e.g. depend on the compiler and the compiler options. Also
+if <code class="docutils literal"><span class="pre">f</span></code> and <code class="docutils literal"><span class="pre">g</span></code> wrote to <code class="docutils literal"><span class="pre">std::cout</span></code>, this means that the order in which
+this output is written is undefined. If <code class="docutils literal"><span class="pre">x</span></code> was a reference parameter that was
+changed, it&#8217;s value would be undefined, and so on. In fact, you can even get
+yourself in trouble without using functions:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">/</span> <span class="o">++</span><span class="n">x</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The behaviour of this code is undefined: It depends on whether the compiler
+decides to emit the code for incrementing x or doubling it first. The culprit
+is, of course, that the <code class="docutils literal"><span class="pre">++</span></code> operator has the side effect of incrementing
+<code class="docutils literal"><span class="pre">x</span></code>.</p>
+<p>Other patterns to watch out for are</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(),</span> <span class="n">h</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(),</span> <span class="n">h</span><span class="p">(</span><span class="n">q</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>For the first, the following orders of evaluation are possible:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="n">h</span> <span class="n">f</span>
+<span class="n">h</span> <span class="n">g</span> <span class="n">f</span>
+</pre></div>
+</div>
+<p>and for the second one, the code has to be prepared for:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="n">q</span> <span class="n">h</span> <span class="n">f</span>
+<span class="n">q</span> <span class="n">h</span> <span class="n">g</span> <span class="n">f</span>
+<span class="n">q</span> <span class="n">g</span> <span class="n">h</span> <span class="n">f</span>
+</pre></div>
+</div>
+<p>Especially the last possibility is one that people often miss.</p>
+<p>To avoid these problems, you should stick to the following guidelines:</p>
+<ul class="simple">
+<li>As an implementor of functions: If a function returns a value that is meant to
+be used in a complex expression (i.e. something other than an success
+indicator or an error code) it should be side effect free.</li>
+<li>As a user of functions: If you call functions with side effects you should
+either call each in it&#8217;s own statement (saving the result in a variable), or
+make sure that the order of side effects does not matter (e.g. it would
+probably be irrelevant in which order <code class="docutils literal"><span class="pre">g</span></code> or <code class="docutils literal"><span class="pre">h</span></code> wrote to a log file).</li>
+</ul>
+<div class="section" id="short-circuit-evaluation-and">
+<h3>Short circuit evaluation and <code class="docutils literal"><span class="pre">?:</span></code><a class="headerlink" href="#short-circuit-evaluation-and" title="Permalink to this headline">¶</a></h3>
+<p>An exception to the rule that the order of evaluation within one expression is
+undefined is the conditional operator <code class="docutils literal"><span class="pre">?:</span></code>: It is guaranteed that the
+condition will be evaluated first and then only the selected expression will be
+evaluated, meaning that any side effects the other might have are not executed.</p>
+<p>Another exception is the so called <em class="dfn">short circuit</em> evaluation of logical
+and <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> and logical or <code class="docutils literal"><span class="pre">||</span></code>. Since in the expression <code class="docutils literal"><span class="pre">x</span> <span class="pre">&amp;&amp;</span> <span class="pre">y</span></code> the result
+can only be <code class="docutils literal"><span class="pre">false</span></code> if <code class="docutils literal"><span class="pre">x</span></code> is already <code class="docutils literal"><span class="pre">false</span></code>, <code class="docutils literal"><span class="pre">y</span></code> is not evaluated in
+that case. Similarly for <code class="docutils literal"><span class="pre">x</span> <span class="pre">||</span> <span class="pre">y</span></code>, if <code class="docutils literal"><span class="pre">x</span></code> is <code class="docutils literal"><span class="pre">true</span></code>, <code class="docutils literal"><span class="pre">y</span></code> needs not to be
+and is not evaluated. This means, for example, that the following will never
+cause a division by zero:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span>
+  <span class="c1">// Do something.</span>
+</pre></div>
+</div>
+<p>It also means that in expressions like <code class="docutils literal"><span class="pre">f()</span> <span class="pre">||</span> <span class="pre">g()</span></code> the only possible
+evaluation “orders” are <code class="docutils literal"><span class="pre">f</span> <span class="pre">g</span></code> and just <code class="docutils literal"><span class="pre">f</span></code>.</p>
+</div>
+</div>
+<div class="section" id="background-information-the-stack">
+<span id="proc-func-stack"></span><h2>Background Information: The stack<a class="headerlink" href="#background-information-the-stack" title="Permalink to this headline">¶</a></h2>
+<p>The main memory (<abbr title="Random Access Memory">RAM</abbr>) that your program sees is
+divided into three areas:</p>
+<ul class="simple">
+<li>The heap/free store, to which we will come later.</li>
+<li>The area in which global variables and constants are stored.</li>
+<li>The <em class="dfn">stack</em>, on which local variables and <a class="reference internal" href="#proc-func-retaddr"><span class="std std-ref">return addresses</span></a> are stored.</li>
+</ul>
+<p>We will take a closer look on the stack, because understanding the stack helps
+understanding how functions work.</p>
+<p>In general <em>a</em> stack is a collection of data objects that supports at least two
+operations:</p>
+<ul class="simple">
+<li>You can <em class="dfn">push</em> an object on the stack. This object then becomes the
+stack&#8217;s <em class="dfn">top</em>.</li>
+<li>You can <em class="dfn">pop</em> the top object from the stack, i.e. remove it.</li>
+</ul>
+<p>These operations give the stack its name because like e.g. a stack of books, you
+can only add things to and remove them from the top. A minimal stack often
+supports only access to the top element, but on <em>the</em> stack you can access (both
+read and write) any object. The data objects on the stack are local variables,
+return addresses and also return values of functions.</p>
+<p>Consider e.g. the factorial function, repeated here for your convenience:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="nf">factorial</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1uLL</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1uLL</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">*=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Let&#8217;s call this from a <code class="docutils literal"><span class="pre">main</span></code> like the following:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">4uLL</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">/</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The stack before calling <code class="docutils literal"><span class="pre">factorial</span></code> the first time might look like the
+following:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>undefined ← f2, top
+undefined ← fn
+4         ← n
+return address from main to operating system
+</pre></div>
+</div>
+<p>Note that I have only added the variable names after <code class="docutils literal"><span class="pre">←</span></code> to make this easier
+to read: In reality, the stack contains only the plain values, nothing else.
+There really is a record of where the stack&#8217;s top currently is (called
+<em class="dfn">stack pointer</em>), but this is of course not on the stack itself but in a
+special memory area on the processor.</p>
+<p>Then, in order to call <code class="docutils literal"><span class="pre">factorial</span></code>, the return address, i.e. where it should
+continue afterwards is pushed. Note that this return address is more exact than
+to a single C++ statement, it contains <em>excactly</em> where to continue program
+execution after returning from the callee, which could be in the middle of
+evaluating an expression. In addition to the return address, the arguments are
+pushed, so the stack might then look like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>4 (argument to factorial) ← top
+return address to main
+undefined ← f2
+undefined ← fn
+4         ← n
+return address from main to operating system
+</pre></div>
+</div>
+<p>Then <code class="docutils literal"><span class="pre">factorial</span></code> is called. (One of) the first thing(s) <code class="docutils literal"><span class="pre">factorial</span></code> does is
+reserving stack space for its local variables, so the stack looks like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>undefined ← factorial/i, top
+undefined ← factorial/result
+4         ← factorial/n
+return address to main
+undefined ← main/f2
+undefined ← main/fn
+4         ← main/n
+return address from main to operating system
+</pre></div>
+</div>
+<p>Note that there are now not only the variables of <code class="docutils literal"><span class="pre">main</span></code> but simultaneously
+the ones from <code class="docutils literal"><span class="pre">factorial</span></code> on the stack. The part of a stack that belongs to a
+function is called its <em class="dfn">stack frame</em>. <code class="docutils literal"><span class="pre">factorial</span></code>&#8216;s stack frame extends
+from the top to the return address to main (inclusive) and <code class="docutils literal"><span class="pre">main</span></code>&#8216;s is
+everything below.</p>
+<p>Then, after returning, <code class="docutils literal"><span class="pre">main</span></code> is left with this stack:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>24 (factorial&#39;s return value) ← top
+undefined ← main/f2
+undefined ← main/fn
+4         ← main/n
+return address from main to operating system
+</pre></div>
+</div>
+<p>What <code class="docutils literal"><span class="pre">main</span></code> now does is assigning the return value to <code class="docutils literal"><span class="pre">fn</span></code> and then popping
+it:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>undefined ← main/f2, top
+24        ← main/fn
+4         ← main/n
+return address from main to operating system
+</pre></div>
+</div>
+<p>The same process repeats for the second call. Note, however, that of course the
+return address given to <code class="docutils literal"><span class="pre">factorial</span></code> is different from before, as is the
+argument and hence the return value.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This was a conceptual explanation of how the stack works. In practice,
+this is one area where the compiler might do lots of optimizations: For
+example, it often uses the memory that is directly on the CPU (the
+<em class="dfn">registers</em>) instead of the stack for local variables while a function is
+active (it has to save them to the stack before calling anything because the
+callee might use the registers too) or return values, or it uses the values
+returned directly as variables instead of copying the value and then popping
+the original. If you are interested, you migth want to research the keyword
+<a class="reference external" href="https://en.wikipedia.org/wiki/Calling_convention">calling convention</a>.</p>
+</div>
+<p>For reference parameters, not the value is pushed on the stack, but the
+address of the variable.</p>
+</div>
+<div class="section" id="recursion">
+<h2>Recursion<a class="headerlink" href="#recursion" title="Permalink to this headline">¶</a></h2>
+<p>An interesting programming technique using functions is <em class="dfn">recursion</em>.
+Recursion can be a confusing concept at first; a common joke is that in order to
+understand recursion, you must first understand recursion.</p>
+<p>The definition of recursion is rather simple: A function is <em class="dfn">recursive</em> if
+it calls itself.</p>
+<div class="section" id="a-simple-recursion-factorials">
+<h3>A simple recursion: Factorials<a class="headerlink" href="#a-simple-recursion-factorials" title="Permalink to this headline">¶</a></h3>
+<p>As an example, we might implement the <a class="reference internal" href="#proc-func-factorial"><span class="std std-ref">factorial function</span></a> using recursion:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="nf">factorial</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you have trouble reading this application of the <a class="reference internal" href="logic.html#proc-logic-ternary"><span class="std std-ref">ternary
+operator</span></a> <code class="docutils literal"><span class="pre">?:</span></code>, here is an alternative way to write
+the function&#8217;s body:</p>
+<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">else</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>For comparison, here is the body of the original factorial function:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">auto</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1uLL</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1uLL</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">*=</span> <span class="n">i</span><span class="p">;</span>
+<span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Obviously the recursive definition is much shorter, which is often an advantage
+of recursion. A disadvantage of recursion which probably hits you right now is
+that it can be harder to understand. So let&#8217;s examine step by step what happens
+for a call to <code class="docutils literal"><span class="pre">factorial(3)</span></code>:</p>
+<p>First, <code class="docutils literal"><span class="pre">factorial(3)</span></code> checks, if <code class="docutils literal"><span class="pre">n</span></code> is zero which is not the case, so the
+expression <code class="docutils literal"><span class="pre">n</span> <span class="pre">*</span> <span class="pre">factorial(n</span> <span class="pre">-</span> <span class="pre">1)</span></code> is evaluated instead, which is <code class="docutils literal"><span class="pre">3</span> <span class="pre">*</span>
+<span class="pre">factorial(2)</span></code>. In order to evaluate this expression, <code class="docutils literal"><span class="pre">factorial</span></code> gets called
+again, this time with the parameter <code class="docutils literal"><span class="pre">n</span></code> being <code class="docutils literal"><span class="pre">2</span></code>. Again, it checks for <code class="docutils literal"><span class="pre">n</span>
+<span class="pre">==</span> <span class="pre">0</span></code>, and again the check is false, and this time, <code class="docutils literal"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">factorial(1)</span></code> is
+evaluated. The same happens in <code class="docutils literal"><span class="pre">factorial(1)</span></code>, since <code class="docutils literal"><span class="pre">1</span></code> is still not equal
+to <code class="docutils literal"><span class="pre">0</span></code>. Only <code class="docutils literal"><span class="pre">factorial(0)</span></code> can finally calculate a result without relying
+on another call to <code class="docutils literal"><span class="pre">factorial</span></code>. This result <code class="docutils literal"><span class="pre">1</span></code> is now returned to
+<code class="docutils literal"><span class="pre">factorial(1)</span></code> which can now return <code class="docutils literal"><span class="pre">1</span> <span class="pre">*</span> <span class="pre">1</span></code>, which is <code class="docutils literal"><span class="pre">1</span></code> to
+<code class="docutils literal"><span class="pre">factorial(2)</span></code> which, again, happily returns <code class="docutils literal"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">1</span></code> = <code class="docutils literal"><span class="pre">2</span></code> and finally
+<code class="docutils literal"><span class="pre">factorial(3)</span></code> can return <code class="docutils literal"><span class="pre">3</span> <span class="pre">*</span> <span class="pre">2</span></code> = <code class="docutils literal"><span class="pre">6</span></code> to its caller.</p>
+<p>You see, from a technical perspective, a recursive function call is no different
+than any other function call. For each call, the return address, arguments and
+local variables (if any) are pushed on <a class="reference internal" href="#proc-func-stack"><span class="std std-ref">the stack</span></a>. So
+for example, before <code class="docutils literal"><span class="pre">factorial(0)</span></code> returns, the stack might look as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>0  ← factorial(0)/n, top
+return address to factorial(1)
+1  ← factorial(1)/n
+return address to factorial(2)
+2  ← factorial(2)/n
+return address to factorial(3)
+3  ← factorial(3)/n
+return address to factorial(3)&#39;s caller
+</pre></div>
+</div>
+<p>Of course, there is not really a function like <code class="docutils literal"><span class="pre">factorial(0)</span></code> or
+<code class="docutils literal"><span class="pre">factorial(2)</span></code>, there is only the <code class="docutils literal"><span class="pre">factorial(unsigned</span> <span class="pre">long</span> <span class="pre">long</span> <span class="pre">n)</span></code> we
+defined. In fact, all the return addresses to any <code class="docutils literal"><span class="pre">factorial(n)</span></code> above are
+exactly equal. What distinguishes e.g. <code class="docutils literal"><span class="pre">factorial(0)</span></code> from <code class="docutils literal"><span class="pre">factorial(2)</span></code> is
+only the value of the local variable <code class="docutils literal"><span class="pre">n</span></code>. Pushing otherwise redundant return
+addresses allows recursive calls to be treated in exactly the same way as
+any other function call.</p>
+<p>From the above stack, you can already see a disadvantage of recursion: It needs
+more space on the stack than an implementation using loops (an <em class="dfn">iterative</em>
+implementation). In fact, it does not even need just a constant amount of bytes
+more but the additional space it needs depends, in the case of <code class="docutils literal"><span class="pre">factorial(n)</span></code>
+on the input parameter <code class="docutils literal"><span class="pre">n</span></code>, while the iterative implementation always uses the
+same amount of stack space, regardless of <code class="docutils literal"><span class="pre">n</span></code>. Because the stack is usually
+limited too a far smaller size than the available RAM (e.g. just two Megabytes
+with MSVC&#8217;s default configuration), calling the recursive implementation of
+<code class="docutils literal"><span class="pre">factorial</span></code> with a too big number can lead to a <em class="dfn">stack overflow error</em>,
+that crashes the program <a class="footnote-reference" href="#factorialoverflow" id="id1">[1]</a>. Additionally, all the pushing
+and popping also takes time and so the function is also slower than the
+iterative variant.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A clever compiler may be able to optimize simple recursions like the
+above in such a way that the generated machine does not contain recursion
+anymore and is equivalent to an iterative implementation.</p>
+</div>
+<p>Of course, recursion also has advantages: For example, it is often closer to the
+mathematical definition of a function than a recursive implementation. For
+example, a common mathematical definition for the factorial of <span class="math">\(n\)</span>,
+<span class="math">\(n!\)</span> is:</p>
+<div class="math">
+\[\begin{split}0! &amp;= 1 \\
+n! &amp;= n \cdot (n - 1)!\end{split}\]</div>
+<p>This exactly matches the recursive definition. In the case of the factorial,
+there is also a mathematical definition that more closely matches the iterative
+implementation:</p>
+<div class="math">
+\[n! = \prod_{i=1}^{n}{i}\]</div>
+<p>The big pi <span class="math">\(\prod\)</span> is the mathematical product sign. The whole expression
+means “Take the product of all <span class="math">\(i\)</span> from <span class="math">\(i = 1\)</span> to <span class="math">\(n\)</span>”.
+However, there are functions for which there is only a recursive mathematical
+definition.</p>
+</div>
+<div class="section" id="a-more-complex-recursion-fibonacci-numbers">
+<h3>A more complex recursion: Fibonacci numbers<a class="headerlink" href="#a-more-complex-recursion-fibonacci-numbers" title="Permalink to this headline">¶</a></h3>
+<p>One of the more well known functions that have no simple non-recursive
+mathematical definitions is the function that returns the
+<span class="math">\(n\)</span>th number of the Fibonacci sequence. It is defined as:</p>
+<div class="math">
+\[\begin{split}\newcommand\fib{\operatorname{fib}}
+\fib(0) &amp;= 0 \\
+\fib(1) &amp;= 1 \\
+\fib(n) &amp;= \fib(n - 1) + \fib(n - 2)\end{split}\]</div>
+<p>This means that each Fibonacci number is the sum of its two predecessors,
+yielding the following sequence of numbers:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>n        0  1  2  3  4  5  6   7  …
+fib(n)   0  1  1  2  3  5  8  13  …
+</pre></div>
+</div>
+<p>It is straightforward to translate the mathematical definition into C++:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="nf">fib_recursive</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span>
+           <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span>
+               <span class="n">fib_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib_recursive</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Although this was very easy to come up with and is very easy to read if you
+understand the mathematical definition, it is also terribly inefficient, since
+we now have not only one but <em>two</em> recursive calls that are always executed
+(except for the base cases <code class="docutils literal"><span class="pre">0</span></code> and <code class="docutils literal"><span class="pre">1</span></code>). Consider which calls have to be
+made for e.g. <code class="docutils literal"><span class="pre">fib_recursive(4)</span></code>:</p>
+<div class="figure">
+<p><img src="../_images/tikz-8d247ea0d8e483bb4a4c43d05df4a4c457952ace.png" alt="[level 1/.style={sibling distance=10em},level 2/.style={sibling distance=5em}]
+
+\newcommand\fib[1]{\texttt{fib(#1)}}
+
+\node{\fib{4}}
+  child{node{\fib{3}}
+    child{node{\fib{2}}
+      child{node{\fib{1}}}
+      child{node{\fib{0}}}}
+    child{node{\fib{1}}}}
+  child{node{\fib{2}}
+    child{node{\fib{1}}}
+    child{node{\fib{0}}}};" /></p>
+<p class="caption">Calls made for fib_recursive(4) (called just fib here)</p></div><p>In total, <code class="docutils literal"><span class="pre">fib</span></code> is called 9 times. Even worse: if you increase <code class="docutils literal"><span class="pre">n</span></code> just by
+one, the number of <code class="docutils literal"><span class="pre">fib</span></code> calls nearly doubles. <a class="footnote-reference" href="#fibcomplexity" id="id2">[2]</a> Try, e.g.,
+computing <code class="docutils literal"><span class="pre">fib(45)</span></code> and notice how long it takes. Also, if <span class="math">\(s\)</span> bytes of
+stack space are needed to compute <code class="docutils literal"><span class="pre">fib(0)</span></code> or <code class="docutils literal"><span class="pre">fib(1)</span></code>, then to compute
+<code class="docutils literal"><span class="pre">fib(n)</span></code>, <span class="math">\(s \cdot n\)</span> bytes of stack space are needed.</p>
+<p>Fortunately, there is a much faster, iterative way. As was already said, each
+Fibonacci number is the sum of its two predecessors. So we only need to compute
+and store these two to compute the next one:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="nf">fib_iterative</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">current</span> <span class="o">=</span> <span class="mi">1u</span><span class="p">,</span> <span class="n">previous</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1u</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="n">previous</span><span class="p">;</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This way, it takes only circa <code class="docutils literal"><span class="pre">n</span></code> steps to compute the <code class="docutils literal"><span class="pre">n</span></code>th Fibonacci
+number, and only a constant amount of stack space. I think that
+<code class="docutils literal"><span class="pre">fib_iterative</span></code> is harder to read and come up with than <code class="docutils literal"><span class="pre">fib_recursive</span></code>. It
+is also much harder to check if the above is correct. For <code class="docutils literal"><span class="pre">fib_recursive</span></code> I
+only need to check that the translation from the mathematical definition to C++
+is correct, for <code class="docutils literal"><span class="pre">fib_iterative</span></code> I would only be assured of its correctness
+when I tested it for some values.</p>
+<p>However, we can significantly improve the efficiency of the recursion by
+implementing it the same way as the loop above, i.e. by computing bottom-up
+starting with <span class="math">\(\operatorname{fib}(0)\)</span> instead of top-down starting with
+<span class="math">\(\operatorname{fib}(1)\)</span>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="nf">fib_impl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">current</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">previous</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">i</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fib_impl</span><span class="p">(</span><span class="n">current</span> <span class="o">+</span> <span class="n">previous</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">unsigned</span> <span class="nf">fib_recursive2</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">fib_impl</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This bottom-up computing technique that avoids computing the same
+things over and over again is useful for many algorithms and even has a name:
+<a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_programming">Dynamic programming</a></p>
+</div>
+<p>This also shows that transforming a loop into a recursion is a quite mechanical
+task: All local variables become parameters, the check in the loop head becomes
+an <code class="docutils literal"><span class="pre">if</span></code> which encompasses the loop body and at the end of the loop body comes
+the recursive call. It also shows that you can do everything with recursion that
+you can do with loops. Note that the above is already optimized further; a
+version of <code class="docutils literal"><span class="pre">fib_impl</span></code> more akin to the iterative implementation (with
+equivalent meaning as the above) would look like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="nf">fib_impl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">current</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">previous</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">i</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span> <span class="o">+</span> <span class="n">previous</span><span class="p">;</span>
+        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
+        <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">fib_impl</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">previous</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">current</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are some more complicated algorithms that cannot be implemented
+iteratively without manually managing a stack of data ‒ this is still usually
+more efficient than recursion, since you don&#8217;t have to store return addresses or
+local variables that aren&#8217;t needed after the recursive call would have been
+made. For those algorithms, you have to make a trade-off between
+readability/maintainability and efficiency, unless you are forced to avoid a
+recursive solution due to possible stack overflow errors.</p>
+<div class="section" id="task-sorting-three-numbers-with-a-swap-function-solved">
+<h4>Solved task: Sorting three numbers with a swap function<a class="headerlink" href="#task-sorting-three-numbers-with-a-swap-function-solved" title="Permalink to this headline">¶</a></h4>
+<div class="admonition-task admonition">
+<p class="first admonition-title">Original task</p>
+<p class="taskref taskorigref">(<a class="reference external" href="#task-sorting-three-numbers-with-a-swap-function">Original task&#8217;s location</a>)</p>
+<p>In <a class="reference internal" href="control-flow.html#t-sort3"><span class="std std-ref">a previous task</span></a>, you wrote a program to sort three
+numbers. Improve this program by writing a function that swaps two numbers
+and replace all manual swaps in the program with it. Think about:</p>
+<blockquote>
+<div><ul class="simple">
+<li>how to call the function that does the swapping</li>
+<li>what signature (arguments and return values) the function should have</li>
+</ul>
+</div></blockquote>
+<p>When you are done, evaluate the improvements:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>Is the program shorter than the original? Or even longer?</li>
+<li>What about the readability of the program?</li>
+<li>What would change in your evaluation if you adapted the shorter program
+that swaps just three numbers instead?</li>
+</ul>
+</div></blockquote>
+</div>
+<p id="task-sorting-three-numbers-with-a-swap-function-solution">A good name for the swapping-function is <code class="docutils literal"><span class="pre">swap</span></code>: As stated earlier, verbs
+make good function names. Since we want to swap <code class="docutils literal"><span class="pre">int</span></code>s the signature for
+the function could be <code class="docutils literal"><span class="pre">void</span> <span class="pre">swap(int&amp;</span> <span class="pre">a,</span> <span class="pre">int&amp;</span> <span class="pre">b)</span></code>, that is, it returns
+nothing and takes two <code class="docutils literal"><span class="pre">int</span></code>s by reference as arguments. The whole program
+then could look like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">original_a</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">original_a</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter three numbers: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="n">b</span> <span class="o">&gt;&gt;</span> <span class="n">c</span><span class="p">;</span>
+
+    <span class="c1">// Make sure a is the smallest number:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+
+    <span class="c1">// Make sure that b and c are in the correct order:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">swap</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Sorted: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39; &#39;</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The program is only two lines shorter than the one given as solution to the
+previous task. If we were to use a swap function for the two-number program,
+we would even have more lines than without using an extra function for swap.
+In conclusion, the more you can use a function, the better.</p>
+<p>The readability of the program with the extra function is greatly improved:
+<code class="docutils literal"><span class="pre">swap(a,</span> <span class="pre">b)</span></code> is far easier to read than the whole swap-“algorithm”.</p>
+</div>
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="factorialoverflow" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>In the case of <code class="docutils literal"><span class="pre">factorial</span></code> this is probably not a real
+problem because the result will overflow <code class="docutils literal"><span class="pre">unsigned</span> <span class="pre">long</span> <span class="pre">long</span></code>, causing
+incorrect results, before the number of recursive calls overflows the stack.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="fibcomplexity" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>In fact, the exact number of calls to <code class="docutils literal"><span class="pre">fib</span></code> necessary to
+compute <code class="docutils literal"><span class="pre">fib(n)</span></code> this way is <span class="math">\(\operatorname{fib}(n)\)</span>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Functions</a><ul>
+<li><a class="reference internal" href="#basic-usage">Basic usage</a></li>
+<li><a class="reference internal" href="#parameters-and-arguments">Parameters and arguments</a><ul>
+<li><a class="reference internal" href="#default-arguments">Default arguments</a></li>
+<li><a class="reference internal" href="#pass-by-value">Pass by value</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-values">Return values</a><ul>
+<li><a class="reference internal" href="#main-s-return-value"><code class="docutils literal"><span class="pre">main</span></code>&#8216;s return value</a></li>
+<li><a class="reference internal" href="#return-as-a-control-flow-statement"><code class="docutils literal"><span class="pre">return</span></code> as a control flow statement</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#changing-parameters-and-references">Changing parameters and references</a><ul>
+<li><a class="reference internal" href="#pass-by-reference">Pass by reference</a></li>
+<li><a class="reference internal" href="#reference-types">Reference types</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#why-are-functions-useful">Why are functions useful?</a></li>
+<li><a class="reference internal" href="#global-variables-and-why-you-should-not-use-them">Global variables and why you should not use them</a></li>
+<li><a class="reference internal" href="#side-effects-and-their-order">Side effects and their order</a><ul>
+<li><a class="reference internal" href="#short-circuit-evaluation-and">Short circuit evaluation and <code class="docutils literal"><span class="pre">?:</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#background-information-the-stack">Background Information: The stack</a></li>
+<li><a class="reference internal" href="#recursion">Recursion</a><ul>
+<li><a class="reference internal" href="#a-simple-recursion-factorials">A simple recursion: Factorials</a></li>
+<li><a class="reference internal" href="#a-more-complex-recursion-fibonacci-numbers">A more complex recursion: Fibonacci numbers</a><ul>
+<li><a class="reference internal" href="#task-sorting-three-numbers-with-a-swap-function-solved">Solved task: Sorting three numbers with a swap function</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="user-types.html" title="Defining new types"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="control-flow.html" title="Control flow"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/proc/functions.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

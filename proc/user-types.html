@@ -1,0 +1,806 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Defining new types &mdash; On C++</title>
+    
+    <link rel="stylesheet" href="../_static/xalabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="On C++" href="../index.html" />
+    <link rel="up" title="The Basics: Procedural programming" href="index.html" />
+    <link rel="next" title="Dealing with collections of data" href="vector-intro.html" />
+    <link rel="prev" title="Functions" href="functions.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="vector-intro.html" title="Dealing with collections of data"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="functions.html" title="Functions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="defining-new-types">
+<h1>Defining new types<a class="headerlink" href="#defining-new-types" title="Permalink to this headline">¶</a></h1>
+<p>When developing complex programs, you only seldom have to to with <code class="docutils literal"><span class="pre">int</span></code>s or
+<code class="docutils literal"><span class="pre">double</span></code>s directly. Most of the time you will work with objects that
+correspond to real-world (or virtual-world) objects like persons, credit cards,
+bank accounts, players, monsters, books, dates and so on. Dealing with these by
+explicitly juggling with C++&#8217;s built-in types quickly becomes cumbersome and
+error-prone.</p>
+<p>For example, assume we are developing a game in which two player can move across
+the screen and has a certain amount of points. To represent this player in our
+program we could use two <code class="docutils literal"><span class="pre">int</span></code>s for the x and y-coordinate of the position
+and another one for the points:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">draw_player</span><span class="p">(</span><span class="kt">int</span> <span class="n">player_x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">player_y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">player_points</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot;Player at &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player_x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player_y</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot; with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player_points</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; points.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">next_round</span><span class="p">(</span><span class="kt">unsigned</span><span class="o">&amp;</span> <span class="n">game_round</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">++</span><span class="n">game_round</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Round &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">game_round</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">game_round</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">player_a_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">player_a_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">player_a_points</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">auto</span> <span class="n">player_b_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">player_b_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">player_b_points</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">next_round</span><span class="p">(</span><span class="n">game_round</span><span class="p">);</span>
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player_a_x</span><span class="p">,</span> <span class="n">player_a_y</span><span class="p">,</span> <span class="n">player_a_points</span><span class="p">);</span>
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player_b_x</span><span class="p">,</span> <span class="n">player_b_y</span><span class="p">,</span> <span class="n">player_b_points</span><span class="p">);</span>
+
+    <span class="n">next_round</span><span class="p">(</span><span class="n">game_round</span><span class="p">);</span>
+    <span class="c1">// Move player a right a bit:</span>
+    <span class="n">player_a_x</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player_a_x</span><span class="p">,</span> <span class="n">player_a_y</span><span class="p">,</span> <span class="n">player_a_points</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This code suffers from several problems:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">The player variables are not explicitly separated from each other or other
+unrelated variables.</p>
+</li>
+<li><p class="first">The variables are are ordinary <code class="docutils literal"><span class="pre">int</span></code>s. E.g. nothing would prevent you
+from accidentally writing nonsensical statements like:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="c1">// Oops, wrong order!</span>
+<span class="n">draw_player</span><span class="p">(</span><span class="n">player_a_points</span><span class="p">,</span> <span class="n">player_a_x</span><span class="p">,</span> <span class="n">player_a_y</span><span class="p">);</span>
+
+<span class="c1">// Oops, players mixed!</span>
+<span class="n">draw_player</span><span class="p">(</span><span class="n">player_a_x</span><span class="p">,</span> <span class="n">player_a_y</span><span class="p">,</span> <span class="n">player_b_points</span><span class="p">);</span>
+
+<span class="c1">// More nonsense:</span>
+<span class="n">next_round</span><span class="p">(</span><span class="n">player_a_points</span><span class="p">);</span>
+<span class="n">draw_player</span><span class="p">(</span><span class="n">player_b_x</span><span class="p">,</span> <span class="n">player_b_y</span><span class="p">,</span> <span class="n">game_round</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Adding a new data component to a player involves changing all places where
+a player was used.</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="simple-compound-types-struct">
+<h2>Simple compound types: <code class="docutils literal"><span class="pre">struct</span></code><a class="headerlink" href="#simple-compound-types-struct" title="Permalink to this headline">¶</a></h2>
+<p>By using the <code class="docutils literal"><span class="pre">struct</span></code> construct and the <code class="docutils literal"><span class="pre">.</span></code> (dot) operator, we can improve
+our program as follows:</p>
+<div class="highlight-cpp"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">Player</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">n_points</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">draw_player</span><span class="p">(</span><span class="n">Player</span> <span class="n">player</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot;Player at &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">y</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot; with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">n_points</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; points.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">next_round</span><span class="p">(</span><span class="kt">unsigned</span><span class="o">&amp;</span> <span class="n">game_round</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">++</span><span class="n">game_round</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Round &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">game_round</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">game_round</span> <span class="o">=</span> <span class="mi">0u</span><span class="p">;</span>
+    <span class="n">Player</span> <span class="n">player_a</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">player_b</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="n">next_round</span><span class="p">(</span><span class="n">game_round</span><span class="p">);</span>
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player_a</span><span class="p">);</span>
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player_b</span><span class="p">);</span>
+
+    <span class="n">next_round</span><span class="p">(</span><span class="n">game_round</span><span class="p">);</span>
+    <span class="n">player_a</span><span class="p">.</span><span class="n">x</span> <span class="o">+=</span> <span class="mi">5</span><span class="p">;</span> <span class="c1">// Move player to the right a bit.</span>
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player_a</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>First, we define the <code class="docutils literal"><span class="pre">Player</span></code> structure in line 3 ‒ 6. It starts with the
+keyword <code class="docutils literal"><span class="pre">struct</span></code> followed by a name. Then come, inside curly braces <code class="docutils literal"><span class="pre">{}</span></code> the
+data members of the <code class="docutils literal"><span class="pre">struct</span></code>: these are just explicitly typed variable
+definitions, like with local variables. After the closing curly brace follows a
+semicolon <code class="docutils literal"><span class="pre">;</span></code> (contrary to functions, where this is neither required nor
+allowed).</p>
+<p>This structure is its own type. It can be used quite similarly to built-in types
+like <code class="docutils literal"><span class="pre">int</span></code>: It can e.g. be used as function parameter type (line 8) or for
+local variables (line 24). However, since it is a distinct type, you cannot
+assign a <code class="docutils literal"><span class="pre">Player</span></code> variable to an <code class="docutils literal"><span class="pre">int</span></code> variable or vice versa, solving the
+second of the aforementioned problems. To use variables of the type <code class="docutils literal"><span class="pre">Player</span></code>
+the program above uses the following operations on the whole <code class="docutils literal"><span class="pre">struct</span> <span class="pre">Player</span></code>
+object:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Initialize all members to zero by using <code class="docutils literal"><span class="pre">=</span> <span class="pre">{}</span></code> (<code class="docutils literal"><span class="pre">bool</span></code>s would become
+<code class="docutils literal"><span class="pre">false</span></code>; see line 24).</li>
+<li>Assign players to each other (happens implicitly when passing the player by
+value to <code class="docutils literal"><span class="pre">draw_player</span></code>; see lines 8 and 27, 28 and 32).</li>
+</ul>
+</div></blockquote>
+<p>However, in the end a <code class="docutils literal"><span class="pre">struct</span></code> only consists of its data members, and hence
+the most important operation of a <code class="docutils literal"><span class="pre">struct</span></code> object is accessing its members.
+This is done with the <code class="docutils literal"><span class="pre">.</span></code> (dot) operator in lines 11, 12 and 31 of the above
+program. An member access expression like <code class="docutils literal"><span class="pre">player.x</span></code> can be used like a normal
+variable: both reading the data member (e.g. writing it to <code class="docutils literal"><span class="pre">std::cout</span></code> or
+saving it into an <code class="docutils literal"><span class="pre">int</span></code> variable) and writing to it (i.e. assigning to it
+using <code class="docutils literal"><span class="pre">=</span></code> or using a compound assignment operator like <code class="docutils literal"><span class="pre">+=</span></code>) is possible: it
+yields an <em>lvalue</em>. As a consequence of being an lvalue you can also bind this
+to a reference like:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Player</span> <span class="n">player</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kt">int</span><span class="o">&amp;</span> <span class="n">rx</span> <span class="o">=</span> <span class="n">player</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="n">rx</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// Now player.x is also 3.</span>
+<span class="n">player</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span> <span class="c1">// Now rx is also 42.</span>
+</pre></div>
+</div>
+<p>Note that the two <code class="docutils literal"><span class="pre">Player</span></code> variables are of course independent of each other,
+just like the <code class="docutils literal"><span class="pre">int</span></code> variables were in the initial program. This means that
+changing data members of one player will not change the other player.</p>
+<div class="section" id="struct-initialization-with">
+<h3><code class="docutils literal"><span class="pre">struct</span></code> initialization with <code class="docutils literal"><span class="pre">{}</span></code><a class="headerlink" href="#struct-initialization-with" title="Permalink to this headline">¶</a></h3>
+<p>In the above example programs we have always used <code class="docutils literal"><span class="pre">=</span> <span class="pre">{}</span></code> to initialize all of
+a <code class="docutils literal"><span class="pre">struct</span></code>s members with zero. However, we can also choose our own values
+for the data members by writing them inside the braces, separated by comma:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">Player</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">n_points</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">print_player</span><span class="p">(</span><span class="n">Player</span> <span class="n">player</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">n_points</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">Player</span> <span class="nf">new_player</span><span class="p">(</span><span class="kt">int</span> <span class="n">n_points</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n_points</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Player</span> <span class="n">player</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">};</span>
+    <span class="n">print_player</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">};</span>
+    <span class="n">print_player</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+
+    <span class="n">Player</span> <span class="n">player_b</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">};</span>
+    <span class="n">print_player</span><span class="p">(</span><span class="n">player_b</span><span class="p">);</span>
+
+    <span class="n">print_player</span><span class="p">({</span><span class="mi">10</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">250</span><span class="p">});</span>
+    <span class="n">print_player</span><span class="p">(</span><span class="n">new_player</span><span class="p">(</span><span class="mi">310</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>5,3: 100
+1,2: 3
+5,0: 0
+1,2: 42
+10,7: 250
+0,0: 310
+</pre></div>
+</div>
+<p>If you study the above program and its output you will also notice that</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">=</span> <span class="pre">{...}</span></code> can also be used for reassigning variables that have a
+<code class="docutils literal"><span class="pre">struct</span></code> type.</li>
+<li>If you specify less values in the braces than the struct has members, the
+rest is filled with zero/false. In fact the <code class="docutils literal"><span class="pre">=</span> <span class="pre">{}</span></code> syntax we have seen
+before is just a special case of this.</li>
+<li>If you have a function with a parameter of a <code class="docutils literal"><span class="pre">struct</span></code> type, you can use
+<code class="docutils literal"><span class="pre">{...}</span></code> to create a object of that type with the given values on the fly,
+withouth needing a variable.</li>
+<li>Similarly, if you have a function with <code class="docutils literal"><span class="pre">struct</span></code> return type, you can use
+<code class="docutils literal"><span class="pre">{...}</span></code> to return create an object of that type with the given values on
+the fly.</li>
+</ul>
+</div></blockquote>
+<p>Naturally, in all cases where literals like <code class="docutils literal"><span class="pre">42</span></code> or <code class="docutils literal"><span class="pre">5</span></code> were used, you can
+use arbitrary expressions like variables or computations of the right type.</p>
+</div>
+<div class="section" id="const-and-structs">
+<h3><code class="docutils literal"><span class="pre">const</span></code> and <code class="docutils literal"><span class="pre">struct</span></code>s<a class="headerlink" href="#const-and-structs" title="Permalink to this headline">¶</a></h3>
+<p>Of course variables with <code class="docutils literal"><span class="pre">struct</span></code> types can also be made <code class="docutils literal"><span class="pre">const</span></code>, meaning
+that neither the object as whole nor any of its data members may be modified:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">const</span> <span class="n">Player</span> <span class="n">player</span> <span class="o">=</span> <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">};</span>
+<span class="n">print_player</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+<span class="c1">//player = {3, 3, 500}; // Does not compile, player is const.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<span class="c1">//player.x = 6; // Does not compile, player is const.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nested-structs">
+<h3>Nested structs<a class="headerlink" href="#nested-structs" title="Permalink to this headline">¶</a></h3>
+<p>Like nearly everything in C++, <code class="docutils literal"><span class="pre">struct</span></code>s can be nested too. For example, it
+is probable that in a game, we will neeed x/y-positions not just for the player
+but also for other things like monsters, doors, coins or whatever things are
+lying around in the game&#8217;s virtual world. Thus it totally makes sense to break
+out these positions from the <code class="docutils literal"><span class="pre">Player</span></code> type into a new type <code class="docutils literal"><span class="pre">Point</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">Player</span> <span class="p">{</span>
+  <span class="n">Point</span> <span class="n">position</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">n_points</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Initialization and member access is naturally also nested then:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Player</span> <span class="n">pl</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="mi">0</span><span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pl</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// Prints “2”.</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">pl</span><span class="p">.</span><span class="n">n_points</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// Prints “0”.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="efficiently-passing-structs-to-functions">
+<h3>Efficiently passing <code class="docutils literal"><span class="pre">struct</span></code>s to functions<a class="headerlink" href="#efficiently-passing-structs-to-functions" title="Permalink to this headline">¶</a></h3>
+<p>As explained in <a class="reference internal" href="functions.html#proc-func-stack"><span class="std std-ref">Background Information: The stack</span></a>, passing an argument to a function
+involves pushing it on the stack. While this is fine for small arguments like
+<code class="docutils literal"><span class="pre">int</span></code>s and <code class="docutils literal"><span class="pre">double</span></code>s, most <code class="docutils literal"><span class="pre">struct</span></code> types are much bigger. For
+example, our <code class="docutils literal"><span class="pre">Player</span></code> has at least the size of three <code class="docutils literal"><span class="pre">int</span></code>s. We can check
+the exact size with the uary <code class="docutils literal"><span class="pre">sizeof</span></code> operator. This operator can be applied
+to a type or to any expression and evaluates to the size of the (expression&#8217;s)
+type measured in bytes <a class="footnote-reference" href="#sizeofbytes" id="id1">[1]</a>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Player</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">Player</span> <span class="n">player_a</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">player_a</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>With the MSVC compiler, the Player has in fact twelve bytes. To avoid copying
+all these bytes to the stack for passing it to a function, we could use
+references, e.g.:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_player</span><span class="p">(</span><span class="n">Player</span><span class="o">&amp;</span> <span class="n">player</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Now only the address (4 bytes on 32 bit systems and 8 bytes on 64 bit systems)
+is pushed on the stack. There are two problems though: First, we cannot pass
+<code class="docutils literal"><span class="pre">const</span> <span class="pre">Player</span></code> variables or expressions like <code class="docutils literal"><span class="pre">{5,</span> <span class="pre">5,</span> <span class="pre">100}</span></code> (an rvalue) and
+second, we could accidentally change the passed in variable. To avoid both
+problems we use <code class="docutils literal"><span class="pre">const</span></code> references:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_player</span><span class="p">(</span><span class="k">const</span> <span class="n">Player</span><span class="o">&amp;</span> <span class="n">player</span><span class="p">)</span> <span class="p">{</span> <span class="cm">/* ... */</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This solves both of the above problems.</p>
+<p>Of course you can also use <code class="docutils literal"><span class="pre">const</span></code> references to builtin types like <code class="docutils literal"><span class="pre">int</span></code>,
+but this usually makes no sense and is in fact slower than just copying the
+<code class="docutils literal"><span class="pre">int</span></code> over because accessing the value through a reference is slower than
+accessing it directly.</p>
+</div>
+</div>
+<div class="section" id="encapsulation-and-member-functions">
+<h2>Encapsulation and member functions<a class="headerlink" href="#encapsulation-and-member-functions" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">struct</span></code>s can be more than simple data containers.</p>
+<div class="section" id="member-functions">
+<h3>Member functions<a class="headerlink" href="#member-functions" title="Permalink to this headline">¶</a></h3>
+<p>So far, we have only had data members in <code class="docutils literal"><span class="pre">struct</span></code>s, but it turns out that we
+can also add functions to them. For example, we could write a member function
+<code class="docutils literal"><span class="pre">draw()</span></code> instead of a “free” function <code class="docutils literal"><span class="pre">draw_player(const</span> <span class="pre">Player&amp;)</span></code> like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">Player</span> <span class="p">{</span>
+    <span class="n">Point</span> <span class="n">position</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">n_points</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="nf">draw</span><span class="p">()</span> <span class="k">const</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span>
+            <span class="o">&lt;&lt;</span> <span class="s">&quot;Player at &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">position</span><span class="p">.</span><span class="n">y</span>
+            <span class="o">&lt;&lt;</span> <span class="s">&quot; with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">n_points</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; points.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Player</span> <span class="n">player_a</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">player_b</span> <span class="o">=</span> <span class="p">{{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="mi">1</span><span class="p">};</span>
+    <span class="n">player_a</span><span class="p">.</span><span class="n">draw</span><span class="p">();</span>
+    <span class="n">player_b</span><span class="p">.</span><span class="n">draw</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>While data members like <code class="docutils literal"><span class="pre">position</span></code> and <code class="docutils literal"><span class="pre">n_points</span></code> are stored in each
+<code class="docutils literal"><span class="pre">Player</span></code> object, functions are not really a part of the object. They behave
+like normal functions with the difference that you can only call them on a
+particular object (“instance”) of a <code class="docutils literal"><span class="pre">Player</span></code> / <code class="docutils literal"><span class="pre">struct</span></code>-type. Behind the
+scenes, the member function receives a hidden additional argument. You can think
+of it as having the type <code class="docutils literal"><span class="pre">Player</span> <span class="pre">const&amp;</span></code> if you write <code class="docutils literal"><span class="pre">const</span></code> after the
+function, as done above, or <code class="docutils literal"><span class="pre">Player&amp;</span></code> otherwise (note that this means that you
+can only member functions marked as <code class="docutils literal"><span class="pre">const</span></code> on <code class="docutils literal"><span class="pre">const</span></code> objects). Then, when
+a variable or function name appears in the member function&#8217;s body, the compiler
+looks in these places:</p>
+<ol class="arabic simple">
+<li>local variables and function parameters</li>
+<li>members of the hidden additional parameter</li>
+<li>global variables and free functions</li>
+</ol>
+<p>Considering all this, what is the difference to the version with the free
+function? If you were to look very closely at the machine code that is generated
+from both version, you could see that they are in fact bit-by-bit identical. So
+at runtime there is no difference. Now it seems to be only a matter of style,
+but there is in fact a drawback: Later when we learn how to split a program into
+multiple files, we will see that a <code class="docutils literal"><span class="pre">struct</span></code>-definition must not span multiple
+files. So without touching the file where the <code class="docutils literal"><span class="pre">struct</span></code> is defined, it is
+impossible to add new functions. With free functions, you can add more functions
+for working with the <code class="docutils literal"><span class="pre">struct</span></code> without changing the definition.</p>
+</div>
+<div class="section" id="encapsulation-and-access-control">
+<h3>Encapsulation and access control<a class="headerlink" href="#encapsulation-and-access-control" title="Permalink to this headline">¶</a></h3>
+<p>There is an important technique that only works with member functions:
+<em class="dfn">encapsulation</em> (also called <em class="dfn">information hiding</em>). By encapsulating
+members of a type, you restrict access to them to member functions of the type
+only. This has two advantages: First, you can often change the (now) internal
+representation of the type without having to change code that uses the type.
+Secondly, it allows you to enforce <em class="dfn">invariants</em> on the members, that is to
+enforce that some conditions always hold.</p>
+<p>For the first advantage, consider how, when we combined the <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code>
+members of the player into a new <code class="docutils literal"><span class="pre">Position</span></code> type, we also had to change
+<code class="docutils literal"><span class="pre">draw_player</span></code> and all other code using <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code>. Were the position
+encapsulated in the right way, we wouldn&#8217;t have had to change anything but the
+<code class="docutils literal"><span class="pre">Player</span></code>-<code class="docutils literal"><span class="pre">struct</span></code> itself. The following example demonstrates this part
+of encapsulation.</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">Player</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">x</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">set_x</span><span class="p">(</span><span class="kt">int</span> <span class="n">x_</span><span class="p">)</span> <span class="p">{</span> <span class="n">m_position</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x_</span><span class="p">;</span> <span class="p">}</span> 
+
+    <span class="kt">int</span> <span class="n">y</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">set_y</span><span class="p">(</span><span class="kt">int</span> <span class="n">y_</span><span class="p">)</span> <span class="p">{</span> <span class="n">m_position</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y_</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">n_points</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_n_points</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">set_n_points</span><span class="p">(</span><span class="kt">int</span> <span class="n">n_points_</span><span class="p">)</span> <span class="p">{</span> <span class="n">m_n_points</span> <span class="o">=</span> <span class="n">n_points_</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">Point</span> <span class="n">position</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_position</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Point</span> <span class="n">m_position</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">m_n_points</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">draw_player</span><span class="p">(</span><span class="n">Player</span> <span class="k">const</span><span class="o">&amp;</span> <span class="n">player</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot;Player at &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">x</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;,&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">y</span><span class="p">()</span>
+        <span class="o">&lt;&lt;</span> <span class="s">&quot; with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">player</span><span class="p">.</span><span class="n">n_points</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; points.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Player</span> <span class="n">player</span><span class="p">;</span>
+    <span class="n">player</span><span class="p">.</span><span class="n">set_x</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">player</span><span class="p">.</span><span class="n">set_y</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+    <span class="n">player</span><span class="p">.</span><span class="n">set_n_points</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+    <span class="n">draw_player</span><span class="p">(</span><span class="n">player</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Everything after <code class="docutils literal"><span class="pre">private:</span></code> is only accessible to member functions of the
+<code class="docutils literal"><span class="pre">struct</span></code>. On the other hand, everything after <code class="docutils literal"><span class="pre">public:</span></code> is also accessible
+to outside functions. These key words are called <em class="dfn">access control key
+words</em>. It is customary to not intend them (relative to the <code class="docutils literal"><span class="pre">struct</span></code> itself).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Access-control is per-type not per-object.</p>
+<p>That is, having a member function like the following <code class="docutils literal"><span class="pre">Player</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">steal_points</span><span class="p">(</span><span class="n">Player</span><span class="o">&amp;</span> <span class="n">other</span><span class="p">)</span> <span class="p">{</span> <span class="n">m_n_points</span> <span class="o">+=</span> <span class="n">other</span><span class="p">.</span><span class="n">m_n_points</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>in <code class="docutils literal"><span class="pre">Player</span></code> and using it like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">player_a</span><span class="p">.</span><span class="n">steal_points</span><span class="p">(</span><span class="n">player_b</span><span class="p">);</span>
+</pre></div>
+</div>
+<p class="last">is completely OK.</p>
+</div>
+<p>Notice how instead of having a public data member <code class="docutils literal"><span class="pre">n_points</span></code>, <code class="docutils literal"><span class="pre">Player</span></code> now
+has a private data member <code class="docutils literal"><span class="pre">m_n_points</span></code> (the <code class="docutils literal"><span class="pre">m_</span></code> is just a fairly customary
+name prefix to mark private data members) and two function for accessing it,
+namely <code class="docutils literal"><span class="pre">int</span> <span class="pre">n_points()</span></code> to get the value and <code class="docutils literal"><span class="pre">set_n_points(int)</span></code> to set it
+(the parameter name <code class="docutils literal"><span class="pre">n_points_</span></code> has a trailing underscore to distinguish it
+from the <code class="docutils literal"><span class="pre">n_points()</span></code> function).  The former function is called a
+<em class="dfn">getter</em> and the latter a <em class="dfn">setter</em>. Note that not every getters must
+have a corresponding setter (or vice versa, though that is more unusual), e.g.
+the position of a <code class="docutils literal"><span class="pre">Player</span></code> is read-only because only a getter <code class="docutils literal"><span class="pre">Point</span>
+<span class="pre">position()</span> <span class="pre">const</span></code> is provided. On the other hand, there may be getters and
+setters for “properties” that are not even directly backed by data members, as
+is the case with the <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> properties of the player.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Getters are often used in expressions involving more than one function
+call and thus should be side-effect free; see <a class="reference internal" href="functions.html#sec-sideeffect"><span class="std std-ref">Side effects and their order</span></a>.</p>
+</div>
+</div>
+<div class="section" id="constructors">
+<h3>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h3>
+<p>There is a problem with the previous example: it fails to realize the second
+advantage of encapsulation, namely maintained invariants. Although we have not
+explicitly stated any, it clearly undesirable to have a <code class="docutils literal"><span class="pre">Player</span></code> where any
+members are initialized. In fact, the situation regarding initialization with
+this partially-encapsulated example is worse than before since we cannot use the
+<code class="docutils literal"><span class="pre">=</span> <span class="pre">{</span> <span class="pre">…</span> <span class="pre">}</span></code> syntax anymore because the data members are private (in fact this
+<em class="dfn">aggregate initialization`</em> cannot be used at all as soon as <em>any</em> members
+of the initialized type are private). To remediate this, you can define a
+special member function called the <em class="dfn">constructor</em>. Constructors functions
+have no return type and the same name as the type. They can have parameters but
+don&#8217;t have to. A constructor that can be called without parameters is called a
+<em class="dfn">default-constructor</em>. If we add a default-constructor to our <code class="docutils literal"><span class="pre">struct</span>
+<span class="pre">Player</span></code>, it looks like this:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">Player</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Player</span><span class="p">()</span><span class="o">:</span>
+        <span class="n">m_position</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">m_n_points</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ... getters and setters as before ...</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">Point</span> <span class="n">m_position</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">m_n_points</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The effect of this change is that every <code class="docutils literal"><span class="pre">Player</span></code> variable will be
+automatically initialized with position of (0, 0) and zero points.</p>
+<p>Apart from the name, which is the same as the type&#8217;s, and the missing return
+type, constructors have one more feature that normal functions don&#8217;t have:
+Initializer lists. This comma-delimited list starts at the <code class="docutils literal"><span class="pre">:</span></code> after the
+argument list and the entries have the form <code class="docutils literal"><span class="pre">data_member_name{initial_value}</span></code>.
+In the case of <code class="docutils literal"><span class="pre">Player</span></code> above, this is the same as if we had written:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Player</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">m_position</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
+    <span class="n">m_n_points</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>There are cases where this makes a differences, namely when the some data
+members have constructors themselves.</p>
+<p>Instead of a default-constructor, we could also add a constructor that accepts
+the initial values as arguments:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Player</span><span class="p">(</span><span class="n">Position</span> <span class="n">position_</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n_points_</span><span class="p">)</span><span class="o">:</span>
+    <span class="n">m_position</span><span class="p">{</span><span class="n">position_</span><span class="p">},</span>
+    <span class="n">m_n_points</span><span class="p">{</span><span class="n">n_points_</span><span class="p">}</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now I can also explain where the initializer list behaves different from using
+<code class="docutils literal"><span class="pre">=</span></code>: E.g. if <code class="docutils literal"><span class="pre">Point</span></code> had a constructor <code class="docutils literal"><span class="pre">Point(int</span> <span class="pre">x,</span> <span class="pre">int</span> <span class="pre">y)</span></code>, then we
+would have to use the initialization list, because if we leave it out, the
+compiler will try to insert a call to the default constructor as if we had
+written:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">Player</span><span class="p">(</span><span class="n">Position</span> <span class="n">position_</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n_points_</span><span class="p">)</span><span class="o">:</span>
+<span class="hll">    <span class="n">m_position</span><span class="p">{}</span>
+</span><span class="p">{</span>
+    <span class="n">m_position</span> <span class="o">=</span> <span class="n">position_</span><span class="p">;</span>
+    <span class="n">m_points</span> <span class="o">=</span> <span class="n">n_points</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Since the constructor of <code class="docutils literal"><span class="pre">m_position</span></code> requires two <code class="docutils literal"><span class="pre">int</span></code>s as parameters,
+however, this would be an error.</p>
+</div>
+</div>
+<div class="section" id="a-quick-glance-at-templates">
+<h2>A quick glance at templates<a class="headerlink" href="#a-quick-glance-at-templates" title="Permalink to this headline">¶</a></h2>
+<p>One thing that is a bit limiting for the <code class="docutils literal"><span class="pre">struct</span> <span class="pre">Point</span></code> is that it only has
+<code class="docutils literal"><span class="pre">int</span></code>s as the <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> components. If we only use the <code class="docutils literal"><span class="pre">Point</span></code> for
+one application and we only need <code class="docutils literal"><span class="pre">int</span></code>, that may be fine. But in general, we
+might need <code class="docutils literal"><span class="pre">Point</span></code> s of <code class="docutils literal"><span class="pre">double</span></code> or <code class="docutils literal"><span class="pre">int</span></code> or maybe in one case we need to
+optimize for memory and even want to use a <code class="docutils literal"><span class="pre">Point</span></code> of <code class="docutils literal"><span class="pre">signed</span> <span class="pre">char</span></code>. We
+could just write a class for every case such as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">IntPoint</span> <span class="p">{</span> <span class="kt">int</span> <span class="n">x</span><span class="p">;</span> <span class="kt">int</span> <span class="n">y</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">struct</span> <span class="n">FloatPoint</span> <span class="p">{</span> <span class="kt">float</span> <span class="n">x</span><span class="p">;</span> <span class="kt">float</span> <span class="n">y</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">struct</span> <span class="n">DoublePoint</span> <span class="p">{</span> <span class="kt">double</span> <span class="n">x</span><span class="p">;</span> <span class="kt">double</span> <span class="n">y</span><span class="p">;</span> <span class="p">};</span>
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<p>In the case of <code class="docutils literal"><span class="pre">Point</span></code> this may even be feasible as the <code class="docutils literal"><span class="pre">struct</span></code> is so tiny.
+But now imagine we also wanted to provide some functions for <code class="docutils literal"><span class="pre">Point</span></code>s, such
+as:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="n">IntPoint</span> <span class="nf">move_int_point</span><span class="p">(</span><span class="n">IntPoint</span> <span class="n">p</span><span class="p">,</span> <span class="n">IntPoint</span> <span class="n">by</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">p</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">by</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">by</span><span class="p">.</span><span class="n">y</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">print_int_point</span><span class="p">(</span><span class="n">IntPoint</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;(&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If we had <span class="math">\(n\)</span> functions and <span class="math">\(m\)</span> types of points, we would need to implement all
+of the <span class="math">\(n\)</span> functions separately for all <span class="math">\(m\)</span> types which results in <span class="math">\(m \cdot n\)</span>
+functions. Clearly this does not scale up well.</p>
+<div class="section" id="class-templates">
+<h3>Class templates<a class="headerlink" href="#class-templates" title="Permalink to this headline">¶</a></h3>
+<p>With the template mechanism of C++, <code class="docutils literal"><span class="pre">struct</span></code>s we can instead write a struct
+template (usually called a <em class="dfn">class-template</em>) for <code class="docutils literal"><span class="pre">Point</span></code>:</p>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+    <span class="n">T</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">T</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">template</span></code> keyword tells the compiler that what follows is a template
+definition and inside the angle brackets (which are used the usual less-than and
+greater-than signs repurposed) come the template parameters. In this case the
+template has as parameter a type (<code class="docutils literal"><span class="pre">typename</span></code>) with the parameter name <code class="docutils literal"><span class="pre">T</span></code>.
+Inside the template definition, you can use <code class="docutils literal"><span class="pre">T</span></code> just like a normal type.</p>
+<p>To use this class template, we now need to specify the template parameter:</p>
+<div class="highlight-cpp" id="lst-point-tpl-usage"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">print_point</span><span class="p">(</span><span class="n">Point</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;(&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Point</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">mypoint</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">};</span>
+    <span class="n">print_point</span><span class="p">(</span><span class="n">mypoint</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is very similar to functions. In fact, you could view the class template
+<code class="docutils literal"><span class="pre">Point</span></code> as a “type function” that takes a component-type as parameter and
+“returns” a point-type. The big difference is that this “computation” is done by
+the compiler and not when the program runs.</p>
+</div>
+<div class="section" id="function-templates">
+<h3>Function templates<a class="headerlink" href="#function-templates" title="Permalink to this headline">¶</a></h3>
+<p>Now we need to write only one <code class="docutils literal"><span class="pre">Point</span></code> class-template instead of several
+<code class="docutils literal"><span class="pre">SomeTypePoint</span></code> classes, but we still would need <span class="math">\(m \cdot n\)</span> functions. But
+function templates come to the rescue!</p>
+<div class="sidebar">
+<p class="first sidebar-title">Function templates can be used without class templates</p>
+<p>Of course, you can also use function-templates without class-templates.  For
+example, we could make our good old factorial function a function template:</p>
+<div class="last highlight-cpp"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">factorial</span><span class="p">(</span><span class="n">T</span> <span class="n">n</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">T</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">*=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-cpp"><div class="highlight"><pre><span></span><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="kt">void</span> <span class="n">print_point</span><span class="p">(</span><span class="n">Point</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">p</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;(&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;,&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Transforming <code class="docutils literal"><span class="pre">print_point</span></code> from a function to a function-template should look
+extremely similar to the previous tranformation of <code class="docutils literal"><span class="pre">Point</span></code> to a
+class-template. However, when calling a function template, there is a catch: You
+usually don&#8217;t need to specify the template parameter because the compiler
+figures them out automatically by comparing the function argument with
+parameter. That is, the <code class="docutils literal"><span class="pre">main</span></code> function <a class="reference internal" href="#lst-point-tpl-usage"><span class="std std-ref">from before</span></a> now looks exactly the same!</p>
+<p>By using class- and function-templates, instead of <span class="math">\(m \cdot n\)</span> functions,
+we now need to write each function only once for all <code class="docutils literal"><span class="pre">Point</span></code> types, greatly
+improving maintainability and readability of the program.</p>
+<hr class="docutils" />
+<p class="rubric">Footnotes</p>
+<table class="docutils footnote" frame="void" id="sizeofbytes" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Actually, the C++ standard defines <code class="docutils literal"><span class="pre">sizeof</span></code> to return the
+size in multiples of <code class="docutils literal"><span class="pre">char</span></code>&#8216;s size (<code class="docutils literal"><span class="pre">sizeof(char)</span></code> is defined to be
+<code class="docutils literal"><span class="pre">1</span></code>). Although the standard only specifies that a <code class="docutils literal"><span class="pre">char</span></code> must be <em>at
+least</em> one byte large, in practice it has exactly one byte on all but some
+exotic platforms.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">On C++</a></h1>
+
+
+
+<p class="blurb">Yet another C++ tutorial.</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=Oberon00&repo=cpptutorial&type=star&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Defining new types</a><ul>
+<li><a class="reference internal" href="#simple-compound-types-struct">Simple compound types: <code class="docutils literal"><span class="pre">struct</span></code></a><ul>
+<li><a class="reference internal" href="#struct-initialization-with"><code class="docutils literal"><span class="pre">struct</span></code> initialization with <code class="docutils literal"><span class="pre">{}</span></code></a></li>
+<li><a class="reference internal" href="#const-and-structs"><code class="docutils literal"><span class="pre">const</span></code> and <code class="docutils literal"><span class="pre">struct</span></code>s</a></li>
+<li><a class="reference internal" href="#nested-structs">Nested structs</a></li>
+<li><a class="reference internal" href="#efficiently-passing-structs-to-functions">Efficiently passing <code class="docutils literal"><span class="pre">struct</span></code>s to functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#encapsulation-and-member-functions">Encapsulation and member functions</a><ul>
+<li><a class="reference internal" href="#member-functions">Member functions</a></li>
+<li><a class="reference internal" href="#encapsulation-and-access-control">Encapsulation and access control</a></li>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#a-quick-glance-at-templates">A quick glance at templates</a><ul>
+<li><a class="reference internal" href="#class-templates">Class templates</a></li>
+<li><a class="reference internal" href="#function-templates">Function templates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="vector-intro.html" title="Dealing with collections of data"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="functions.html" title="Functions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">On C++</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >The Basics: Procedural programming</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy;2014, Christian Neumüller.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="../_sources/proc/user-types.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
