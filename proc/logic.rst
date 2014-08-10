@@ -231,7 +231,8 @@ Note that operators are evaluated in this order:
 4. Comparison operators (first ``<``, ``<=``, ``>`` and ``>=``
    then ``==`` and ``!=``).
 5. Logical connectives (first ``&&``, then ``||``).
-6. Assignment operator (``=``)
+6. Assignment operator (``=``) and compound assignment operators (``+=``,
+   ``-=``, ``*=``, ``/=`` and ``%=``)
 
 That is, the initialization expression of ``winning`` has the same meaning as ::
 
@@ -258,8 +259,9 @@ left-associative; that is they are evaluated from left to right. For example
 the expression ``x - y - z`` is evaluated as ``(x - y) - z``. If ``-`` was
 right-associative, this expression would be evaluated as ``x - (y - z)``.
 
-The only right-associative operator we have seen until now is ``=``. Thus the
-expression ``x = y = z`` is evaluated as ``x = (y = z)``. What does it mean?
+The only right-associative operators we have seen until now are the assignment
+operators. Thus the expression ``x = y = z`` is evaluated as ``x = (y = z)``.
+What does it mean?
 
 The assignment operator does two things (in this order): first, it (obviously)
 assigns the right-hand side operand to the variable on the left-hand side. And
@@ -274,6 +276,12 @@ of the form ::
 
 to assign the value ``some_expression`` to all of the variables ``a`` through
 ``z``.
+
+The same that has been said about ``=`` also applies to the compound assignment
+operators ``+=``, ``-=``, ``*=``, ``/=`` and ``%=``. However, while ``a = b =
+c`` has an intuitive and easy-to-read meaning, ``a += b += c`` does not. I thus
+recommend using either one or multiple “simple” assignment operators ``=`` or
+only one compound assignment operator [#good-comment]_.
 
 Background: The input/output operators (``>>``/``<<``)
 ------------------------------------------------------
@@ -321,8 +329,19 @@ read more than one variable in one expression (and thus statement), like this::
 
 .. rubric:: Footnotes
 
-.. [#iff] The phrase “if and only if” is so common in mahthematics and logic
+.. [#iff] The phrase “if and only if” is so common in mathematics and logic
    that it is shortened to the single word :dfn:`iff`.
+
+.. [#good-comment] If you should ever come across a situation where the multiple
+   compound assignments would make the code a lot shorter, this would be a good
+   opportunity for a comment, like::
+
+     // Calculate a1 as the sum of a1..a9;
+     // ai will contain the intermediate value a9 + a 8 + ... + ai
+     a1 += a2 += a3 += a4 += a5 += a6 += a7 += a8 += a9;
+
+   However, the above would most certainly be better written using two concepts
+   we will cover later, namely loops and arrays.
 
 .. [#stream] You can imagine a stream as a pipeline where you put data in at one
    end (e.g. your program or the keyboard) and it comes out at the other end
