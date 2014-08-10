@@ -212,6 +212,21 @@ save it in the variable ``p``.
    where people tend to be really picky, floating point variables are basically
    unusable here. However, a single division for output is only just okay.
 
+Compound assignment
+-------------------
+
+Since statements of the form ``x = x + y`` or generally, :samp:`x = x {operator}
+y` are so common, C++ has a shorthand for them. The compound assignment
+operators: ``x += y`` means the same as ``x = x + y``, ``x -= y`` means ``x = x
+- y`` and so on for ``*=``, ``/=`` and ``%=``. Using them, the above program
+could have been written as:
+
+.. literalinclude:: vars-mutability-compound.cpp
+
+
+More on variables
+=================
+
 Before I go on with explaining the observable behavior of variables, you should
 know what a variable really is: It is a named, typed area of memory. The “named”
 should be clear, since we explicitly gave the variable a name (e.g. ``price``).
