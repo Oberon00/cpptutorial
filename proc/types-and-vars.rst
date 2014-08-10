@@ -87,6 +87,39 @@ evaluated before the containing expression and otherwise evaluation is done from
 left to right.
 
 
+The remainder operator ``%``
+----------------------------
+
+There is one more operator that is often quite useful: The ``%`` operator
+calculates the remainder of a division. For example, ``9 % 4`` is ``1`` because
+the integer division ``9 / 4`` has the result ``2`` and ``9 - 2 * 4`` equals
+``1``. ``9 % 3`` on the other hand, is ``0`` because ``3`` divides ``9`` evenly.
+Mathematically, ``(a / b) * b + a % b`` (with ``/`` denoting rounded down
+integer division) will always equal ``a``. Note that the remainder operator is
+often called modulo operator and pronounced as “mod”, after the mathematical
+operator of the same name. It is, however, not quite the same, because C++'s
+``%`` operator has results different from the usual mathematical definition of
+mod if a negative number is used. From the above equation, we can deduce that:
+
+* ``3 % -2`` is ``1`` because ``(3 / -2) * -2 + x`` equals ``2 + x`` and for
+  this to equal ``3``, ``x`` must be ``1``.
+* ``-3 % 2`` is ``-1`` (same reasoning).
+* ``-3 % -2`` is also ``-1`` (same reasoning again).
+
+Since these are all different cases of operand signs, we can conclude that the
+sign of ``a % b`` is the same as that of ``a``.
+
+Note that ``%`` only works with integers, since there is not really a remainder
+when dividing floating point numbers.
+
+The following code uses the ``%`` operator to convert minutes to minutes and
+hours::
+
+  std::cout << "172 min = " << 172 / 60 << " h " << 172 % 60 << " min\n";
+
+The output would be ``172 min = 2 h 52 min``.
+
+
 Remembering values
 ==================
 
