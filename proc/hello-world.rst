@@ -2,6 +2,11 @@
 The Hello World program analyzed
 ********************************
 
+.. todo::
+
+   * Move compiler instructions from intro here?
+   * Compiler errors
+
 Now that you have compiled and run the :ref:`Hello World program from the
 introduction <intro-helloworld>`, you are probably curious what all these
 cryptic lines in the source code mean. Let's repeat our little program here:
