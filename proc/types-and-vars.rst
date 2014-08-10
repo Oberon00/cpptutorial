@@ -2,6 +2,10 @@
 Types and Variables
 *******************
 
+.. todo::
+   * Move multi-assignment here?
+   * More explicit explanation of expressions?
+
 Calculating with C++
 ====================
 
@@ -12,7 +16,7 @@ disposal! ::
 
   int main()
   {
-    std::cout << 1 << " = " << "1" << "\n";
+      std::cout << 1 << " = " << "1" << "\n";
   }
 
 This unspectacularly prints
@@ -53,8 +57,8 @@ This program uses the four basic arithmetic operators:
 * ``-`` (minus) for subtraction,
 * ``*`` (times) for multiplication (the asterisk ``*`` resembles a times symbol
   :math:`\times` or a multiplication dot :math:`\cdot`), and
-* ``/`` (over) for division (the forward slash ``/`` resembles a fraction bar, as in ¾ or
-  :math:`\frac 3 4`).
+* ``/`` (over) for division (the forward slash ``/`` resembles a fraction bar,
+  as in ¾ or :math:`\frac 3 4`).
 
 The :dfn:`syntax` (the notation; the way of writing this) should look pretty
 familiar from mathematics: The operator is written between a left-hand side and
@@ -65,19 +69,19 @@ With ``8 / 3`` we get a rounded-down result, while with ``8 / 3.0`` we get the
 “correct”, fractional result. The reason is that there are really two main types
 of numbers in C++: integers and floating point (approximate fractional) numbers.
 
-When you write a literal number in your code, this :dfn:`literal`'s type
-is determined by how exactly you write it: If you include a fractional part
-(i.e. a decimal point) it is a floating point number, otherwise an integer.
-When you write an operator between two numbers, i.e. use an expression of the
-form :samp:`x {operator} y`, where :samp:`{operator}` is a symbol like +, -, *
-or /, the result will have the operands (i.e. ``x``'s and ``y``'s) type. Thus,
-with ``8`` and ``3`` being both integer literals, the result of dividing them is
-also calculated with integer division, yielding an integer result. If
-the operands have different types, the one that is more likely to correctly
-represent the result is taken, and the other operand is converted to to this type
-before computing the result. For floating point vs. integer, this is always
-floating point which is why in the above example program writing ``8 / 3.0`` was
-enough (but ``8.0 / 3.0`` would also work, of course).
+When you write a literal number in your code, this :dfn:`literal`'s type is
+determined by how exactly you write it: If you include a fractional part (i.e. a
+decimal point) it is a floating point number, otherwise an integer.  When you
+write an operator between two numbers, i.e. use an expression of the form
+:samp:`x {operator} y`, where :samp:`{operator}` is a symbol like +, -, * or /,
+the result will have the operands (i.e. ``x``'s and ``y``'s) type. Thus, with
+``8`` and ``3`` being both integer literals, the result of dividing them is also
+calculated with integer division, yielding an integer result. If the operands
+have different types, the one that is more likely to correctly represent the
+result is taken, and the other operand is converted to to this type before
+computing the result. For floating point vs. integer, this is always floating
+point which is why in the above example program writing ``8 / 3.0`` was enough
+(but ``8.0 / 3.0`` would also work, of course).
 
 The last line demonstrates that you can use arbitrarily complex expressions that
 may contain multiple operators (including unary ``-``, i.e. negation) and
@@ -174,7 +178,7 @@ Changing memories
 =================
 
 In C++, contrary to mathematics, variables are mutable. That is, you can change
-their value:
+their value by assigning a new one using the assignment operator ``=``:
 
 .. literalinclude:: vars-mutability.cpp
 
@@ -183,21 +187,6 @@ Output:
 .. code-block:: none
 
   Total price: 18.34
-
-Note that the ``auto`` keyword is used only once here: No new variables are
-introduced thereafter; it is really the value that is saved in the variable that
-changes. The `=` is the assignment operator: It assigns the value of the
-expression on its right side to its left side, which must be a variable. An
-assignment like ``3 = 4 + 3`` or ``1 * 2 = 2`` will not compile (after all, what
-should be the meaning of this?).
-
-Do not mistake the meaning of the assignment operator for the mathematical
-equals sign: while both use the same character, they don't mean the same.
-Mathematically, :math:`p = p + 90` is a proposition that is false (at least for
-real numbers), because it can be reduced to the obviously false :math:`0 = 90`
-by subtracting :math:`p` on both sides. In C++, however, ``p = p + 90`` is a command
-that tells the computer to compute the result of the expression ``p + 90`` and
-save it in the variable ``p``.
 
 .. sidebar:: Floating point numbers and money
 
@@ -211,6 +200,22 @@ save it in the variable ``p``.
    because they are periodic to this base. Because money is one of the things
    where people tend to be really picky, floating point variables are basically
    unusable here. However, a single division for output is only just okay.
+
+Note that the ``auto`` keyword is used only once here: No new variables are
+introduced thereafter; it is really the value that is saved in the variable that
+changes. The `=` is the assignment operator: It assigns the value of the
+expression on its right side to its left side, which must be a variable. An
+assignment like ``3 = 4 + 3`` or ``1 * 2 = 2`` will not compile (after all, what
+should be the meaning of this?).
+
+Do not mistake the meaning of the assignment operator for the mathematical
+equals sign: while both use the same character, they don't mean the same.
+Mathematically, :math:`p = p + 90` is a proposition that is false (at least for
+real numbers), because it can be reduced to the obviously false :math:`0 = 90`
+by subtracting :math:`p` on both sides. In C++, however, ``p = p + 90`` is a
+command that tells the computer to compute the result of the expression ``p +
+90`` and save it in the variable ``p``.
+
 
 Compound assignment
 -------------------
@@ -368,9 +373,10 @@ as the signed type above, but with ``unsigned`` prepended, e.g. ``unsigned
 long``. The type ``unsigned int`` can also be called just ``unsigned``.
 
 The type of a literal is never ``short`` but otherwise it is the smallest of the
-above types that can hold the value. You can use the ``l`` or ``L`` suffix to force
-using at least ``long`` (e.g. ``42L``) and ``ll`` or ``LL`` to force a ``long
-long`` (all also in addition to ``u`` or ``U``, e.g. ``42uL`` or ``42LLu``).
+above types that can hold the value. You can use the ``l`` or ``L`` suffix to
+force using at least ``long`` (e.g. ``42L``) and ``ll`` or ``LL`` to force a
+``long long`` (all also in addition to ``u`` or ``U``, e.g. ``42uL`` or
+``42LLu``).
 
 
 Explicitly typed variables
