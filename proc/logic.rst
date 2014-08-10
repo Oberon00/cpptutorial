@@ -283,6 +283,8 @@ c`` has an intuitive and easy-to-read meaning, ``a += b += c`` does not. I thus
 recommend using either one or multiple “simple” assignment operators ``=`` or
 only one compound assignment operator [#good-comment]_.
 
+.. _proc-logic-io:
+
 Background: The input/output operators (``>>``/``<<``)
 ------------------------------------------------------
 
