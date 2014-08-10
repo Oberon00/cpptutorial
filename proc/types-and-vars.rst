@@ -245,6 +245,20 @@ How exactly is the type determined? A variable defined using ``auto``
 automatically (hence the keyword) gets the type of the expression at the
 right hand side of the ``=``.
 
+.. note:: The fact that types are determined completely at compile time and that
+   they cannot change at runtime is what makes C++ a :dfn:`statically typed`
+   language. Languages like C, C#, Java and Haskell are also statically typed.
+   Python, Ruby, Lua and Javascript on the other hand, are :dfn:`dynamically
+   typed` languages: In them, variables have no types, only their values have.
+   Thus types can change at runtime, exactly like values. Dynamic typing is one
+   of the main characteristics of the only vaguely defined term :dfn:`scripting
+   language`.
+
+   While dynamic typing often allows for more conscise programs (though the
+   advantage tends to get smaller as the programs grow bigger), static typing
+   has the advantage of improved compile-time error checking and usually better
+   runtime performance of the compiled program.
+
 Using this knowledge, you may now guess if the following program compiles:
 
 .. literalinclude:: vars-statictype.cpp
