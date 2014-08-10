@@ -35,13 +35,12 @@ This tutorial is written using [Sphinx][] and ReStructuredText.
 * If/else
 * Loops (while, do…while, for)
 * Functions [potentially hard!]
-* Structures and typedefs
-* Constants and enums
 * Pass by reference
+* Defining new types: typedef/using, enum, struct
 * (Raw) Pointers
 * The heap and `unique_ptr`
 * `std::vector`
-* `std::string`
+* Characters, Strings, string literals, `std::string`
 
 ## The C/C++ “Module-System”
 * Translation Units, Headers, Linkage and the Linker
