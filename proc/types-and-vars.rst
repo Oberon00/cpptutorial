@@ -425,6 +425,56 @@ You may want to do this later, when you know more of C++, as this blog post is
 intended for developers who already know the language.
 
 
+Defining multiple variables at once
+===================================
+
+You can define multiple variables at once. Using explicitly typed variables this
+is really straightforward::
+
+  int x, y;
+
+declares the variables ``x`` and ``y`` of type ``int`` without initializing
+them. It means the same as ::
+
+  int x;
+  int y;
+
+You can, however also initialize these variables, or initialize only some of
+them::
+
+  int x = 0, y;
+
+initializes ``x`` to ``0`` but leaves ``y`` uninitialized.
+
+This syntax can also be used with ``auto``. As usual, all variables declared
+must be initialized::
+
+  auto x = 0, y = 0;
+
+works, but ::
+
+  auto x = 0, y;
+
+doesn't, for the same reason that the equivalent ::
+
+  auto x = 0;
+  auto y;
+
+doesn't work.
+
+However, there is an additional catch with ``auto``: All variables declared in
+the same statement must have the same type. That is, while ::
+
+  auto x = 0, y = 0;
+
+works because both ``x`` and ``y`` are deduced to be ``int``\ s, the following
+is an error, because different types are deduced for ``a`` and ``b``::
+
+  auto a = 0, b = 0.0;
+
+You can remember this by imagining that the compiler replaces ``auto`` with the
+type name and does not allow conversions there.
+
 User input
 ==========
 
