@@ -33,7 +33,13 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.mathjax',
     'tutorial',
+    'sphinxcontrib.tikz'
 ]
+
+tikz_proc_suite = 'Netpbm'
+tikz_latex_preamble = (
+    r'\usepackage{zi4}' # Inconsolata
+    + r'\renewcommand\familydefault{\sfdefault}')
 
 todo_include_todos = True
 
@@ -144,6 +150,8 @@ html_static_path = ['_static']
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
 #html_extra_path = []
+
+html_style = 'cpptut.css'
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
