@@ -200,15 +200,19 @@ htmlhelp_basename = 'OnC++'
 
 # -- Options for LaTeX output ---------------------------------------------
 
+_cp_neq = format(ord('≠'), 'x')
+
 latex_elements = {
 # The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+  'papersize': 'a4paper',
 
 # The font size ('10pt', '11pt' or '12pt').
 #'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
+  'preamble': '\\DeclareUnicodeCharacter{' + _cp_neq + '}{$\\ne$}',
+  'fontpkg': '\\usepackage[nomath,oldstylenums]{kpfonts}\n'
+           + '\\usepackage[sc,osf]{mathpazo}\n'
+           + '\\usepackage{zi4} % Inconsolata\n'
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
@@ -231,7 +235,7 @@ latex_documents = [
 #latex_show_pagerefs = False
 
 # If true, show URL addresses after external links.
-#latex_show_urls = False
+latex_show_urls = 'footnote'
 
 # Documents to append as an appendix to all manuals.
 #latex_appendices = []
