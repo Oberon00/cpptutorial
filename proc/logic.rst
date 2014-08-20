@@ -348,6 +348,28 @@ read more than one variable in one expression (and thus statement), like this::
   std::cin >> x >> y;
 
 
+Summary
+=======
+
+* The ``bool``\ (ean) type can store the truth values ``true`` and ``false``.
+* For ``std::cin`` and ``std::cout``, ``true`` is ``1`` and ``false`` is ``0``.
+* The unary logical negation operator ``!`` makes ``true`` ``false`` and vice
+  versa.
+* The and-operator ``x && y`` yields ``true`` iff ``x`` and ``y`` are both
+  ``true``.
+* The or-operator ``x || y`` yields ``true`` if ``x`` or ``y`` or both are
+  ``true``.
+* Comparison operators take numeric values and yield boolean ones.
+* The equality comparison operators are ``==`` for “equals” and ``!=`` for “not
+  equals” (≠). Don't confuse equality comparison ``==`` and assignment ``=``!
+* The relational comparison operators are ``<`` (less-than), ``>``
+  (greater-than), ``<=`` (less-than-or-equal) and
+  ``>=`` (greater-than-or-equal).
+* Operators are evaluated in order of their precedence. Operators of the same
+  precedence are evaluated according to their associativity (left or right).
+* ``=`` can be used multiple times in the same expression to assign multiple
+  variables the same value (e.g. ``x = y = 42``).
+
 .. rubric:: Footnotes
 
 .. [#iff] The phrase “if and only if” is so common in mathematics and logic

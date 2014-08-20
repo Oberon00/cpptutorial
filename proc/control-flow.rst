@@ -1014,6 +1014,43 @@ but it should be enough to demonstrate the semantics of ``continue``.
    ``switch``. However, when the ``switch`` is contained in a loop, ``continue``
    affects the loop.
 
+
+Summary
+=======
+
+* The unary prefix operators ``++x`` and ``--x`` are equivalent to ``x += 1``
+  and ``x -= 1`` respectively.
+* The unary postfix operators ``x++`` and ``x--`` have the same side effect as
+  their prefix counterparts but return the original value of their operand.
+* Curly braces ``{}`` group multiple statements in one block statement.  This is
+  mainly useful for the following control-flow structures, which accept only a
+  single statement.
+* Control structures can be arbitrarily nested.
+* ``if (condition) statement`` executes statement only if the boolean expression
+  ``condition`` is ``true``.
+* ``else statement`` can be used after an ``if`` statement to execute the
+  statement only when the ``if``'s condition is not fulfilled.
+* ``switch (integral_expression)`` can be used for multiway-branching, as an
+  replacement for multiple ``else if (integral_expression == constant)``
+  statements. The branches start with ``case constant:`` and end with
+  ``break;``. The special ``default:`` branch is executed if no other branch
+  matches.
+* ``while (condition) statement`` executes statement as long as ``condition`` is
+  ``true``. If ``condition`` is initially ``false``, ``statement`` will never be
+  executed.
+* ``do statement while (condition);`` repeats ``statement`` as long as
+  ``condition`` is true, but it checks condition only *after* executing it, so
+  ``statement`` will always be executed at least once.
+* ``for (initialization; condition; increment) statement`` (where all head parts
+  are optional) executes ``statement`` as long as ``condition`` is ``true`` but
+  executes the expression or definition ``initialization`` before the loop is
+  entered (and ``condition`` is checked) and executes the ``increment``
+  expression every time after ``statement`` was executed.
+* ``break`` ends the loop it is in.
+* ``continue`` skips the rest of the loop body it is in, but goes on with the
+  next iteration (provided the loop condition is ``true``).
+
+
 ----
 
 .. rubric:: Footnotes
