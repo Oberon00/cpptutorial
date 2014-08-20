@@ -487,8 +487,8 @@ to them using ``=``, and leaving out the initial value can be used as a sign to
 the reader that such an initialization is intended. The most prominent example
 for such an initialization is user input.
 
-You may now ask when you should use explitly typed variables vs. ``auto``. I
-recommend to use explicitily typed variables only when you want a conversion, or
+You may now ask when you should use explicitly typed variables vs. ``auto``. I
+recommend to use explicitly typed variables only when you want a conversion, or
 when you dont't initialize the variable with the ``=`` operator. If you want to
 know more, I recommend reading this blog post by the prominent C++ expert Herb
 Sutter: http://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/.

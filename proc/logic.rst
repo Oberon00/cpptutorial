@@ -342,8 +342,7 @@ Analogously the same applies to ``std::cin`` (which is of type
 ``std::istreaam``, i.e. input stream) and the ``>>`` operator; that is you can
 read more than one variable in one expression (and thus statement), like this::
 
-  int x;
-  int y;
+  int x, y;
   std::cout << "Enter the x and y coordinates: ";
   std::cin >> x >> y;
 

@@ -29,6 +29,10 @@ The following program demonstrates that:
 .. literalinclude:: conditional-division.cpp
    :emphasize-lines: 13-14
 
+.. warning:: Do not write a semicolon ``;`` between the closing parenthesis and
+   the statement. It would make the ``if`` control an empty statement and the
+   next “real” statement would be executed unconditionally.
+
 Example output with dividend 3 and divisor 4 (note that the statement printing
 the divisions result is executed):
 
@@ -310,7 +314,7 @@ This inner if, however, applies to the ``cout`` expression, so that from the
 outer ``if``'s point of view, ``if (x <= 100) std::cout << …`` is just one
 statement.
 
-In this case, the nesting does not really make sense: the and operator `&&``
+In this case, the nesting does not really make sense: the and-operator ``&&``
 could (and should) be used instead::
 
   if (x >= 0 && x <= 100)
@@ -385,7 +389,7 @@ Alternatively, the following also means the same:
   else
       std::cout << "x is negative.\n";
 
-By giving the inner ``if`` an empty ``else`` branch, the next ``else`` is force
+By giving the inner ``if`` an empty ``else`` branch, the next ``else`` is forced
 to the outer ``if``. However, although technically correct, this is rather
 obscure and I recommend just using block statements instead.
 
@@ -440,7 +444,9 @@ The ``switch`` statement typically has the following syntax::
 Where ``integral_expression`` is an expression which evaluates to an integer
 type and integral constants are integral expressions that can be evaluated at
 compile time, e.g. simple integer literals or constants that are initialized
-with them.
+with them. Note that if you use variables for ``integral_expression``, they must
+be ``const``; but not every ``const`` variable qualifies: They must, in turn,
+also have been initialized from compile time evaluable expressions.
 
 The above ``switch`` is a replacement for the following ``if … else if … else``
 sequence::
