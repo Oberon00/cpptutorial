@@ -45,6 +45,25 @@ Thus, the steps are
    (``.exe`` on Windows, without extension on Unix-like systems like MacOS and
    Linux).
 
+.. tikz:: From source code to executables.
+  :libs: arrows.meta, positioning
+
+  [
+    -{Latex[length=4mm]}, auto, node distance=6em,
+    file/.style={rectangle, draw, align=center},
+    start/.style={circle, fill, draw}
+  ]
+  \node (start) [start] {};
+  \node (cpp) [file, right=of start]
+    {Source file\\\texttt{*.cpp}, \texttt{*.cc}};
+  \node (obj) [file,right=of cpp] {Object file\\\texttt{*.o}, \texttt{*.obj}};
+  \node (exe) [file,right=of obj]
+    {Executable file\\\texttt{*.exe}, w/o extension};
+
+  \path (start) edge node {Editor} (cpp)
+        (cpp) edge node {Compiler} (obj)
+        (obj) edge node {Linker} (exe);
+
 
 How To: Install a compiler
 ==========================

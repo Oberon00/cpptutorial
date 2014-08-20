@@ -250,6 +250,17 @@ of ``price`` is determined solely by the line ::
 
   auto price = 0;
 
+.. tikz:: A variable. The type determines the interpretation of the bits
+  stored at the memory location, and its size.
+  :libs: positioning, shapes.symbols, arrows.meta
+
+  \node (type) [draw, magnifying glass, line width=0.3em,
+    fill=blue, fill opacity=0.1, text opacity=1]
+    {\tikz \node [draw,rectangle] {Memory location};};
+  \node [rotate=-45, below right=2em of type] {Type};
+  \node (name) [left=of type, inner sep=0.1em] {Name};
+  \path[-{Latex}] (name) edge (type);
+
 How exactly is the type determined? A variable defined using ``auto``
 automatically (hence the keyword) gets the type of the expression at the
 right hand side of the ``=``.
