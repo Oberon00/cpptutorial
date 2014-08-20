@@ -136,8 +136,6 @@ do not return a number, but a truth value: a ``bool``. Here they are:
 
   + ``==`` (that's a double equals sign) returns ``true`` if its operands are
     the same. E.g. ``1 == 1`` yields ``true``, while ``1 == 2`` yields false.
-    Don't confuse it with the assignment operator ``=`` which is written with
-    just a single equals sign. 
   + ``!=`` means not-equal (≠) and is the opposite of ``==``: it returns
     ``true`` if its operands are *not* the same. E.g. ``1 != 2`` returns
     ``true``, while ``1 != 1`` is false.
@@ -157,6 +155,16 @@ do not return a number, but a truth value: a ``bool``. Here they are:
   + Greater-than-or-equal ``>=`` tests if the left-hand side is at least as big as
     the right-hand side: ``2 >= 1`` and ``1 >= 1`` are ``true``, while ``1 >= 2``
     is not. It always returns the opposite of ``<``.
+
+.. warning:: Don't confuse the equality test operator ``==`` with the assignment
+   operator ``=`` which is written with just a single equals sign. Often, both
+   will compile because all basic types can be converted to booleans (``true``
+   when not equal to zero) and ``=`` returns the assigned-to variable. The
+   following will always execute the ``if`` and set ``a`` to ``42``::
+
+    if (a = 42)
+        std::cout << "A is 42.\n"; // (it really is *now*, but mightn't before)
+
 
 .. warning:: Be careful when comparing floating point values for equality!
 
@@ -226,7 +234,7 @@ Example output with player level 5 and sword strength 6 (no cheating):
 Note that operators are evaluated in this order:
 
 1. Unary operators (unary ``-`` and ``!``)
-2. Arithmetic operators (first ``*`` and ``/`` then ``+`` and ``-``)
+2. Arithmetic operators (first ``*``, ``/`` and ``%`` then ``+`` and ``-``)
 3. “Input and output” operators (``>>`` and ``<<``)
 4. Comparison operators (first ``<``, ``<=``, ``>`` and ``>=``
    then ``==`` and ``!=``).
@@ -281,7 +289,18 @@ The same that has been said about ``=`` also applies to the compound assignment
 operators ``+=``, ``-=``, ``*=``, ``/=`` and ``%=``. However, while ``a = b =
 c`` has an intuitive and easy-to-read meaning, ``a += b += c`` does not. I thus
 recommend using either one or multiple “simple” assignment operators ``=`` or
-only one compound assignment operator [#good-comment]_.
+only one compound assignment operator.
+
+.. note:: If you should ever come across a situation where the multiple compound
+  assignments would make the code a lot shorter, this would be a good
+  opportunity for a comment, like::
+
+    // Calculate a1 as the sum of a1..a9;
+    // ai will contain the intermediate value a9 + a 8 + ... + ai
+    a1 += a2 += a3 += a4 += a5 += a6 += a7 += a8 += a9;
+
+  However, the above would most certainly be better written using two concepts
+  we will cover later, namely loops and arrays.
 
 .. _proc-logic-io:
 
@@ -333,17 +352,6 @@ read more than one variable in one expression (and thus statement), like this::
 
 .. [#iff] The phrase “if and only if” is so common in mathematics and logic
    that it is shortened to the single word :dfn:`iff`.
-
-.. [#good-comment] If you should ever come across a situation where the multiple
-   compound assignments would make the code a lot shorter, this would be a good
-   opportunity for a comment, like::
-
-     // Calculate a1 as the sum of a1..a9;
-     // ai will contain the intermediate value a9 + a 8 + ... + ai
-     a1 += a2 += a3 += a4 += a5 += a6 += a7 += a8 += a9;
-
-   However, the above would most certainly be better written using two concepts
-   we will cover later, namely loops and arrays.
 
 .. [#stream] You can imagine a stream as a pipeline where you put data in at one
    end (e.g. your program or the keyboard) and it comes out at the other end
