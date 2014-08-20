@@ -62,7 +62,9 @@ This program uses the four basic arithmetic operators:
 
 The :dfn:`syntax` (the notation; the way of writing this) should look pretty
 familiar from mathematics: The operator is written between a left-hand side and
-a right-hand side operand.
+a right-hand side operand. Such operators are called :dfn:`binary` operators
+because they have two operands and :dfn:`infix` operators because they are
+written between them.
 
 The two lines containing a division are particularly interesting.
 With ``8 / 3`` we get a rounded-down result, while with ``8 / 3.0`` we get the
@@ -123,6 +125,8 @@ hours::
 
 The output would be ``172 min = 2 h 52 min``.
 
+.. task:: Incorporate the ``%`` operator in the above example program!
+
 
 Remembering values
 ==================
@@ -160,7 +164,7 @@ While valid, names like the last ones (from ``temp`` on) should, in general,
 better be avoided: The purpose of a name is to let the reader know what the
 variable means, but these names tell nothing.
 
-.. important:: More time is spent on reading than one writing source code. You
+.. important:: More time is spent on reading than on writing source code. You
    should thus strive for the most readable source code rather than e.g. using
    short names just for the sake of typing speed.
 
@@ -552,6 +556,13 @@ like ``pi``. Do whatever you think is more readable.
 In the price calculation program, ``const`` could not be used, since we are
 changing the only variable ``price``.
 
+You should almost always use constants instead of writing numeric literals
+directly in your code: We have seen that for ``pi``, but this applies to almost
+any number (other than 0 and 1 which often have no special meaning beyond being
+zero and one). Numeric literals used for other things than initializing a
+constant are thus often called :dfn:`magic numbers` because their meaning is
+unknown to the uninitiated reader.
+
 
 Background information: Temporary variables
 ===========================================
@@ -575,17 +586,22 @@ names are just for demonstration purposes)::
 That is, the intermediate results of the calculations are saved in, invisible,
 temporary variables.
 
-.. note:: 
-
-  This is just conceptually so. When there is no observable difference in the
-  program's behavior, the compiler can always do something different. E.g. in
-  the above code it will probably detect that no temporaries are necessary,
-  since the calculation's intermediate values can be accumulated in ``x``::
+.. note:: This is just conceptually so. When there is no observable difference
+  in the program's behavior, the compiler can always do something different.
+  E.g. in the above code it will probably detect that no temporaries are
+  necessary, since the calculation's intermediate values can be accumulated in
+  ``x``::
 
     auto x = p * p;
     x = 1 - x;
     x = y * x;
     x = x + z;
+
+An other way to look at this is realizing that the difference between a
+(sub)expression's value and a variable's is only that the former has no name. It
+does, however, have the two other characteristics of a variable: it's stored in
+a certain area of memory and has a type. A typed area of memory is called an
+:dfn:`object`. A variable can thus also be described as a named object.
 
 
 Summary
@@ -593,6 +609,10 @@ Summary
 
 * Literals are values that are literally written into the source code, like
   ``42``, ``3.14``, or ``"Hello"``.
+* The operators ``+``, ``-``, ``*`` and ``/`` can be used to add, subtract,
+  multiply and divide two numeric operands.
+* ``x % y`` calculates the remainder when dividing the integers ``x`` by ``y``.
+  The result has the same sign as ``x``.
 * Variables are named, typed, mutable areas of memory.
 * Variable names must start with a letter or underscore and can then be followed
   by any number of letters, digits and/or underscores.
