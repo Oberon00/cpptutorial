@@ -560,9 +560,9 @@ block or just after it; I just think it looks nicer in the above way.
 Loops
 =====
 
-While ``if`` executes its “attached” statement either one or zero times, loops
-allow you to conditionally execute a statement many times. Finally, you can let
-the computer do the repetition for you!
+While ``if``/``else`` and ``switch`` execute their “attached” statement(s)
+either one or zero times, loops allow you to conditionally execute a statement
+many times. Finally, you can let the computer do the repetition for you!
 
 Repeat conditionally: ``while``
 ---------------------------------
@@ -574,7 +574,14 @@ different::
     statement                 // Loop “body”.
 
 It executes ``statement`` as long as ``boolean_expression`` is true.
-``boolean_expression`` is checked each time before executing ``statement``.
+``boolean_expression`` is checked each time before executing ``statement``. That
+is, a ``while`` loop operates as follows:
+
+1. Evaluate ``boolean_expression``
+2. If it evaluated to ``false``, end the loop (go after 4.)
+3. Execute ``statement``
+4. Go to 1.
+
 This means that if ``boolean_expression`` is already ``false`` at the point
 where the ``while`` is first reached, ``statement`` will never be executed.
 
@@ -603,16 +610,413 @@ Play around with the following program!
 ``do … while``
 --------------
 
-.. todo::
-   Not necessary most of the time.
-   Precondition vs. postcondition
+The syntax of the ``do … while`` loop is a bit weird, in the sense that it is
+the only control flow statement that consists of two keywords and the only one
+where a keyword is put *after* the statement::
+
+  do
+      statement
+  while (boolean_expression)
+
+Semantically, the only difference between the ``do … while`` and the “ordinary”
+``while`` loop is that the former checks its condition every time *after* its
+statement is executed, while the ``while`` loop does it beforehand. It operates
+as follows:
+
+1. Execute ``statement``
+2. Evaluate ``boolean_expression``
+3. If it evaluated to ``false``, end the loop (go after 4.)
+4. Go to 1.
+
+This means that, contrary to the ``while`` loop, a ``do … while`` loop always
+executes its statement at least once, no matter if ``boolean_expression`` is
+initially ``false``. You won't need ``do … while`` nearly as often as ``while``,
+but sometimes it can be handy.
+
+The following program shows a menu to the user until he chooses to exit the
+program. Such menus are typical candidates for ``do … while``.
+
+.. literalinclude:: loop-calculator.cpp
+
+You should use ``do … while`` instead of ``while`` if you catch yourself
+repeating the statements from inside the ``while`` in front of it; this::
+
+  some_statement;
+  while (some_condition)
+      some_statement; // Same as above.
+
+is better written as ::
+
+  do
+      some_statement;
+  while (some_condition)
+
+Conversely, if you are tempted to put a ``do … while`` inside an ``if`` with the
+same condition as the loop, use a plain ``while`` instead::
+
+  if (some_condition) {
+      do
+          some_statement;
+      while (some_condition); // Same condition as for the if.
+  }
+
+The above should really be written as simply::
+
+  while (some_condition)
+      some_statement;
+
+Often, you will have loops where you know that the loop condition will be
+``true`` in the first iteration of the loop, so that ``while`` and ``do …
+while`` would effectively be equivalent. In such cases, you should, by
+convention, prefer the plain ``while`` loop::
+
+  auto running = true;
+  while (running)
+      // …
+
+``while`` loops also have the advantage that their condition is written in front
+of the body, so that you can see it directly without scrolling down a
+potentially long loop body.
 
 
-Counter loops -- ``for``
+Counter loops: ``for``
 ------------------------
+
+The ``for`` loop is C++'s most versatile loop. It's commonly used as a counter
+loop, e.g. to do something ten times.
+
+
+Implementing ``for`` with ``while``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to understand the ``for`` loop, we will first implement a counter loop
+using ``while``:
+
+.. literalinclude:: while-counter.cpp
+
+Some example outputs
+
+.. code-block:: none
+
+  Enter number of iterations: 5
+  Iteration with i = 0
+  Iteration with i = 1
+  Iteration with i = 2
+  Iteration with i = 3
+  Iteration with i = 4
+  Loop left with i = 5
+
+.. code-block:: none
+
+  Enter number of iterations: 0
+  Loop left with i = 0
+
+.. code-block:: none
+
+  Enter number of iterations: 1
+  Iteration with i = 0
+  Loop left with i = 1
+
+Note that, again by convention, counting in C++ starts at zero instead of one
+and the counter variable (often named ``i``) is compared with the desired
+iteration number (``n`` in this case) by using ``<`` (less-than), not ``<=``
+(less-than-or-equal). That is, the counter variable consecutively gets all
+values from ``0`` to ``n - 1``. Mathematically, you can call this an half-open
+range, because it does not include ``n``.
+
+When the loop exits, ``i`` is equal to ``n`` (or, equivalently, the loop exits
+when ``i`` is equal to ``n``).
+
+
+The increment ``++`` and decrement ``--`` operators
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Because adding ``1`` to a variable (:dfn:`incrementing` it) is so common in C++,
+the language has a special unary operator for that: ``++``. Using this operator,
+``x += 1`` can be written as ``++x``. Similarly, subtracting ``1``
+(:dfn:`decrementing`) is done by the ``--`` operator: ``--x`` is a shorthand for
+``x -= 1``. Like the ``+=`` or ``-=`` operators, the ``++`` and ``--`` operators
+require a variable as an operand and return it after in-/decrementing.
+
+Note that these unary operators can be written not only in front of a variable
+like ``++x`` (as :dfn:`prefix` operators) but also after them, e.g. ``x++`` (as
+:dfn:`postfix` operators). The difference between these two forms is subtle:
+Both will increment (or decrement in the case of ``--``) the operand. However,
+while ``++x`` returns the updated variable, ``x++`` returns the value the
+variable had *before* incrementing. E.g. when ``x`` was ``2`` before
+incrementing, ``++x`` would set ``x`` to ``3`` and then return this ``x`` that
+has the value ``3``. ``x++``, on the other hand, remembers the value ``2``, then
+increments ``x`` and finally returns this remembered value ``2``.
+
+.. note:: Why is there the postfix form with such an odd behavior? Because it
+  sometimes is exactly what's neeeded, making code shorter. For example, the
+  factorial_ :math:`n!` of a number :math:`n` is defined as the value of the
+  expression :math:`1 \cdot 2 \cdot \ldots \cdot n`. Using this definition, we
+  can compute the factorial of 4 (:math:`4!`) as :math:`1 \cdot 2 \cdot 3 \cdot
+  4 = 24`. As a special case, :math:`0! = 1`. Implementing the factorial in C++
+  could be done with the following loop, that uses prefix ``++``::
+
+    auto i = 1, result = 1;
+    while (i <= n) {
+        result *= i;
+        ++i;
+    }
+
+  Using postfix ``++``, the loop body can be shortened to one line::
+
+    while (i <= n)
+        result *= i++;
+
+  However, since code is read more often than written, it is questionable if
+  this kind of trickery (or postfix ``++`` and ``--`` at all) is desirable.
+
+.. _factorial: http://en.wikipedia.org/wiki/Factorial
+
+When replacing ``+=`` of the counter loop from the previous section with ``++``,
+it looks like this [#postfix-again]_::
+
+  while (i < n) {
+      std::cout << "Iteration with i = " << i << '\n';
+      ++i;
+  }
+
+
+The ``for`` loop
+^^^^^^^^^^^^^^^^
+
+There were three things we had to do in our counter loops:
+
+1. Define and initialize a counter variable
+2. Compare the counter with the desired count
+3. Increment the counter
+
+The ``for`` loop allows to do all this in one statement::
+
+  for (definition_or_expression; boolean_expression; expression)
+        statement
+
+The ``definition_or_expression`` should define a counter variable or use an
+assignment expression to (re)initialize an existing one. The
+``boolean_expression`` is the loop condition that determines whether to continue
+the ``for``-loop and ``expression`` is usually used to increment the counter.
+For example the following ``for``::
+
+  for (auto i = 0u; i < n; ++i)
+      std::cout << "Iteration with i = " << i << '\n';
+
+is the exact equivalent of the ``while`` counter loop we implemented before,
+including the definition of ``i``. The only difference is that the variable
+``i`` is only in scope inside the ``for`` loop (both body and head), unlike the
+``i`` for the ``while`` that we had to declare before the loop. That is, a
+``for`` loop operates as follows:
+
+1. Execute ``definition_or_expression``.
+2. Evaluate ``boolean_expression``.
+3. If it evaluated to ``false``, end the loop (go after 6.)
+4. Execute ``statement``.
+5. Evaluate ``expression`` (for its side effect; the result is discarded).
+6. Go to 2.
+
+The following program prints a rectangle with the help of two nested for loops:
+
+.. literalinclude:: loop-for-rect.cpp
+
+Example output:
+
+.. code-block:: none
+
+  width: 3
+  height: 2
+
+  ###
+  ###
+
+Note that the inner ``for`` loop's ``definition_or_expression`` is (naturally)
+executed in each iteration of the outer ``for``. If you are unsure about what
+exactly happens, try replacing the ``cout``\ s output with something that
+includes ``x`` and ``y``.
+
+
+Stripping ``for``'s head
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+One interesting thing you can do with ``for`` is omitting parts of its head:
+In ::
+
+  for (definition_or_expression; boolean_expression; expression)
+
+If you don't need ``definition_or_expression`` you can just leave it out. The
+same thing goes for ``expression``. You can also leave out ``condition`` in
+which case it is always ``true``, causing and endless loop -- a “pseudo-endless”
+loop using the ``break`` statement from the next section is sometimes useful.
+When you leave out everything but condition, it is equivalent to a ``while``
+loop::
+
+  for (; condition; )
+      something;
+
+is equivalent to the more readable ::
+
+  while (condition)
+      something;
+
+which is why this combination of omitted head parts is not really useful.
 
 
 ``break`` and ``continue``
 --------------------------
 
-.. todo:: Use sparingly!
+Ending a loop with ``break``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes checking the loop condition at the beginning of the loop (or at the
+end with ``do … while``) is not feasible. Or there are several conditions that
+can lead to the loop being terminated and different actions are necessary in
+reaction to them. That's where ``break`` can come in handy: this keyword,
+written as a single statement, ends the (innermost) loop it is in, jumping right
+after its end.
+
+For example, the following gets up to ten numbers from the user, but ends the
+loop as soon as the sum of the numbers reaches 256:
+
+.. literalinclude:: loop-break.cpp
+   :emphasize-lines: 17
+
+We used ``break`` here, because (a) we want to execute an additional ``cout``
+when the loop ends because of reaching the target sum, without duplicating the
+boolean expression for checking if the sum was reached after loop and (b) we
+don't want to print “Sum not reached yet.” in that case and ``break`` saves us
+from having to put this into a conditional.
+
+However, there is a potential gotcha in this program: If we wanted to print
+the average of all numbers after the ``for``, we would need the count to be in
+scope after loop, so we would first move the ``auto i = 0`` before the loop ::
+
+  auto i = 0;
+  for (; i < max_number_count; ++i) {
+  // …
+
+But then a problem would surface: The final value of ``i`` has no consistent
+meaning:
+
+If the loop was terminated using ``break``, the ``++i`` in the ``for`` head
+won't be executed a final time thus ``i`` will be one less than the number of
+numbers entered. If, however, the loop ends because the ``i < max_number_count``
+loop condition becomes ``false``, ``i`` will be equal to the number of entered
+numbers. This makes it hard to compute e.g. the average of all numbers. A
+solution to this problem would be to move the ``++i`` inside the loop:
+
+.. code-block:: cpp
+  :emphasize-lines: 6
+
+  auto i = 0;
+  for (; i < max_number_count; ) {
+      int n;
+      std::cin >> n;
+      sum += n;
+      ++i;
+
+      if (sum >= target_sum) {
+          std::cout << "Target sum " << target_sum << " reached.\n";
+          break;
+      }
+      std::cout << "Sum not reached yet.\n";
+  }
+
+Now, ``i`` is always equal to the number of numbers after the loop; however our
+``for`` has effectively become a ``while`` in the process.
+
+So while the ``break`` was perfectly fine in the first example where we were not
+interested in the final value of ``i``, it made matters complicated if we did.
+Also, when using ``break``, you have to scan the whole loop body when you want
+to know when a loop will terminate, instead of just looking at the head.  The
+morale of the story is: Use ``break`` sparingly! However, I would personally
+always prefer ``break`` to the introduction of a ``bool`` variable for the loop
+condition.
+
+.. note:: Sometimes not even a single part of a loop's condition can be checked
+  in its head, so that it is entirely ``break``-controlled. The idiomatic way
+  to write such a loop is ``for (;;)``: A ``for`` loop where all optional (that
+  is, all) head parts have been omitted. This syntax looks quite odd and that's
+  why it was choosen -- such pseudo-endless loops are odd too.  The obvious
+  alternative ``while (true)`` is also used, but has the disadvantage that
+  compilers might warn you that the “conditional expression is constant”.
+
+  It is best to avoid such loops if the alternive head-controlled loop is not
+  significantly more complicated (e.g. relying on ``bool`` variables for flow
+  control).
+
+
+Skipping part of a loop body with ``continue``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While ``break`` jumps after the loop's end, ``continue`` jumps just to it,
+skipping the rest of the body but continuing with the next iteration afterwards.
+That is, ``continue`` is just a convenient alternative to putting the remainder
+of the body inside an if::
+
+  while (loop_condition) { // Works for do … while and for too, of course.
+      // Do something.
+      if (skip_condition)
+          continue;
+      // Do more things.
+  }
+
+could also be written as ::
+
+  while (loop_condition) {
+      // Do something.
+      if (!skip_condition) {
+          // Do more things.
+      }
+  }
+
+It is a matter of personal preference which one to use. I think that
+``continue`` is more readable than ``if`` when the ``if``'s body would be very
+long or when the ``if``'s execution is the “usual” case. Also, I always use
+``continue`` if it avoids nested ``if``\ s::
+
+  while (loop_condition) {
+      // Do something.
+      if (skip_condition)
+          continue;
+      // Do more things.
+      if (skip_condition_2)
+          continue;
+      // Do even more things.
+    }
+
+is IMHO far more readable than the variant with nested ``if``\ s::
+
+  while (loop_condition) {
+      // Do something.
+      if (!skip_condition) {
+      // Do more things.
+          if (!skip_condition_2) {
+              // Do even more things.
+          }
+      }
+  }
+
+Of course, you can also mix ``if`` and ``continue``; whether that makes the code
+more readable is up to you.
+
+This program demonstrates the use of ``continue``:
+
+.. literalinclude:: loop-continue.cpp
+   :emphasize-lines: 12
+
+Granted, this example is a bit silly and an ``if`` would be just as appropriate,
+but it should be enough to demonstrate the semantics of ``continue``.
+
+.. note:: Inside a ``switch`` statement, ``break`` ends the ``switch``, as we
+   have seen in the corresponding section. ``continue`` cannot be used in a sole
+   ``switch``. However, when the ``switch`` is contained in a loop, ``continue``
+   affects the loop.
+
+----
+
+.. rubric:: Footnotes
+
+.. [#postfix-again] The alert reader may have noticed that this loop could also
+   be rewritten with one statement using the postfix form of ``++``.
