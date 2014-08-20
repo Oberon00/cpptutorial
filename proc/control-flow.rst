@@ -13,7 +13,6 @@ this :dfn:`control flow`.
 Conditional execution: ``if`` and ``else``
 ==========================================
 
-
 ``if``
 ------
 
@@ -82,18 +81,18 @@ you: ``else``. Using this, the above snippet could be rewritten as::
 This also has the advantage of being immediately clear to the reader: ``if`` the
 condition is true, do this, ``else`` do that.
 
-.. aside:: Checking if ``std::cin`` succeeded
+.. sidebar:: Checking if ``std::cin`` succeeded
 
    When using ``std::cin`` we have always trusted the user to enter correct
-   values. If a incorrect value was entered, our program would screw up,
+   values. If an incorrect value was entered, our program would screw up,
    invoking undefined behavior because the variable that we meant to get from
    the user was not initialized. Using ``if`` we can now check if ``std::cin``
-   suceeded. You might :ref:`remember <proc-logic-io>` that the ``>>`` operator
-   ``std::cin`` returns the input stream (i.e. ``std::cin``) after trying to
-   read in the value. It turns out that streams can be converted to booleans:
-   They evaluate to ``false`` if any previous operation on them (like reading in
-   a variable) failed and to ``true`` otherwise. This means that you can do the
-   following::
+   suceeded. You might :ref:`remember <proc-logic-io>` that the ``>>`` operator,
+   applied to ``std::cin``, returns the input stream (i.e. ``std::cin``) after
+   trying to read in the value. It turns out that streams can be converted to
+   booleans: They evaluate to ``false`` if any previous operation on them (like
+   reading in a variable) failed and to ``true`` otherwise. This means that you
+   can do the following::
 
      if (std::cin >> x)
          std::cout << "Got x = " << x << "\n";
@@ -107,6 +106,7 @@ condition is true, do this, ``else`` do that.
    ``std::cin`` does not make this too easy: As soon as a bad value is entered,
    it basically stops working and you have to do special things we will cover
    (much) later to restore it.
+
 
 
 Block statements
@@ -127,9 +127,10 @@ following syntax::
   }
 
 That is, as many statements as you like (one or zero statements are also
-allowed), inside a pair of braces. Block statements have no special meaning on
-their own (apart from scope; we will come to this in the next section). For
-example, the following snippets are completely equivalent::
+allowed), inside a pair of braces. Note that block statements are the only
+statements that are not terminated with a semicolon. Block statements have no
+special meaning on their own (apart from scope; we will come to this in the next
+section). For example, the following snippets are completely equivalent::
 
   std::cout << "A";
   {
@@ -150,6 +151,8 @@ flow statements we will see later: since a block statement is just a single
 (though composite) statement, using it as the one statement after the ``if`` (or
 ``else`` or other control flow statement) allows to execute multiple statements
 conditionally.
+
+.. _proc-ctrl-ex-sort2:
 
 For example, the following program sorts two numbers that the user enters:
 
@@ -211,7 +214,8 @@ lines more in this example, which I personally think makes the code look so
 “stretched” that it hinders my flow of reading.
 
 There are other styles of brace formatting and indentation in general. You can
-read about them e.g. in `Wikipedia <http://en.wikipedia.org/wiki/Indent_style>`_.
+read about them e.g. in `Wikipedia
+<http://en.wikipedia.org/wiki/Indent_style>`_.
 
 
 Swapping
@@ -271,6 +275,15 @@ the block::
 However, since in this example we don't need ``original_a`` outside the ``if``,
 it's best to leave it's definition were it was: In general you should always
 make the scope of a variable as small as possible and as big necessary.
+
+
+.. task:: Extend the :ref:`program that sorts two numbers <proc-ctrl-ex-sort2>`
+   to sort three numbers instead!
+
+   Hint: Check your program with all 6 permutations_ (i.e. possible
+   orders) of 1, 2, 3.
+
+.. _permutations: http://en.wikipedia.org/wiki/Permutation
 
 
 Nested control flow and ``else if``
@@ -338,7 +351,7 @@ If not, remember that the compiler does not care about indentation. For it, the
   std::cout << "x is negative.\n";
 
 How should the compiler know which ``else`` belongs to which ``if``? This
-problem is so common in imperative languages, that it ha got it's own name: the
+problem is so common in imperative languages, that it has got its own name: the
 `dangling else problem`_. In C++ (and most other languages), there is a simple
 rule: When there is an ambiguity, the ``else`` belongs to the nearest possible
 ``if``. Thus, the “correct” indentation of the code above (i.e. the indentation
@@ -411,14 +424,14 @@ While ``if`` executes its “attached” statement either one or zero times, loo
 allow you to conditionally execute a statement many times. Finally, you can let
 the computer do the repetition for you!
 
-Repeat conditionally -- ``while``
+Repeat conditionally: ``while``
 ---------------------------------
 
 The ``while`` loop has nearly the same syntax as ``if``, only the keyword is
 different::
 
-  while (boolean_expression)
-    statement
+  while (boolean_expression)  // Loop “head”.
+    statement                 // Loop “body”.
 
 It executes ``statement`` as long as ``boolean_expression`` is true.
 ``boolean_expression`` is checked each time before executing ``statement``.
