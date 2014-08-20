@@ -32,14 +32,14 @@ This tutorial is written using [Sphinx][] and ReStructuredText.
 
 ## The Basics: Procedural programming
 * Types, Expressions, Variables [hard!]
-* If/else
+* Branching (`if`/`else`, `switch`)
 * Loops (while, do…while, for)
 * Functions [potentially hard!]
-* Pass by reference
-* Defining new types: typedef/using, enum, struct
+  + Pass by reference
+* Arrays with `std::vector`
+* Defining new types: `typedef`/`using`, `enum`, `struct`
 * (Raw) Pointers
 * The heap and `unique_ptr`
-* `std::vector`
 * Characters, Strings, string literals, `std::string`
 
 ## The C/C++ “Module-System”
