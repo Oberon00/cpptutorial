@@ -2,13 +2,13 @@
 
 int main()
 {
-  double pi = 3.14159265359;
+  auto pi = 3.14159265359;
 
-  double radius = 3;
+  auto radius = 3;
 
-  double area = radius * radius * pi; // radius * radius = radius squared
-  double diameter = 2 * radius;
-  double perimeter = diameter * pi;
+  auto area = radius * radius * pi; // radius * radius = radius squared
+  auto diameter = 2 * radius;
+  auto perimeter = diameter * pi;
   
   std::cout << "r = " << radius << " ==> "
             << "d = " << diameter
