@@ -383,6 +383,56 @@ force using at least ``long`` (e.g. ``42L``) and ``ll`` or ``LL`` to force a
 ``42LLu``).
 
 
+Characters
+----------
+
+The ``char`` type can hold a single one byte character, or a one byte integer
+number.
+
+Because computers can only handle numbers, characters must be :dfn:`encoded` as
+such. The mapping between a character (like “a”) and a number (like 65) is
+called the :dfn:`character encoding`. There are many of them but all that are
+widely used today are based on `ASCII`_. While different encodings are able to
+encode different characters (for example there are encodings for Cyrillic
+characters and other ones that include extended Latin characters like Á, ü, ß or
+ï) almost all encodings can represent the :abbr:`ASCII (American Standard Code
+for Information Interchange)` characters. They are:
+
+* The digits ``0`` to ``9`` (digit symbols are not the same as real numeric
+  values, although they are used to represent them)
+* The uppercase letters ``A`` to ``Z``
+* The lowercase letters ``a`` to ``z``
+* Punctuation characters: ``!?.:,;``
+* Brackets: ``([{}])``
+* Other symbols: ``"#$%&'*+/<=>@\^_`|~``
+* `Control characters`_ like line break, tabulator or form feed (page break).
+
+.. _ASCII: http://en.wikipedia.org/wiki/ASCII
+.. _Control characters: http://en.wikipedia.org/wiki/ASCII#ASCII_control_characters
+
+So since characters and numbers are stored exactly the same way, it is up to you
+how you interpret the ``char`` type: C++ let's you use all the arithmetic
+operators like ``+`` and ``%`` on ``char``\ s but ``std::cout`` prints them as
+characters. Also, the char literals are written as :samp:`'{x}'` where
+:samp:`{x}` can be any (single) ASCII character or escape sequence like ``\n``.
+Compilers might also accept other characters but the C++ standard does not
+require them to, so you should restrict yourself to ASCII if you want your
+source code to be portable across different compilers.
+
+If you use ``char`` for integers, be aware that it is implementation defined
+whether they are ``signed`` or ``unsigned``, so you should better explicitly
+use ``signed char`` (for numbers from -128 to 127) or ``unsigned char`` (for
+numbers from 0 to 255), depending on your needs. Note that ``signed char`` and
+``unsigned char`` are always both their own types, different from plain
+``char``, unlike the other integer types for which e.g. ``signed int`` is just
+another name for ``int``.
+
+As an example of ``char`` used as character, the following is an inconvenient
+way to print “Hello!”::
+
+  std::cout << 'H' << 'e' << 'l' << 'l' << 'o' << '!' << '\n';
+
+
 Explicitly typed variables
 ==========================
 
@@ -534,6 +584,13 @@ An example session looks like this::
 Note that you have to end your input (2.3 in the example above) by pressing
 :kbd:`Return` on your keyboard.
 
+.. note:: ``char`` variables are always interpreted as characters by
+   ``std::cin``, meaning that only a single character can be read. Thus,
+   entering 32 for ``std::cin >> c`` (where ``c`` is a ``char``) causes ``c`` to
+   become the character ``'3'`` not the character whose encoded value is 32. The
+   ``2`` will be left in the input stream and retrieved when ``std::cin`` is
+   used the next time.
+
 
 Constants
 =========
@@ -624,6 +681,7 @@ Summary
 * A literal's type can be influenced by appending a suffix (e.g. ``1.0f``).
 * For numbers, there are floating point and signed and unsigned integer types of
   varying precision and supported range.
+* The ``char`` type can represent characters or one byte integers.
 * A variable's type can be deduced automatically by the compiler from the
   initialization expression by using the ``auto`` keyword.
 * A variable's type can be defined explicitly by writing a type name instead of
