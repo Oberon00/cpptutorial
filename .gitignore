@@ -2,3 +2,4 @@
 *.obj
 _build/*
 scratch.cpp
+*.pyc
