@@ -12,11 +12,6 @@ int main()
     std::cout << "Still valid? " << is_valid << "\n";
     std::cout << "\n";
 
-    float f;
-    std::cin >> f;
-    std::cout << (0.05 * f == 0.5);
-    std::cout << "\n";
-
     bool some_bool;
     std::cout << "Enter a boolean value (0 for false, 1 for true): ";
     std::cin >> some_bool;
