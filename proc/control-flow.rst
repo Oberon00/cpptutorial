@@ -416,6 +416,146 @@ look like::
             std::cout << "x is zero. (0)\n";
 
 
+Multi-way branching: ``switch``
+===============================
+
+The ``switch`` statement typically has the following syntax::
+
+  switch (integral_expression) {
+      case integral_constant_1:
+          statements_1
+      break;
+      case integral_constant_2:
+          statements_2
+      break;
+      case integral_constant_3:
+          statements_3
+      break;
+      // ...
+      default:
+          default_statements
+      break;
+  }
+
+Where ``integral_expression`` is an expression which evaluates to an integer
+type and integral constants are integral expressions that can be evaluated at
+compile time, e.g. simple integer literals or constants that are initialized
+with them.
+
+The above ``switch`` is a replacement for the following ``if … else if … else``
+sequence::
+
+  if (integral_expression == integral_constant_1)
+      statements_1
+  else if (integral_expression == integral_constant_2)
+      statements_2
+  else if (integral_expression == integral_constant_3)
+      statements_3
+  // ...
+  else
+      default_statements
+
+Granted, the ``switch`` has more lines than the chained ``if``/``else``, but it
+does not repeat the ``==`` every time.
+
+The ``default`` branch of the ``switch`` is optional; if you leave it out, it's
+like leaving out the ``else`` in the equivalent ``if``/``else``: No statements
+are executed if ``integral_expression`` is not equal to any of the
+``integral_constant``\ s.
+
+The following program demonstrates ``switch`` (note that ``char``\s count as
+integral):
+
+.. literalinclude:: switch-calc.cpp
+
+Example output:
+
+.. code-block:: none
+
+  Enter left-hand side operand: 12
+  Enter right-hand side operand: 5
+  Enter operator: /
+  12 / 5 = 2.4
+
+.. warning:: Don't forget the ``break``! If you leave it out, the contents of
+   the ``switch`` will continue to execute accross the ``case``\ s and the
+   ``default`` (you :dfn:`fall through` these labels), until it hits the next
+   ``break`` (or reaches the end). There are some rare occasions where this is
+   intended, which is why it's not a compiler error. In such a case, you should
+   place a comment instead of the ``break``, saying ``// fall through``.
+
+Of course, the ``break`` after the ``default`` statements is technically
+unnecessary, but I added it for a consistent look.
+
+Probably the most common application of “fall through” is to execute some
+statements in multiple cases, by falling through after a ``case`` without it's
+own statement. For example we could additionally allow the dot “.” and an “x”
+for multiplication by rewriting the ``switch`` as follows:
+
+.. code-block:: cpp
+  :emphasize-lines: 6-8
+
+  switch (op) {
+      case '+': result = lhs + rhs; break;
+
+      case '-': result = lhs - rhs; break;
+
+      case '*':
+      case 'x':
+      case '.': result = lhs * rhs; break;
+
+      case '/': result = lhs / rhs; break;
+
+      default:
+          valid_op = false;
+          std::cout << "E: '" << op << "' is not a known operator.\n";
+      break;
+  }
+
+In this common case, the ``// fall through`` comment is usually left out,
+because the absence of a statement is enough of a hint. I also chose to add in
+additional empty lines, to make it clear what belongs together.
+
+
+The simple truth about ``switch``
+---------------------------------
+
+A ``switch`` statement of the form ::
+
+  switch (integral_expression) {
+      case integral_constant_1:
+          statements_1
+      case integral_constant_2:
+          statements_2
+      case integral_constant_3:
+          statements_3
+      // ...
+      default:
+          default_statements
+  }
+
+just jumps to the ``case`` label that matches the ``integral_expression``
+(``default`` if no other one matches and after the ``switch`` if no ``default``
+is given) -- nothing more; further ``case`` labels are ignored (but only the
+labels not the statements after them, which are technically not “*their*
+statements”). A ``break`` statement can be used to jump to the end of the
+``switch``. By placing a ``break`` before each ``case`` except the first one,
+the idiomatic usage of ``switch`` as a multi-way branching device is achieved.
+
+Note that if you want to declare variables that are local to a “case-branch”,
+you need to use a block statement::
+
+  switch (x) {
+      // …
+      case some_constant: {
+          auto y = /* … */;
+          // …
+      } break;
+      // …
+  }
+
+Of course, it does not matter whether the ``break`` is inside at the end of the
+block or just after it; I just think it looks nicer in the above way.
 
 Loops
 =====
