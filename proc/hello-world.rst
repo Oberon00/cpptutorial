@@ -1,15 +1,181 @@
+.. _intro-compiler:
+.. _intro-helloworld:
+
+
+*******************************
+From source code to executables
+*******************************
+
+When you write a C++ program, you start with the source code. That's a
+human-readable notation of the program, in the C++ programming language. For
+example a program that writes the text “Hello world!” to a console window looks
+like
+
+.. literalinclude:: hello_world.cpp
+
+You write this text using any plain text editor you like (e.g. `Notepad++`_ or Vim_,
+but not a rich text editor like Word or Open Office Writer). The colors are just
+added here and by good editors automatically to make the code more readable
+(that feature is called :dfn:`syntax highlighting`); you do not set them yourself in
+any way and they do not influence the program behaviour. The file is usually
+saved as with a ``.cpp`` file name extension to make it clear that this is a C++
+source code file. You might also encounter the ``.cc`` or ``.cxx`` extensions.
+
+.. _Notepad++: http://notepad-plus-plus.org/
+.. _Vim: http://www.vim.org/
+
+Computers cannot execute such a source file, they must be translated into binary
+processor instructions first. Thus, next step is to feed this program to a
+:dfn:`compiler`, which does this translation for us. There is a multitude of ways of
+doing that, depending on the compiler. The compiler then takes the source file
+and “compiles” it into an executable program which you can then start.
+
+More complex programs will usually consist of multiple C++ files which are then
+separately compiled into intermediate output files (usually with a ``.o`` or
+``.obj`` extension) and then “linked” together by a program called :dfn:`linker`
+to an executable. In fact, even if just a single source file is compiled into an
+executable, the compiler automatically invokes the linker behind the scenes.
+
+Thus, the steps are
+
+1. Write source code. Tool: editor; result: ``.cpp``-File
+2. Compile source code to object file. Tool: compiler; result: intermediate
+   object file
+3. Link object file to executable. Tool: linker; result: executable File
+   (``.exe`` on Windows, without extension on Unix-like systems like MacOS and
+   Linux).
+
+
+How To: Install a compiler
+==========================
+
+Note that nowaydays every compiler comes with a linker, so there is no need to
+install an extra linker.
+
+Windows
+-------
+
+On Windows, I recommend using Microsoft's free :program:`Visual C++ Express for
+Windows Desktop` [#long-ms-names]_. At the time of this writing, the most recent
+version (which we will of course use) is 2013 Update 3, downloadable at
+http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-8.
+Just click the “Install now!” link, and run the downloaded installer. You can
+untick any checkboxes saying something about Windows Phone or .NET.
+
+I will refer to this compiler as :abbr:`MSVC (Microsoft Visual C++)`.
+
+Debian/Ubuntu based Linux
+-------------------------
+
+On Debian/Ubuntu based Linux, we will use the :program:`g++` compiler, a part of
+the :abbr:`GCC (GNU Compiler Collection)`. Installing is as easy as opening a
+terminal and typing ``sudo apt-get install g++``, but since you're using Linux,
+I assume you know what you're doing anyway. ;-)
+
+.. _gcc: https://gcc.gnu.org/
+
+.. _intro-compiler-howto:
+
+How To: Compile your source code
+================================
+
+(Assuming you saved your file as :file:`hello_world.cpp`)
+
+Windows
+-------
+
+Open the :program:`VS2013 x86 Native Tools Command Prompt`. It is located in the
+start menu (or whatever you call it nowadays) at :menuselection:`Visual Studio
+2013 --> Visual Studio Tools`. Then change the current directory to the folder
+where you saved your file using ``cd``, e.g. :samp:`cd
+C:\\Users\\{YOURNAME}\\somefolder\\somesubfolder`.
+
+.. note::
+
+  If your source code is on a drive different from the one where the initial
+  directory of the command prompt is, use the :samp:`cd /D {YOURDIRECTORY}`
+  command (the ``/D`` option means “change the Drive if necessary”).
+
+Compiling is then done with the
+command ``cl /EHsc /W4 hello_world.cpp``. You should now see (among others) a
+new file :file:`hello_wold.exe`. You can check in the command prompt by typing
+``dir``. If you want to execute your program now, type ``hello_world``, and you
+should see a line ``Hello world!`` appearing in the console window.
+
+The compiler command
+^^^^^^^^^^^^^^^^^^^^
+
+Let's break down the compiler command. ::
+
+  cl /EHsc /W4 hello_world.cpp
+
+``cl`` is the name of Microsoft's compiler. The things preceded by slashes ``/``
+are options which tell the compiler how to process your source code. ``/EHsc``
+tells it to enable so called *exceptions*, which really should be enabled by
+default but isn't. You don't need to understand this, just remember to add this
+option whenever you compile C++ code. ``/W4`` stands for “warning level 4” and
+tells the compiler to tell you about any suspicious things it notices in your
+source code (this also should be a default but sadly isn't in any compiler I
+know of).  ``hello_world.cpp`` is obviously the name of the source file to
+compile.
+
+Linux
+-----
+
+Open a terminal and change the current directory to the one containing your
+source file. Then execute
+``g++ -std=c++14 -Wall -Wextra -ohello_world hello_world.cpp``. An executable
+``hello_world`` should now appear. You can check in the terminal by typing
+``ls``. If you want to execute your program now, type ``./hello_world``, and you
+should see a line ``Hello world!`` appearing in the terminal.
+
+The compiler command
+^^^^^^^^^^^^^^^^^^^^
+
+Let's break down the compiler command. ::
+
+  g++ -std=c++14 -Wall -Wextra -ohello_world hello_world.cpp
+
+``g++`` is the name of the compiler. The things preceded by dashes ``-``
+are options which tell the compiler how to process your source code.
+``-std=c++14`` tells it that we want to use the newest C++14 standard. ``-Wall``
+and ``-Wextra`` tell the compiler to tell you about any suspicious things it
+notices in your source code (this should be a default but sadly isn't in
+any compiler I know of). ``-ohello_world`` means “output (``-o``) as
+``hello_world`` ” and simply specifies the name of the executable to produce. If
+you leave this option out, it will be called ``a.out``. 
+``hello_world.cpp`` is obviously the name of the source file to compile.
+
+
+A few command line tips
+-----------------------
+
+To use the command line effectively, I recommend reading a good tutorial
+[#cmdtut]_. I will, however, give a few tips here:
+
+* You can use the :kbd:`Up` and :kbd:`Down` keys to cycle through your last
+  commands. For example, if you want to run the last command again, just press
+  :kbd:`Up` again, and the command will reappear, ready to be edited or directly
+  started with :kbd:`Return`.
+* You can use the :kbd:`Tab` key to complete filenames: for instance, if you
+  typed ``hel`` and the file :file:`hello_world.cpp` is in the current
+  directory, you can press :kbd:`Tab` to complete the filename.
+* Pressing :kbd:`Ctrl+C` quits the running console program and drops you back to
+  the command prompt, without closing the console window.
+* On Linux, use the ``ls`` or ``ls -l`` command to show the files and
+  subdirectories in the current directory. On Windows, ``dir`` does that.
+* To open the current directory in your GUI file system browser (e.g. Nautilus,
+  Dolphin or Windows Explorer) Use ``xdg-open .`` on Linux and ``explorer .`` on
+  Windows.
+
+
 ********************************
 The Hello World program analyzed
 ********************************
 
-.. todo::
-
-   * Move compiler instructions from intro here?
-   * Compiler errors
-
-Now that you have compiled and run the :ref:`Hello World program from the
-introduction <intro-helloworld>`, you are probably curious what all these
-cryptic lines in the source code mean. Let's repeat our little program here:
+Now that you have compiled and run the Hello World program, you are probably
+curious what all these cryptic lines in the source code mean. Let's repeat our
+little program here:
 
 .. literalinclude:: hello_world.cpp
 
@@ -266,6 +432,12 @@ Summary
 
 .. rubric:: Footnotes
 
+.. [#long-ms-names] Microsoft is infamous for it's long product names.
+
+.. [#cmdtut] Although I have not read it and it uses PowerShell on Windows
+   instead of the ordinary ``cmd``, http://cli.learncodethehardway.org/book/
+   made a good first impression on me, if you can find nothing else.
+
 .. [#fdef] More technically, it says “Here comes a *function* called ``main``
    that *returns* an integer (``int``) and takes no *arguments* (``()``).”
    Because exactly such a function is defined by the standard as being the main
@@ -280,3 +452,4 @@ Summary
 .. [#convoluted] In fact, this line uses many features of the C++ language
    that we will partly come to only very late, e.g. classes, namespaces and
    operator overloading.
+
