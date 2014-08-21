@@ -39,7 +39,18 @@ extensions = [
 tikz_proc_suite = 'Netpbm'
 tikz_latex_preamble = (
     r'\usepackage{zi4}' # Inconsolata
-    + r'\renewcommand\familydefault{\sfdefault}')
+    + r'\usepackage[T1]{fontenc}'
+    + r'\usepackage[utf8]{inputenc}'
+    + r'\renewcommand\familydefault{\sfdefault}'
+    + r'\usetikzlibrary{shapes.misc,shapes.geometric,arrows.meta}'
+    + r'\usetikzlibrary{positioning,chains}'
+
+    + r'\tikzset{flownode/.style={draw, minimum size=4ex}}'
+    + r'\tikzset{flowterm/.style={flownode,rounded rectangle,fill=black!10!white}}'
+    + r'\tikzset{flowop/.style={flownode,rectangle}}'
+    + r'\tikzset{flowbranch/.style={flownode,diamond}}'
+    + r'\tikzset{flowchart/.style={-{Latex}}}'
+)
 
 todo_include_todos = True
 
