@@ -5,9 +5,21 @@ Control flow
 Until now, the “paths” that the execution of our programs took have been quite
 simple: It started with the first statement, went on with the second, and so on,
 executing one statement after the other, each exactly once and after the last
-statement, the program ends. It turns out that this is not enough for all but
-the most trivial programs. What is needed are special statements that influence
-this :dfn:`control flow`.
+statement, the program ends.
+
+.. tikz:: A flowchart diagram for successive statements.
+
+  [flowchart,start chain=going right, every node/.style={on chain,join}]
+  \node [flowterm] {\texttt{int main()}};
+  \node [flowop] {Statement 1};
+  \node [flowop] {Statement 2};
+  \node [flowop] {\dots};
+  \node [flowop] {Statement $n$};
+  \node [flowterm] {End};
+
+
+It turns out that this is not enough for all but the most trivial programs. What
+is needed are special statements that influence this :dfn:`control flow`.
 
 
 Conditional execution: ``if`` and ``else``
@@ -23,6 +35,20 @@ The simplest control flow statement is ``if``. The syntax is::
 
 This executes the given ``statement`` only if ``boolean_expression`` evaluates
 to ``true``.
+
+.. tikz:: A flowchart for if.
+  :libs: quotes
+
+  [flowchart]
+  \node (before) [flowterm] {statement before \texttt{if}};
+  \node (cond) [flowbranch,right=of before] {condition?};
+  \node (stat) [flowop,below=of cond] {statement};
+  \node (after) [flowterm,right=7em of cond] {statement after \texttt{if}};
+  \path (before) edge (cond)
+        (cond) edge ["\texttt{true}"] (stat)
+        (cond) edge ["\texttt{false}"] (after);
+  \draw (stat) -| (after);
+
 
 The following program demonstrates that:
 
@@ -84,6 +110,23 @@ you: ``else``. Using this, the above snippet could be rewritten as::
 
 This also has the advantage of being immediately clear to the reader: ``if`` the
 condition is true, do this, ``else`` do that.
+
+.. tikz:: A flowchart for if/else.
+  :libs: quotes
+
+  [flowchart]
+  \node (before) [flowterm] {statement before \texttt{if}/\texttt{else}};
+  \node (cond) [flowbranch,right=of before] {condition?};
+  \node (stat) [flowop,right=of cond] {\texttt{if}'s statement};
+  \node (else stat) [flowop,below=of cond] {\texttt{else}'s statement};
+  \node (after) [flowterm,right=of stat]
+    {statement after \texttt{if}/\texttt{else}};
+  \path (before) edge (cond)
+        (cond) edge ["\texttt{true}"] (stat)
+        (cond) edge ["\texttt{false}"] (else stat)
+        (stat) edge (after);
+  \draw (else stat) -| (after);
+
 
 .. sidebar:: Checking if ``std::cin`` succeeded
 
@@ -419,6 +462,36 @@ look like::
         else
             std::cout << "x is zero. (0)\n";
 
+.. tikz:: A flowchart for the above snippet (equivalent to the corresponding
+  part in the full program).
+  :libs: quotes, intersections
+
+  [flowchart]
+  \node (before) [flowterm] {start};
+
+  \node (negcond) [flowbranch,below=of before] {x < 0?};
+  \node (poscond) [flowbranch,below=of negcond] {x > 0?};
+
+  \node (zero) [flowop,below=of poscond]
+    {\verb|std::cout << "x is zero. (0)\n"|};
+  \node (neg) [flowop,right=of negcond]
+    {\verb|std::cout << "x is negative. (-)\n"|};
+  \node (pos) [flowop,right=of poscond]
+    {\verb|std::cout << "x is positive. (+)\n"|};
+
+  \node (after) [flowterm,below=of zero] {end};
+
+  \path (before) edge (negcond)
+        (negcond) edge ["\texttt{true}"] (neg)
+        (negcond) edge ["\texttt{false}"] (poscond)
+        (poscond) edge ["\texttt{true}"] (pos)
+        (poscond) edge ["\texttt{false}"] (zero)
+        (zero) edge (after);
+  \draw [name path=neg after] (neg.east) -- ++(3em,0) |- (after.east);
+  \path [name path=pos after] (pos.south) |- (after.east);
+  \draw [name intersections={of=neg after and pos after,by=x}]
+    (pos.south) -- (x);
+
 
 Multi-way branching: ``switch``
 ===============================
@@ -440,6 +513,34 @@ The ``switch`` statement typically has the following syntax::
           default_statements
       break;
   }
+
+.. tikz:: A flowchart for the above switch.
+  :libs: quotes
+
+  [flowchart]
+  \node (before) [flowterm] {start};
+
+  \node (sw) [flowbranch,below=of before,align=center]
+    {\ttfamily switch\\ \ttfamily(integral\_expression)};
+  \node (c3) [flowop,below=5em of sw] {\verb|statements_3|};
+  \node (c2) [flowop,left=of c3] {\verb|statements_2|};
+  \node (c1) [flowop,left=of c2] {\verb|statements_1|};
+  \node (cx) [flowop,right=of c3] {\dots};
+  \node (def) [flowop,right=of cx] {\verb|default_statements|};
+
+  \node (after) [flowterm,below=of c3] {end};
+
+  \path (before) edge (sw)
+        (sw) edge ["\ttfamily const\_1:"'] (c1)
+        (sw) edge ["\ttfamily const\_2:"'] (c2)
+        (sw) edge ["\ttfamily const\_3:"'] (c3)
+        (sw) edge (cx)
+        (sw) edge ["\ttfamily default:"] (def)
+        (c1) edge (after)
+        (c2) edge (after)
+        (c3) edge (after)
+        (cx) edge (after)
+        (def) edge (after);
 
 Where ``integral_expression`` is an expression which evaluates to an integer
 type and integral constants are integral expressions that can be evaluated at
@@ -579,14 +680,30 @@ different::
   while (boolean_expression)  // Loop “head”.
     statement                 // Loop “body”.
 
-It executes ``statement`` as long as ``boolean_expression`` is true.
-``boolean_expression`` is checked each time before executing ``statement``. That
-is, a ``while`` loop operates as follows:
+It executes ``statement`` as long as the loop condition ``boolean_expression``
+is ``true``.  ``boolean_expression`` is checked each time before executing
+``statement``. That is, a ``while`` loop operates as follows:
 
 1. Evaluate ``boolean_expression``
 2. If it evaluated to ``false``, end the loop (go after 4.)
 3. Execute ``statement``
 4. Go to 1.
+
+.. tikz:: A flowchart for while.
+  :libs: quotes
+
+  [flowchart]
+
+  \node (s) [flowterm] {start};
+  \node (cond) [flowbranch, below=of s] {condition?};
+  \node (stat) [flowop, below=of cond] {statement};
+  \node (e) [flowterm, below=of stat] {end};
+
+  \path (s) edge (cond)
+        (cond) edge ["\ttfamily true"] (stat);
+  \draw (stat.south) |- ++(9em,-1em) |- (cond.east);
+  \draw (cond.west) -- ++(-3em,0) node [anchor=south] {\ttfamily false} |- (e.west);
+
 
 This means that if ``boolean_expression`` is already ``false`` at the point
 where the ``while`` is first reached, ``statement`` will never be executed.
@@ -633,6 +750,21 @@ as follows:
 2. Evaluate ``boolean_expression``
 3. If it evaluated to ``false``, end the loop (go after 4.)
 4. Go to 1.
+
+.. tikz:: A flowchart for do … while.
+  :libs: quotes
+
+  [flowchart]
+
+  \node (s) [flowterm] {start};
+  \node (stat) [flowop, below=of s] {statement};
+  \node (cond) [flowbranch, below=of stat] {condition?};
+  \node (e) [flowterm, below=of cond] {end};
+
+  \path (s) edge (stat)
+        (stat) edge (cond)
+        (cond) edge ["\ttfamily false"] (e);
+  \draw (cond.east) -- ++(3em,0) node [anchor=north] {\ttfamily true} |- (stat.east);
 
 This means that, contrary to the ``while`` loop, a ``do … while`` loop always
 executes its statement at least once, no matter if ``boolean_expression`` is
@@ -822,6 +954,26 @@ including the definition of ``i``. The only difference is that the variable
 4. Execute ``statement``.
 5. Evaluate ``expression`` (for its side effect; the result is discarded).
 6. Go to 2.
+
+.. tikz:: A flowchart for for.
+  :libs: quotes
+
+  [flowchart]
+
+  \node (s) [flowterm] {start};
+  \node (init) [flowop, below=of s]{definition or expression (head pt. 1)};
+  \node (cond) [flowbranch, below=of init,align=center]
+    {condition?\\(head pt. 2)};
+  \node (stat) [flowop, below=of cond] {statement};
+  \node (step) [flowop, below=of stat] {expression (head pt. 3)};
+  \node (e) [flowterm, below=of step] {end};
+
+  \path (s) edge (init)
+        (init) edge (cond)
+        (cond) edge ["\ttfamily true"] (stat)
+        (stat) edge (step);
+  \draw (step.south) |- ++(9em,-1em) |- (cond.east);
+  \draw (cond.west) -- ++(-3em,0) node [anchor=south] {\ttfamily false} |- (e.west);
 
 The following program prints a rectangle with the help of two nested for loops:
 
