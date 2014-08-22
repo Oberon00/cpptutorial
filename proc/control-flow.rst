@@ -324,7 +324,9 @@ it's best to leave it's definition were it was: In general you should always
 make the scope of a variable as small as possible and as big necessary.
 
 
-.. task:: Extend the :ref:`program that sorts two numbers <proc-ctrl-ex-sort2>`
+.. task:: Sorting three numbers
+
+   Extend the :ref:`program that sorts two numbers <proc-ctrl-ex-sort2>`
    to sort three numbers instead!
 
    Hint: Check your program with all 6 permutations_ (i.e. possible
@@ -776,6 +778,13 @@ program. Such menus are typical candidates for ``do … while``.
 
 .. literalinclude:: loop-calculator.cpp
 
+.. task:: Mini calculator
+
+   Extend this program so that the user cannot enter only a number that
+   is then added, but a number and and and operator, so that the user can decide
+   to add to, subtract from, multiply or divide the current value. Make sure to
+   handle division by zero!
+
 You should use ``do … while`` instead of ``while`` if you catch yourself
 repeating the statements from inside the ``while`` in front of it; this::
 
@@ -994,6 +1003,24 @@ executed in each iteration of the outer ``for``. If you are unsure about what
 exactly happens, try replacing the ``cout``\ s output with something that
 includes ``x`` and ``y``.
 
+.. task:: Pyramids with ``for``
+
+  Write a program that outputs a “pyramid” of a given height. For
+  example fo the input 4, the program should print::
+
+    #
+    ##
+    ###
+    ####
+
+  Extend the program to optionally put the slope on both sides. E.g for the 4
+  above, it should then print::
+
+       #
+      ###
+     #####
+    #######
+
 
 Stripping ``for``'s head
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1129,10 +1156,13 @@ could also be written as ::
       }
   }
 
-It is a matter of personal preference which one to use. I think that
-``continue`` is more readable than ``if`` when the ``if``'s body would be very
-long or when the ``if``'s execution is the “usual” case. Also, I always use
-``continue`` if it avoids nested ``if``\ s::
+That is, the ``continue`` jumps before the check of the condition in a ``while``
+and ``do … while`` loop and before the “increment” expression in a ``for`` loop.
+
+It is a matter of personal preference whether to use ``continue`` or ``if``. I
+think that ``continue`` is more readable than ``if`` when the ``if``'s body
+would be very long or when the ``if``'s execution is the “usual” case. Also, I
+always use ``continue`` if it avoids nested ``if``\ s::
 
   while (loop_condition) {
       // Do something.
@@ -1166,6 +1196,15 @@ This program demonstrates the use of ``continue``:
 
 Granted, this example is a bit silly and an ``if`` would be just as appropriate,
 but it should be enough to demonstrate the semantics of ``continue``.
+
+.. task:: ``continue`` with ``if``/``else``
+
+  Rewrite this program using ``if``/``else`` instead of ``continue``!
+
+  SOLUTION:
+
+  .. literalinclude:: loop-continue-if.cpp
+     :emphasize-lines: 11-12
 
 .. note:: Inside a ``switch`` statement, ``break`` ends the ``switch``, as we
    have seen in the corresponding section. ``continue`` cannot be used in a sole
@@ -1209,7 +1248,11 @@ Summary
   next iteration (provided the loop condition is ``true``).
 
 
-----
+Solutions for Tasks
+===================
+
+.. tasksolutions:: .
+
 
 .. rubric:: Footnotes
 

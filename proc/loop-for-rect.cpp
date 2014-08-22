@@ -12,7 +12,7 @@ int main()
 
     std::cout << '\n';
 
-    const char brush_char = '#';
+    const auto brush_char = '#';
 
     for (auto y = 0u; y < height; ++y) {
         for (auto x = 0u; x < width; ++x)
