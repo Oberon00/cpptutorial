@@ -10,5 +10,10 @@ div.figure {
     text-align: center;
 }
 
-div.figure p.caption {
+p.taskref { text-align: right }
+div.admonition p.admonition-title { display: inline }
+div.admonition-task {
+    background-image: url(dialog-todo.png);
+    background-repeat: no-repeat;
+    background-position: 10px 8px;
 }
