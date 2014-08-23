@@ -332,6 +332,19 @@ make the scope of a variable as small as possible and as big necessary.
    Hint: Check your program with all 6 permutations_ (i.e. possible
    orders) of 1, 2, 3.
 
+   SOLUTION:
+
+   One way to approach this is to first make sure that the smallest of the three
+   numbers is first and then swap the remaining two if necessary:
+
+   .. literalinclude:: conditional-sort-3.cpp
+
+   What's ugly about this solution is that we have to repeat the code
+   for swapping three numbers three times. We will learn how to write code that
+   can be used several times from several places in :ref:`proc-functions`. For
+   now, we have to put up with this violation of the DRY_ principle.
+
+.. _DRY: http://en.wikipedia.org/wiki/Don%27t_repeat_yourself
 .. _permutations: http://en.wikipedia.org/wiki/Permutation
 
 
@@ -572,6 +585,8 @@ like leaving out the ``else`` in the equivalent ``if``/``else``: No statements
 are executed if ``integral_expression`` is not equal to any of the
 ``integral_constant``\ s.
 
+.. _proc-ctrl-ex-switch:
+
 The following program demonstrates ``switch`` (note that ``char``\s count as
 integral):
 
@@ -773,17 +788,30 @@ executes its statement at least once, no matter if ``boolean_expression`` is
 initially ``false``. You won't need ``do … while`` nearly as often as ``while``,
 but sometimes it can be handy.
 
+
+.. _proc-ctrl-ex-do-while:
+
 The following program shows a menu to the user until he chooses to exit the
 program. Such menus are typical candidates for ``do … while``.
 
 .. literalinclude:: loop-calculator.cpp
 
+.. _proc-task-minicalc:
+
 .. task:: Mini calculator
 
    Extend this program so that the user cannot enter only a number that
-   is then added, but a number and and and operator, so that the user can decide
+   is then added, but a number and an operator, so that the user can decide
    to add to, subtract from, multiply or divide the current value. Make sure to
    handle division by zero!
+
+   SOLUTION:
+
+   This program is basically a combination of the example program :ref:`for
+   switch <proc-ctrl-ex-switch>` and :ref:`the one mentioned in the task
+   <proc-ctrl-ex-do-while>`:
+
+   .. literalinclude:: loop-minicalc.cpp
 
 You should use ``do … while`` instead of ``while`` if you catch yourself
 repeating the statements from inside the ``while`` in front of it; this::
@@ -1021,6 +1049,30 @@ includes ``x`` and ``y``.
      #####
     #######
 
+  Try to minimize code duplication between these two options!
+
+  SOLUTION:
+
+  The trick for the basic variant is to have the inner ``for``'s counter run
+  only up to the outer ``for``'s counter + 1: In the first line, you want to
+  print one ``#``, in the second line two, and so on: generally, in the n-th
+  line, you want to print n hashtags.
+
+  For the extended variant, you need to print ``w = 2 * y + 1`` hashtags in the
+  line index ``y`` (index ``y`` meaning it's the ``y + 1``-th line): In line
+  ``0``, you need to print one (hence the ``+ 1``) and in every successive line
+  you need to print two more (hence the ``* 2``). Additionally, you need to
+  print spaces in front of the hashtags: Obviously, for the last line, let's
+  call it's index ``h``, you need to print zero of them. However, for line ``h -
+  1`` you need to print one space, for line ``h - 2`` two, and so on. Generally,
+  line ``y`` requires ``h - y`` spaces.
+
+  Note that the formula for the block numbers of the extended and basic variant
+  can be generalized to ``w = b * y + 1`` where ``b`` is 1 for the basic variant
+  and ``2`` for the extended variant.
+
+  .. literalinclude:: loop-for-pyramids.cpp
+
 
 Stripping ``for``'s head
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1073,6 +1125,20 @@ boolean expression for checking if the sum was reached after loop and (b) we
 don't want to print “Sum not reached yet.” in that case and ``break`` saves us
 from having to put this into a conditional.
 
+.. _proc-task-break-with-if-else:
+
+.. task:: ``break`` with ``if``/``else``
+
+   Rewrite the above program without using ``break``.
+
+   SOLUTION:
+
+   .. literalinclude:: loop-break-if.cpp
+      :emphasize-lines: 10, 15, 18
+
+   Note how the check if the target sum has (not) been reached now appears three
+   times instead of just one.
+
 However, there is a potential gotcha in this program: If we wanted to print
 the average of all numbers after the ``for``, we would need the count to be in
 scope after loop, so we would first move the ``auto i = 0`` before the loop ::
@@ -1115,9 +1181,25 @@ So while the ``break`` was perfectly fine in the first example where we were not
 interested in the final value of ``i``, it made matters complicated if we did.
 Also, when using ``break``, you have to scan the whole loop body when you want
 to know when a loop will terminate, instead of just looking at the head.  The
-morale of the story is: Use ``break`` sparingly! However, I would personally
-always prefer ``break`` to the introduction of a ``bool`` variable for the loop
+morale of the story is: Use ``break`` sparingly, especially in ``for`` loops
+with increment expressions in their head!  However, I would personally always
+prefer ``break`` to the introduction of a ``bool`` variable for the loop
 condition.
+
+.. task:: Average with ``break``-less variant
+
+   (Followup to the :ref:`previous task <proc-task-break-with-if-else>`.) What
+   would you need to change for the previous task to have ``i`` always be equal
+   to the number of numbers entered?
+
+   SOLUTION:
+
+   Moving the definition of ``i`` outside the ``for`` is enough.
+
+.. task::
+
+   A great opportunity to *introduce* ``break`` would be the :ref:`mini
+   calculator <proc-task-minicalc>`.
 
 .. note:: Sometimes not even a single part of a loop's condition can be checked
   in its head, so that it is entirely ``break``-controlled. The idiomatic way

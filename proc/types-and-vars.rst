@@ -125,7 +125,7 @@ hours::
 
 The output would be ``172 min = 2 h 52 min``.
 
-.. task:: Try ``%``
+.. task::
 
    Incorporate the ``%`` operator in the above example program!
 
