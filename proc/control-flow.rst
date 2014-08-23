@@ -305,7 +305,7 @@ i.e. inside or after the ``else`` block.
 
 Apart from type, value and associated memory, a variable also has a
 :dfn:`scope`. The scope is the area of the source code in which the variable can
-be referred to. It starts at it's definition and ends where the (innermost)
+be referred to. It starts at its definition and ends where the (innermost)
 block in which it was declared ends. Thus the scope of ``original_a`` extends
 only to the end of the ``if``'s block statement, but not outside it. If you
 wanted to use the variable after the ``if`` you would have to define it outside
@@ -320,7 +320,7 @@ the block::
   // and also here
 
 However, since in this example we don't need ``original_a`` outside the ``if``,
-it's best to leave it's definition were it was: In general you should always
+it's best to leave its definition were it was: In general you should always
 make the scope of a variable as small as possible and as big necessary.
 
 
@@ -612,7 +612,7 @@ Of course, the ``break`` after the ``default`` statements is technically
 unnecessary, but I added it for a consistent look.
 
 Probably the most common application of “fall through” is to execute some
-statements in multiple cases, by falling through after a ``case`` without it's
+statements in multiple cases, by falling through after a ``case`` without its
 own statement. For example we could additionally allow the dot “.” and an “x”
 for multiplication by rewriting the ``switch`` as follows:
 
@@ -1063,7 +1063,7 @@ includes ``x`` and ``y``.
   ``0``, you need to print one (hence the ``+ 1``) and in every successive line
   you need to print two more (hence the ``* 2``). Additionally, you need to
   print spaces in front of the hashtags: Obviously, for the last line, let's
-  call it's index ``h``, you need to print zero of them. However, for line ``h -
+  call its index ``h``, you need to print zero of them. However, for line ``h -
   1`` you need to print one space, for line ``h - 2`` two, and so on. Generally,
   line ``y`` requires ``h - y`` spaces.
 

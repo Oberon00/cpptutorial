@@ -247,7 +247,7 @@ it and how they should to be performed (note that types should be nothing new to
 you by now; a variables type is the very same concept as a literal's or an
 expression's type). The type of a variable is determined at compile time (i.e.
 when compiling the program, not when running it), when defining it. Unlike a
-variable's value, it's type never changes. Thus in the program above, the type
+variable's value, its type never changes. Thus in the program above, the type
 of ``price`` is determined solely by the line ::
 
   auto price = 0;

@@ -451,7 +451,7 @@ Summary
 
 .. rubric:: Footnotes
 
-.. [#long-ms-names] Microsoft is infamous for it's long product names.
+.. [#long-ms-names] Microsoft is infamous for its long product names.
 
 .. [#cmdtut] Although I have not read it and it uses PowerShell on Windows
    instead of the ordinary ``cmd``, http://cli.learncodethehardway.org/book/

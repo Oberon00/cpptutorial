@@ -253,7 +253,7 @@ not everyone can always correctly remember the order of operator evaluation and
 parentheses make the order of evaluation unambiguous to the reader.
 
 How early an operator is evaluated in relation to other operators is a property
-that has it's own name: the :dfn:`precedence` (level) of an operator. The higher
+that has its own name: the :dfn:`precedence` (level) of an operator. The higher
 the level, the earlier an operator is evaluated.
 
 Operator associativity and “multi-assignment”

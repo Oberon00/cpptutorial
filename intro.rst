@@ -51,7 +51,7 @@ However, as you can probably imagine, developing software by entering just zeros
 and ones is not really feasible: it is very hard to write such :dfn:`machine
 code` correctly, and even harder to read. To solve this problem, :dfn:`assembler
 languages` were created. I use the plural here, because, like with bitwise
-programming, every processor (or processor family) had it's own assembler
+programming, every processor (or processor family) had its own assembler
 language. Such “languages” allow programmers to use words instead of bit
 patterns for the instructions that the corresponding CPU supports. For example,
 to add the constant 4 to the value that is saved in the 123th memory cell, the
@@ -218,7 +218,7 @@ There are programming languages which do better in some of these aspect, but
 no single one (at least not in wide use) that has all of the advantages.
 
 For example, C# fails #6, by requiring the .NET Framework or Mono to be
-installed.  Its also not completely on par with C++ in terms of performance. The
+installed.  It's also not completely on par with C++ in terms of performance. The
 same applies to Java, which requires a JRE (Java Runtime Environment) to be
 installed.
 
