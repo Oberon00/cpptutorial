@@ -279,11 +279,11 @@ that, make C++ “feel like a new language” [Stroustrup01]_. A new minor (thou
 by far not as minor as C++03) update is expected in late summer 2014, the next
 major one is planned for 2017, which shows that since C++11 the
 speed of the standardization committee has greatly increased. See
-https://isocpp.org/std/status for more on this.
+http://isocpp.org/std/status for more on this.
 
 The standard is intended mainly for :ref:`compiler <intro-compiler>` writers but it may also be useful
 to experienced C++ programmers who seek authoritative, formal, detailed
-information. See https://isocpp.org/std/the-standard for how to get it. But note
+information. See http://isocpp.org/std/the-standard for how to get it. But note
 that the standard is hard to read even for those already knowing C++. It is not
 intended for learning the language.
 

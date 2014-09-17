@@ -91,7 +91,7 @@ the :abbr:`GCC (GNU Compiler Collection)`. Installing is as easy as opening a
 terminal and typing ``sudo apt-get install g++``, but since you're using Linux,
 I assume you know what you're doing anyway. ;-)
 
-.. _gcc: https://gcc.gnu.org/
+.. _gcc: http://gcc.gnu.org/
 
 .. _intro-compiler-howto:
 
