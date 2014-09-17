@@ -11,3 +11,4 @@ Contents:
    logic
    control-flow
    functions
+   user-types
