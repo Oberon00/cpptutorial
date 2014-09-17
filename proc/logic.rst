@@ -237,9 +237,11 @@ Note that operators are evaluated in this order:
 2. Arithmetic operators (first ``*``, ``/`` and ``%`` then ``+`` and ``-``)
 3. “Input and output” operators (``>>`` and ``<<``)
 4. Comparison operators (first ``<``, ``<=``, ``>`` and ``>=``
-   then ``==`` and ``!=``).
-5. Logical connectives (first ``&&``, then ``||``).
-6. Assignment operator (``=``) and compound assignment operators (``+=``,
+   then ``==`` and ``!=``)
+5. Logical connectives (first ``&&``, then ``||``)
+6. Ternary conditional operator ``? :`` (see :ref:`later section
+   <proc-logic-ternary>`)
+7. Assignment operator (``=``) and compound assignment operators (``+=``,
    ``-=``, ``*=``, ``/=`` and ``%=``)
 
 That is, the initialization expression of ``winning`` has the same meaning as ::
@@ -347,6 +349,68 @@ read more than one variable in one expression (and thus statement), like this::
   std::cin >> x >> y;
 
 
+.. _proc-logic-ternary:
+
+The ternary conditional operator ``? :``
+========================================
+
+Let's start with an example program that uses the ternary operator:
+
+.. literalinclude:: logic-ternary.cpp
+   :emphasize-lines: 10
+
+Example outputs:
+
+.. code-block:: none
+
+  Enter PIN: 1234
+  OK
+
+.. code-block:: none
+
+  Enter PIN: 2334
+  Invalid!
+
+That is, the ternary operator has the following syntax::
+
+  boolean_expression ? true_expression : false_expression
+
+In fact :dfn:`ternary` means just that the operator has three operands (the
+succession is thus unary: 1, binary: 2, ternary: 3 operands) ‒ this is an
+unique property in C++. The operator works as follows:
+
+First, evaluate ``boolean_expression``. Then, if it was true, evaluate and yield
+``true_expression``. Otherwise evaluate and yield ``false_expression``.
+
+``true_expression`` and ``false_expression`` must thus be convertible to a
+common type. For numbers the same rules as for the arithmetic operators apply,
+e.g. ``condition ? 3 : 0.4`` will have the type ``double``; it does not matter
+which value gets actually selected by ``condition`` since, as you already know,
+types are determined at compile time.
+
+The ``? :`` is right associative and it's precedence is just above the
+assignment operators [#midpar]_. It is also right associative, so that
+expressions containing multiple ``?:``\s have a useful meaning. E.g. the
+following::
+
+  auto num_str = x == 1 ? "one" :
+                 x == 2 ? "two" :
+                 x == 3 ? "three" :
+                          "many";
+
+means the same as::
+
+  auto num_str =  x == 1 ? "one" :
+                 (x == 2 ? "two" :
+                 (x == 3 ? "three" :
+                           "many"));
+
+I.e. if ``x == 1`` set ``num_str`` to ``"one"``, otherwise if ``x == 2`` to
+``"two"``, otherwise if ``x == 3`` to ``"three"``, otherwise to ``"many"``.
+
+.. todo:: Precedence different in parts?
+
+
 Summary
 =======
 
@@ -368,6 +432,11 @@ Summary
   precedence are evaluated according to their associativity (left or right).
 * ``=`` can be used multiple times in the same expression to assign multiple
   variables the same value (e.g. ``x = y = 42``).
+* The ternary conditional operator ``c ? t : f`` evaluates to ``t`` if ``c`` is
+  ``true`` and to ``f`` otherwise. It is right associative and can thus be
+  composed like ``c1 ? t1 : c2 ? t2 : f``, meaning ``t1`` if ``c1``, otherwise
+  ``t2`` if ``c2``, otherwise ``f``.
+
 
 .. rubric:: Footnotes
 
@@ -377,3 +446,6 @@ Summary
 .. [#stream] You can imagine a stream as a pipeline where you put data in at one
    end (e.g. your program or the keyboard) and it comes out at the other end
    (e.g. the screen or in the variable given to ``std::cin``).
+
+.. [#midpar] However, in ``c ? t : f`` the ``t`` is “parenthesized” between the
+   ``?`` and the ``:``.
