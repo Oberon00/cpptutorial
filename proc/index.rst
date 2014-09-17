@@ -10,3 +10,4 @@ Contents:
    types-and-vars
    logic
    control-flow
+   functions

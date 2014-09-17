@@ -667,6 +667,8 @@ temporary variables.
     x = y * x;
     x = x + z;
 
+.. _proc-vars-obj:
+
 An other way to look at this is realizing that the difference between a
 (sub)expression's value and a variable's is only that the former has no name. It
 does, however, have the two other characteristics of a variable: it's stored in

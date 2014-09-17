@@ -295,6 +295,7 @@ right (sorted from smallest to largest) order. Of course, sorting more than just
 two numbers is more involved than that, but many algorithms that do it still use
 the swapping of two numbers as a fundamental operation.
 
+.. _proc-ctrl-scope:
 
 Scope
 -----
@@ -922,6 +923,8 @@ variable had *before* incrementing. E.g. when ``x`` was ``2`` before
 incrementing, ``++x`` would set ``x`` to ``3`` and then return this ``x`` that
 has the value ``3``. ``x++``, on the other hand, remembers the value ``2``, then
 increments ``x`` and finally returns this remembered value ``2``.
+
+.. _proc-ctrl-factorial:
 
 .. note:: Why is there the postfix form with such an odd behavior? Because it
   sometimes is exactly what's neeeded, making code shorter. For example, the
