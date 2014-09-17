@@ -481,13 +481,20 @@ uninitialized variables, you will `most likely`_ just get some garbage value
 (whatever bits previously were in the memory area that is now occupied by the
 variable).
 
+.. note:: To clear up the terminology here:
+  * You :dfn:`initialize` a variable when you assign a value in the same
+    statement where it is defined.
+  * You :dfn:`assign` a variable by using the ``=`` operator afterwards.
+  * A variable is :dfn:`initialized` both if you have assigned a value to it or
+    really did initialize it. Otherwise it is :dfn:`uninitialized`.
+
 .. _strange things: http://blog.regehr.org/archives/759
 .. _most likely: http://kqueue.org/blog/2012/06/25/more-randomness-or-less/
 
-Nevertheless, variables can be initialized in other ways than assigning a value
-to them using ``=``, and leaving out the initial value can be used as a sign to
-the reader that such an initialization is intended. The most prominent example
-for such an initialization is user input.
+Nevertheless, variables can be “assigned” in other ways than using the
+assignment operator ``=``, and leaving out the initial value can be used as a
+sign to the reader that such an assignment is intended. The most prominent
+example for this is user input.
 
 You may now ask when you should use explicitly typed variables vs. ``auto``. I
 recommend to use explicitly typed variables only when you want a conversion, or
@@ -583,8 +590,8 @@ number of the given variable's type from it and stores the result there [#inpute
     auto radius;
     radius = 0.0;
 
-  Variables defined using ``auto`` must always be initialized directly in the
-  definition statement.
+  Variables defined using ``auto`` must always be initialized, i.e. assigned
+  directly in the definition statement.
 
 The program then goes on, as in the previous version, calculating the diameter,
 perimeter and area of the circle with the entered radius and printing them.
