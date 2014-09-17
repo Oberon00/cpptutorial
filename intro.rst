@@ -77,7 +77,7 @@ equivalent of ::
 
 .. todo:: In practice, registers would be used instead of reserving memory.
 
-Of course you would not write it like this; the above is just pseudocode,
+Of course you would not write it like this; the above is just :dfn:`pseudocode`,
 to give you an idea of how verbosely precise assembler programs are, even
 conceptually. If you wrote this program in the correct way, i.e. using a syntax
 that an actual assembler can understand, the lines would shorter but also more

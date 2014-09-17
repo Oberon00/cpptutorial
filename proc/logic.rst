@@ -173,6 +173,14 @@ do not return a number, but a truth value: a ``bool``. Here they are:
   difference between two numbers is below a certain threshold (e.g. ``0.00001``)
   instead.
 
+.. warning:: Comparison operators can't be chained. While mathematically e.g.
+   the expression :math:`0 < x < m` is true iff :math:`x` is between :math:`0`
+   and :math:`m` exclusively, in C++ ``0 < x < m`` would compare the boolean
+   result of the expression ``0 < x`` to ``m``. Sadly, due to ``bool`` being
+   convertible to (other) numeric types, this and similar expressions compile
+   (with a warning you would hopefully have enabled and notice!) but certainly
+   dont't do what you want.
+
 This example program let's you enter two numbers and outputs the results of all
 comparison operators on them as a table:
 
