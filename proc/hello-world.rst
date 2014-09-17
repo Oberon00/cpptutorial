@@ -371,7 +371,7 @@ yields
 
 Note that in the code examples above, I have only included what is written
 between the curly braces of the main program. You already know the rest and
-always reading/writing the same :term:`boilerplate` code starts getting boring.
+always reading/writing the same :term:`boilerplate code` starts getting boring.
 
 
 Comments

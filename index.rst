@@ -9,6 +9,7 @@ Contents:
 
    intro
    proc/index
+   glossary
 
 .. todolist::
 
