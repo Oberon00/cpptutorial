@@ -482,6 +482,7 @@ uninitialized variables, you will `most likely`_ just get some garbage value
 variable).
 
 .. note:: To clear up the terminology here:
+
   * You :dfn:`initialize` a variable when you assign a value in the same
     statement where it is defined.
   * You :dfn:`assign` a variable by using the ``=`` operator afterwards.
