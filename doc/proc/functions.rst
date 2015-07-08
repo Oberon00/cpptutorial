@@ -18,7 +18,7 @@ Basic usage
 The following program defines and uses a function called ``print_sepline`` that
 prints a separator line to ``std::cout``:
 
-.. literalinclude:: func-basic-sepline.cpp
+.. literalinclude:: ex/functions/basic-sepline.cpp
 
 The program's output is:
 
@@ -78,7 +78,7 @@ come in. For example, for ``print_sepline`` we could want to parametrize the
 length of the seperator line and the character of which it is made. The
 following program demonstrates that:
 
-.. literalinclude:: func-params-sepline.cpp
+.. literalinclude:: ex/functions/params-sepline.cpp
    :emphasize-lines: 3, 13, 15, 26, 29
 
 Example output:
@@ -131,7 +131,7 @@ Pass by value
 
 What does the following program print?
 
-.. literalinclude:: func-pass-by-val.cpp
+.. literalinclude:: ex/functions/pass-by-val.cpp
 
 Parameters of functions are, as said above, variables inside the callee that are
 initialized by the caller. This implies that the values the caller supplies must
@@ -165,7 +165,7 @@ Function cannot only receive arguments, they can also return a value. For
 example, the following program uses a function to compute the square of a
 number:
 
-.. literalinclude:: func-retval-sqr.cpp
+.. literalinclude:: ex/functions/retval-sqr.cpp
 
 The return value's type (here ``double``) takes the place where formerly we have
 always written ``void``. Inside the function, the ``return`` keyword is used to
@@ -229,7 +229,7 @@ be used multiple times. Apart from returning a value for non-``void`` functions,
 For example, we could use ``return`` in ``main`` to abort the program on invalid
 input:
 
-.. literalinclude:: func-main-err.cpp
+.. literalinclude:: ex/functions/main-err.cpp
 
 Another common usage of ``return`` is to return from a function as soon as you
 “found” something, e.g. in the following (inefficient) function ``next_prime``::
@@ -291,7 +291,7 @@ so that the change effects the variable that the caller passed (because your
 function would otherwise always be used like ``x = f(x)`` anyway). That's where
 reference parameters can be used. For example:
 
-.. literalinclude:: func-ref-absolutize.cpp
+.. literalinclude:: ex/functions/ref-absolutize.cpp
    :emphasize-lines: 3
 
 To make a parameter a reference parameter, write a ``&`` (ampersand) after the
@@ -311,7 +311,7 @@ parameters is that you can assign to them affecting the argument passed.
 A use case for multiple return values could be a function that returns both the
 minimum and the maximum of its parameters:
 
-.. literalinclude:: func-ref-minmax.cpp
+.. literalinclude:: ex/functions/ref-minmax.cpp
 
 
 Reference types
@@ -389,7 +389,7 @@ functions in this area. Global variables are usually a bad idea because
 
 A bad example would be following:
 
-.. literalinclude:: func-globals.cpp
+.. literalinclude:: ex/functions/globals.cpp
 
 This would better be rewritten using reference parameters, and a local ``sum``
 in ``main``.

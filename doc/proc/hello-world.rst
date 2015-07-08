@@ -11,7 +11,7 @@ human-readable notation of the program, in the C++ programming language. For
 example a program that writes the text “Hello world!” to a console window looks
 like
 
-.. literalinclude:: hello_world.cpp
+.. literalinclude:: ex/hello_world.cpp
 
 You write this text using any plain text editor you like (e.g. `Notepad++`_ or Vim_,
 but not a rich text editor like Word or Open Office Writer). The colors are just
@@ -196,7 +196,7 @@ Now that you have compiled and run the Hello World program, you are probably
 curious what all these cryptic lines in the source code mean. Let's repeat our
 little program here:
 
-.. literalinclude:: hello_world.cpp
+.. literalinclude:: ex/hello_world.cpp
 
 
 Linewise breakdown
@@ -276,7 +276,7 @@ Defining the main program
 
 Now it starts to get interesting!
 
-.. literalinclude:: hello_world.cpp
+.. literalinclude:: ex/hello_world.cpp
    :emphasize-lines: 3,4,6
 
 The third line basically says to the compiler: “Here comes the main program!”
@@ -288,7 +288,7 @@ program is started.
 Writing to the console
 ----------------------
 
-.. literalinclude:: hello_world.cpp
+.. literalinclude:: ex/hello_world.cpp
    :emphasize-lines: 5
 
 This line really is the only one that is actually executed at runtime. It is a

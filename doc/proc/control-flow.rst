@@ -52,7 +52,7 @@ to ``true``.
 
 The following program demonstrates that:
 
-.. literalinclude:: conditional-division.cpp
+.. literalinclude:: ex/control-flow/if-division.cpp
    :emphasize-lines: 13-14
 
 .. warning:: Do not write a semicolon ``;`` between the closing parenthesis and
@@ -203,7 +203,7 @@ conditionally.
 
 For example, the following program sorts two numbers that the user enters:
 
-.. literalinclude:: conditional-sort.cpp
+.. literalinclude:: ex/control-flow/if-sort.cpp
 
 Example output with input “1 2”:
 
@@ -338,7 +338,7 @@ make the scope of a variable as small as possible and as big necessary.
    One way to approach this is to first make sure that the smallest of the three
    numbers is first and then swap the remaining two if necessary:
 
-   .. literalinclude:: conditional-sort-3.cpp
+   .. literalinclude:: ex/control-flow/if-sort-3.cpp
 
    What's ugly about this solution is that we have to repeat the code
    for swapping three numbers three times. We will learn how to write code that
@@ -356,7 +356,7 @@ Like you can write arbitrarily complex expressions, you can also write
 arbitrarily complex control flow structures. The following program demonstrates
 that:
 
-.. literalinclude:: conditional-nested.cpp
+.. literalinclude:: ex/control-flow/if-nested.cpp
 
 Try the program out yourself! Make sure you see all four possible outputs.
 
@@ -386,7 +386,7 @@ The dangling ``else`` problem
 You should be particularly careful with nested ``else``. For example, consider
 the following program:
 
-.. literalinclude:: conditional-dangling-else.cpp
+.. literalinclude:: ex/control-flow/if-dangling-else.cpp
 
 Did you expect these outputs?
 
@@ -462,7 +462,7 @@ There is, however a common use for nesting control flow statements without
 blocks. Look for example at the following program that determines, whether a
 number is positive, negative or zero:
 
-.. literalinclude:: conditional-else-if.cpp
+.. literalinclude:: ex/control-flow/if-else-if.cpp
    :emphasize-lines: 11-12
 
 The ``else if`` is not a new statement: it's just an ``if`` nested inside a
@@ -604,7 +604,7 @@ are executed if ``integral_expression`` is not equal to any of the
 The following program demonstrates ``switch`` (note that ``char``\s count as
 integral):
 
-.. literalinclude:: switch-calc.cpp
+.. literalinclude:: ex/control-flow/switch-calc.cpp
 
 Example output:
 
@@ -741,7 +741,7 @@ where the ``while`` is first reached, ``statement`` will never be executed.
 
 Play around with the following program!
 
-.. literalinclude:: loop-while.cpp
+.. literalinclude:: ex/control-flow/loop-while.cpp
 
 .. note::
 
@@ -808,7 +808,7 @@ but sometimes it can be handy.
 The following program shows a menu to the user until he chooses to exit the
 program. Such menus are typical candidates for ``do … while``.
 
-.. literalinclude:: loop-calculator.cpp
+.. literalinclude:: ex/control-flow/loop-calculator.cpp
 
 .. _proc-task-minicalc:
 
@@ -825,7 +825,7 @@ program. Such menus are typical candidates for ``do … while``.
    switch <proc-ctrl-ex-switch>` and :ref:`the one mentioned in the task
    <proc-ctrl-ex-do-while>`:
 
-   .. literalinclude:: loop-minicalc.cpp
+   .. literalinclude:: ex/control-flow/loop-minicalc.cpp
 
 You should use ``do … while`` instead of ``while`` if you catch yourself
 repeating the statements from inside the ``while`` in front of it; this::
@@ -881,7 +881,7 @@ Implementing ``for`` with ``while``
 In order to understand the ``for`` loop, we will first implement a counter loop
 using ``while``:
 
-.. literalinclude:: while-counter.cpp
+.. literalinclude:: ex/control-flow/loop-while-counter.cpp
 
 Some example outputs
 
@@ -1030,7 +1030,7 @@ including the definition of ``i``. The only difference is that the variable
 
 The following program prints a rectangle with the help of two nested for loops:
 
-.. literalinclude:: loop-for-rect.cpp
+.. literalinclude:: ex/control-flow/loop-for-rect.cpp
 
 Example output:
 
@@ -1087,7 +1087,7 @@ includes ``x`` and ``y``.
   can be generalized to ``w = b * y + 1`` where ``b`` is 1 for the basic variant
   and ``2`` for the extended variant.
 
-  .. literalinclude:: loop-for-pyramids.cpp
+  .. literalinclude:: ex/control-flow/loop-for-pyramids.cpp
 
 
 Stripping ``for``'s head
@@ -1132,7 +1132,7 @@ after its end.
 For example, the following gets up to ten numbers from the user, but ends the
 loop as soon as the sum of the numbers reaches 256:
 
-.. literalinclude:: loop-break.cpp
+.. literalinclude:: ex/control-flow/loop-break.cpp
    :emphasize-lines: 17
 
 We used ``break`` here, because (a) we want to execute an additional ``cout``
@@ -1149,7 +1149,7 @@ from having to put this into a conditional.
 
    SOLUTION:
 
-   .. literalinclude:: loop-break-if.cpp
+   .. literalinclude:: ex/control-flow/loop-break-if.cpp
       :emphasize-lines: 10, 15, 18
 
    Note how the check if the target sum has (not) been reached now appears three
@@ -1289,7 +1289,7 @@ more readable is up to you.
 
 This program demonstrates the use of ``continue``:
 
-.. literalinclude:: loop-continue.cpp
+.. literalinclude:: ex/control-flow/loop-continue.cpp
    :emphasize-lines: 12
 
 Granted, this example is a bit silly and an ``if`` would be just as appropriate,
@@ -1301,7 +1301,7 @@ but it should be enough to demonstrate the semantics of ``continue``.
 
   SOLUTION:
 
-  .. literalinclude:: loop-continue-if.cpp
+  .. literalinclude:: ex/control-flow/loop-continue-if.cpp
      :emphasize-lines: 11-12
 
 .. note:: Inside a ``switch`` statement, ``break`` ends the ``switch``, as we

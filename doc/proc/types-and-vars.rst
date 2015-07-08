@@ -33,7 +33,7 @@ do with it: With strings like we have seen them until now, you can do little
 more than printing them. With numbers, however you can do a lot more, e.g.
 calculating:
 
-.. literalinclude:: calculating.cpp
+.. literalinclude:: ex/types-and-vars/calculating.cpp
 
 Observe the output:
 
@@ -139,7 +139,7 @@ where multiple end results are calculated based on an intermediate value. The
 following demonstrates how to do this, using various calculations on a circle as
 an example:
 
-.. literalinclude:: vars-basic.cpp
+.. literalinclude:: ex/types-and-vars/basic-vars.cpp
 
 This outputs:
 
@@ -186,7 +186,7 @@ Changing memories
 In C++, contrary to mathematics, variables are mutable. That is, you can change
 their value by assigning a new one using the assignment operator ``=``:
 
-.. literalinclude:: vars-mutability.cpp
+.. literalinclude:: ex/types-and-vars/mutability.cpp
 
 Output:
 
@@ -232,7 +232,7 @@ operators: ``x += y`` means the same as ``x = x + y``, ``x -= y`` means ``x = x
 - y`` and so on for ``*=``, ``/=`` and ``%=``. Using them, the above program
 could have been written as:
 
-.. literalinclude:: vars-mutability-compound.cpp
+.. literalinclude:: ex/types-and-vars/compound-assignment.cpp
 
 
 More on variables
@@ -283,7 +283,7 @@ right hand side of the ``=``.
 
 Using this knowledge, you may now guess if the following program compiles:
 
-.. literalinclude:: vars-statictype.cpp
+.. literalinclude:: ex/types-and-vars/static-type.cpp
 
 If you thought that it will not compile, I wish you were right. But
 unfortunately (if you ask me) it does compile and prints
@@ -454,7 +454,7 @@ do this, simply by writing the type instead of ``auto``. The expression on the
 right side of the ``=`` will be converted, if necessary. For example, our circle
 program could be written as:
 
-.. literalinclude:: vars-explicit.cpp
+.. literalinclude:: ex/types-and-vars/explicit-types.cpp
 
 I have chosen the types in such a way that no conversion occurs, but you could
 also use e.g. ``double`` for the radius' type, or use ``float`` everywhere.
@@ -564,7 +564,7 @@ example, if you wanted to calculate the area of a circle with a different value,
 you would have to change the source code and recompile the program. That's not
 acceptable! Let's solve this problem:
 
-.. literalinclude:: vars-input.cpp
+.. literalinclude:: ex/types-and-vars/input.cpp
    :emphasize-lines: 9
 
 If you compile and run this program, it will first display the text “Enter the
@@ -625,7 +625,7 @@ of definition, like ``auto`` variables, even when it is explicitly typed.
 In our circle program we could use ``const`` everywhere except for the input
 variable ``radius``:
 
-.. literalinclude:: vars-const.cpp
+.. literalinclude:: ex/types-and-vars/const.cpp
 
 I recommend using ``const`` variables anywhere you can, but others like to use
 it only for these variables that are logically immutable, e.g. natural constants

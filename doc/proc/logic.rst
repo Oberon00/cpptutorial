@@ -40,7 +40,7 @@ print/accept “0” and “1” (mainly for historical reasons).
    Of course, you usually don't want that and your compiler will, if given the
    right command line options, warn you about such mistakes.
 
-.. literalinclude:: logic-bool-vars.cpp
+.. literalinclude:: ex/logic/bool-vars.cpp
 
 Example output (with input “0”):
 
@@ -110,7 +110,7 @@ meaning as ``x || (y && (!z))``.
 
 The following program demonstrates some uses of these operators:
 
-.. literalinclude:: logic-boolops.cpp
+.. literalinclude:: ex/logic/boolops.cpp
 
 Note that we had to put the expressions in parentheses for output. That's
 because the compiler would otherwise try to generate instructions that evaluate
@@ -183,7 +183,7 @@ do not return a number, but a truth value: a ``bool``. Here they are:
 This example program let's you enter two numbers and outputs the results of all
 comparison operators on them as a table:
 
-.. literalinclude:: logic-comparison.cpp
+.. literalinclude:: ex/logic/comparison.cpp
 
 Example output for inputs x = 1 and y = 2:
 
@@ -226,7 +226,7 @@ It is entirely possible and often useful do arithmetic calculations in
 expressions with comparison operators and use logical connectives on their
 Boolean results:
 
-.. literalinclude:: logic-mixed-expressions.cpp
+.. literalinclude:: ex/logic/mixed-expressions.cpp
 
 Example output with player level 5 and sword strength 6 (no cheating):
 
@@ -363,7 +363,7 @@ The ternary conditional operator ``? :``
 
 Let's start with an example program that uses the ternary operator:
 
-.. literalinclude:: logic-ternary.cpp
+.. literalinclude:: ex/logic/ternary.cpp
    :emphasize-lines: 10
 
 Example outputs:
