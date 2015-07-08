@@ -661,7 +661,7 @@ names are just for demonstration purposes)::
   auto __t3 = y * t2;
   auto x = t3 + z;
 
-That is, the intermediate results of the calculations are saved in, invisible,
+That is, the intermediate results of the calculations are saved in invisible,
 temporary variables.
 
 .. note:: This is just conceptually so. When there is no observable difference
@@ -723,9 +723,10 @@ e.g. simple spreadsheet documents.
 
 .. rubric:: Footnotes
 
-.. [#underscorenames] In fact, such names are not acutally invalid but they are
-   reserved for :dfn:`the implementation`, that is the compiler and the standard
-   library. The same applies to names containing multiple underscores in a row.
+.. [#underscorenames] In fact, such names are not actually invalid but they are
+   reserved for :dfn:`the implementation`, that is the compiler and the
+   standard library. The same applies to names containing multiple underscores
+   in a row.
 .. [#emptyfractional] You can leave out the ``0`` after the ``.``, i.e. ``1.``
    means the same as ``1.0``.
 .. [#inputerr] We will cover what happens when you enter an invalid value

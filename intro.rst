@@ -136,9 +136,9 @@ Abstraction
 High-level programming languages hide the specifics of a particular CPU from us,
 so that we do not have to care about it. However they still provide us with a
 set of well defined instructions that enable us to do whatever we want. The
-compiler the makes sure that the CPU understands these instructions. This hiding
-is an application of :dfn:`abstraction`: Hiding the things that we do not want
-to care about (the available CPU instructions) for our problem (e.g. doing
+compiler then makes sure that the CPU understands these instructions. This
+hiding is an application of :dfn:`abstraction`: Hiding the things that we do not
+want to care about (the available CPU instructions) for our problem (e.g. doing
 something 10 times or calculating the tax or simulating a game world) behind a
 simpler, more expressive, more portable (across CPUs and operating systems)
 language.
@@ -176,9 +176,9 @@ and the main features in programming languages to support it are :ref:`functions
 
 There is also data (object) abstraction in the above recipe: One does not need
 to know, for example, the ingredients of the noodles to use them in the recipe.
-It is enough to know that you can boil them, and when they are al dente. The
-main feature to support this in programming languages are :ref:`classes
-<oo>`.
+It is enough to know that you can boil them, and when they are al dente.
+Programming languages that support this kind of abstraction are called
+:ref:`object oriented <oo>`.
 
 When something cannot (or need not) be refined further, it is called a
 :dfn:`primitive`. Generally, it is in the eye of the beholder if something is a
@@ -257,12 +257,11 @@ A tiny bit of history
 
 The roots of C++ date back to 1979, when Bjarne Stroustrup needed a language
 that was both suitable for writing highly efficient programs and provided
-abstraction mechanisms comparable to the Simula. The language he began to
-develop then was called “C with Classes” as it mainly added basic object
-oriented capabilities to the C programming language. In 1983, the name was
-changed to C++, as more features were added.
-In 1985, Stroustrup wrote first edition of `The C++ programming Language`_
-codifying the language for the first time.
+abstraction mechanisms comparable to Simula. The language he began to develop
+then was called “C with Classes” as it mainly added basic object oriented
+capabilities to the C programming language. In 1983, the name was changed to
+C++, as more features were added.  In 1985, Stroustrup wrote first edition of
+`The C++ programming Language`_ codifying the language for the first time.
 
 .. _The C++ programming Language: http://www.stroustrup.com/4th.html
 
@@ -290,11 +289,11 @@ is planned for 2017, which shows that since C++11 the speed of the
 standardization committee has greatly increased. See
 http://isocpp.org/std/status for more on this.
 
-The standard is intended mainly for :ref:`compiler <intro-compiler>` writers but it may also be useful
-to experienced C++ programmers who seek authoritative, formal, detailed
-information. See http://isocpp.org/std/the-standard for how to get it. But note
-that the standard is hard to read even for those already knowing C++. It is not
-intended for learning the language.
+The standard is intended mainly for :ref:`compiler <intro-compiler>` writers but
+it may also be useful to experienced C++ programmers who seek authoritative,
+formal, detailed information. See http://isocpp.org/std/the-standard for how to
+get it. But note that the standard is hard to read even for those already
+knowing C++. It is not intended for learning the language.
 
 .. [Stroustrup01] Bjarne Stroustrup in his `C++11 FAQ
    <http://www.stroustrup.com/C++11FAQ.html#think>`_
