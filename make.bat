@@ -45,7 +45,7 @@ if "%1" == "clean" (
 )
 
 
-%SPHINXBUILD% 2> nul
+%SPHINXBUILD% 1> nul 2> nul
 if errorlevel 9009 (
 	echo.
 	echo.The 'sphinx-build' command was not found. Make sure you have Sphinx
@@ -59,12 +59,20 @@ if errorlevel 9009 (
 )
 
 set mkhtml=0
-if "%1" == "html" set mkhtml=1
+if "%1" == "devhtml" set mkhtml=1
 if "%1" == "" set mkhtml=1
 
 
 if %mkhtml% == 1 (
-	%SPHINXBUILD% -b html %ALLSPHINXOPTS% %BUILDDIR%/html
+	%SPHINXBUILD% -b html %ALLSPHINXOPTS% %BUILDDIR%/html -Dtodo_include_todos=1
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Build finished. The HTML pages are in %BUILDDIR%/html.
+	goto end
+)
+
+if "%1" == "html" (
+	%SPHINXBUILD% -b html %ALLSPHINXOPTS% %BUILDDIR%/html -Dtodo_include_todos=0
 	if errorlevel 1 exit /b 1
 	echo.
 	echo.Build finished. The HTML pages are in %BUILDDIR%/html.
