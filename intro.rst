@@ -270,15 +270,24 @@ codifying the language for the first time.
 The ISO Standard
 ================
 
-In 1998, the ISO standardized C++. A new version of the standard, which
-contained only a few fixes was released in 2003. These standards are commonly
-referred to as C++98.
+In 1998, the :abbr:`ISO (International Organization for Standardization)`
+standardized C++. A new version of the standard, which contained only a few
+fixes was released in 2003. These standards are commonly referred to as C++98.
+
+.. sidebar:: Why is a standard important?
+
+  Before standardization, programs written for one compiler could often not be
+  compiled by other ones, because each supported different features or supported
+  the same features differently (each implemented its own :dfn:`dialect` of
+  C++).  Since the standardization of C++, these differences have vastly
+  decreased, and nearly all programs can be compiled on all C++-compilers with
+  no changes.
 
 In 2011, the next version of C++ was standardized: C++11 adds many enhancements
 that, make C++ “feel like a new language” [Stroustrup01]_. A new minor (though
-by far not as minor as C++03) update is expected in late summer 2014, the next
-major one is planned for 2017, which shows that since C++11 the
-speed of the standardization committee has greatly increased. See
+by far not as minor as C++03) update was released in 2014 and the next major one
+is planned for 2017, which shows that since C++11 the speed of the
+standardization committee has greatly increased. See
 http://isocpp.org/std/status for more on this.
 
 The standard is intended mainly for :ref:`compiler <intro-compiler>` writers but it may also be useful
