@@ -317,14 +317,14 @@ to http://isocpp.org/, a page set up by Microsoft.
 Bjarne Stroustrup, the creator of C++ also has a homepage with some interesting
 information at http://www.stroustrup.com/.
 
-Reading the C++ FAQ by Marshall Cline at http://www.parashift.com/c++-faq/ can
+Reading the C++ FAQ (originally by Marshall Cline) at https://isocpp.org/faq can
 keep you from falling into many pitfalls of C++ and also does a good job on
 explaining the practical aspects of many of C++'s concepts. It also has a
-section on `Big Picture Issues`_, which answers questions like
-`What are some features of C++ from a business perspective?
-<http://www.parashift.com/c++-faq/overview-cpp.html>`_.
+section on `Big Picture Issues`_, which answers questions like `What are some
+features of C++ from a business perspective?
+<https://isocpp.org/wiki/faq/big-picture#overview-cpp>`_.
 
-.. _Big Picture Issues: http://www.parashift.com/c++-faq/big-picture.html
+.. _Big Picture Issues: https://isocpp.org/wiki/faq/big-picture
 
 `Stackoverflow`_ is a valuable resource for almost any programming language. C++
 questions usually have the tag `[c++]
