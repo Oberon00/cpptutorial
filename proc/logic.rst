@@ -160,11 +160,10 @@ do not return a number, but a truth value: a ``bool``. Here they are:
    operator ``=`` which is written with just a single equals sign. Often, both
    will compile because all basic types can be converted to booleans (``true``
    when not equal to zero) and ``=`` returns the assigned-to variable. The
-   following will always execute the ``if`` and set ``a`` to ``42``::
+   following will always print ``1`` and set ``a`` to ``1`` (the integer
+   value of ``true``)::
 
-    if (a = 42)
-        std::cout << "A is 42.\n"; // (it really is *now*, but mightn't before)
-
+        std::cout << (a = 42 || some_condition);
 
 .. warning:: Be careful when comparing floating point values for equality!
 
