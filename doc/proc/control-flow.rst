@@ -128,6 +128,8 @@ condition is true, do this, ``else`` do that.
   \draw (else stat) -| (after);
 
 
+.. _proc-ctrl-check-cin:
+
 .. sidebar:: Checking if ``std::cin`` succeeded
 
    When using ``std::cin`` we have always trusted the user to enter correct
@@ -509,17 +511,17 @@ look like::
     (pos.south) -- (x);
 
 .. note:: Dont't forget the ``?:`` operator! In the example above, it could be
-   used to replace the ``if``/``else`` like this::
+  used to replace the ``if``/``else`` like this::
 
     std::cout << (x < 0 ? "x is negative. (-)" :
                   x > 0 ? "x is positive. (+)" :
                           "x is zero. (0)")
               << '\n';
 
-    The ternary operator, however, can be used to select expressions only (and
-    also expressions of the same type only), while using ``if``/``else`` you can
-    execute whole different program parts. For example the :ref:`sorting program
-    <proc-ctrl-ex-sort2>` could not be implemented using only ``? :``.
+  The ternary operator, however, can be used to select expressions only (and
+  also expressions of the same type only), while using ``if``/``else`` you can
+  execute whole different program parts. For example the :ref:`sorting program
+  <proc-ctrl-ex-sort2>` could not be implemented using only ``? :``.
 
 
 Multi-way branching: ``switch``

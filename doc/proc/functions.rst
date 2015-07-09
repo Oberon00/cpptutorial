@@ -30,8 +30,8 @@ The program's output is:
   ------------------------------------------------------------
   Below separator lines.
 
-First new thing is the definition of the function. It start with the functions
-head::
+The first new thing is the definition of the function. It start with the
+functions head::
 
   void print_sepline()
 
@@ -61,19 +61,20 @@ continues in the calling function (the main program, in the above example).
 
 One thing to note is that when execution jumps to the called function (the
 :dfn:`callee`) the calling function's (the :dfn:`caller`'s) :ref:`scope
-<proc-ctrl-scope>` is left and with the callee, a new one is entered. Then,
-after completing the callee's body, execution resumes in the callers scope. At
-runtime, this involves creating all variables defined inside the callee
-(reserving memory for them) when it is entered and destroying them (freeing the
-memory for them so that it can be reused later) when it exits. This will be
-detailed further, when we also know about input parameters and return values.
+<proc-ctrl-scope>` is left and the callee's, is entered. Then, after completing
+the callee's body, execution resumes in the callers scope. At runtime, this
+involves creating all variables defined inside the callee (reserving memory for
+them) when it is entered and destroying them (freeing the memory for them so
+that it can be reused later) when it exits (but not when it is just temporarily
+left for calling another function). This will be detailed further, when we also
+know about input parameters and return values.
 
 
 Parameters and arguments
 ========================
 
-Often, we do not want to do *exactly* the same thing multiple times but to reuse
-a certain behaviour with some small variations. That's where function parameters
+Often, we do not want to do *exactly* the same thing multiple times but reuse a
+certain behaviour with some small variations. That's where function parameters
 come in. For example, for ``print_sepline`` we could want to parametrize the
 length of the seperator line and the character of which it is made. The
 following program demonstrates that:
@@ -227,16 +228,21 @@ Return can be used not only at the end of a function, but anywhere. It can also
 be used multiple times. Apart from returning a value for non-``void`` functions,
 ``return`` is to functions what ``break`` is to loops (and to ``switch``).
 For example, we could use ``return`` in ``main`` to abort the program on invalid
-input:
+input (See :ref:`Checking if std::cin succeeded <proc-ctrl-check-cin>`):
 
 .. literalinclude:: ex/functions/main-err.cpp
+
+.. warning:: Note the parantheses around ``std::cin >> x``. If they were left
+  out, the code would be evaluated as ``(!std::cin) >> x``. Unfortunately, this
+  is not a compiler error but has an undesired meaning (e.g. it leaves ``x``
+  uninitialized).
 
 Another common usage of ``return`` is to return from a function as soon as you
 “found” something, e.g. in the following (inefficient) function ``next_prime``::
 
   unsigned next_prime(unsigned start, unsigned max)
   {
-      for (int i = start; i <= max; ++i) {
+      for (auto i = start; i <= max; ++i) {
           if (is_prime(i)) // Left as an exercise to the reader.
               return i;
       }

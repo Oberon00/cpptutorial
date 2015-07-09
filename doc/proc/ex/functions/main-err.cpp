@@ -4,7 +4,7 @@ int main()
 {
     int x;
     std::cout << "Enter x: ";
-    if (!std::cin >> x) {
+    if (!(std::cin >> x)) {
         std::cout << "E: Invalid number.\n";
         return 1;
     }
