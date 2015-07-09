@@ -654,6 +654,9 @@ understand recursion, you must first understand recursion.
 The definition of recursion is rather simple: A function is :dfn:`recursive` if
 it calls itself.
 
+A simple recursion: Factorials
+------------------------------
+
 As an example, we might implement the :ref:`factorial function
 <proc-func-factorial>` using recursion::
 
@@ -724,11 +727,15 @@ more but the additional space it needs depends, in the case of ``factorial(n)``
 on the input parameter ``n``, while the iterative implementation always uses the
 same amount of stack space, regardless of ``n``. Because the stack is usually
 limited too a far smaller size than the available RAM (e.g. just two Megabytes
-with the MSVC's default configuration), calling the recursive implementation of
+with MSVC's default configuration), calling the recursive implementation of
 ``factorial`` with a too big number can lead to a :dfn:`stack overflow error`,
 that crashes the program [#factorialoverflow]_. Additionally, all the pushing
 and popping also takes time and so the function is also slower than the
 iterative variant.
+
+.. note:: A clever compiler may be able to optimize simple recursions like the
+   above in such a way that the generated machine does not contain recursion
+   anymore and is equivalent to an iterative implementation.
 
 Of course, recursion also has advantages: For example, it is often closer to the
 mathematical definition of a function than a recursive implementation. For
@@ -749,7 +756,14 @@ implementation:
 The big pi :math:`\prod` is the mathematical product sign. The whole expression
 means “Take the product of all :math:`i` from :math:`i = 1` to :math:`n`\ ”.
 However, there are functions for which there is only a recursive mathematical
-definition. One of the more well known is the function that returns the
+definition.
+
+
+A more complex recursion: Fibonacci numbers
+-------------------------------------------
+
+One of the more well known functions that have no simple non-recursive
+mathematical definitions is the function that returns the
 :math:`n`\ th number of the Fibonacci sequence. It is defined as:
 
 .. math::
@@ -825,13 +839,60 @@ number, and only a constant amount of stack space. I think that
 is also much harder to check if the above is correct. For ``fib_recursive`` I
 only need to check that the translation from the mathematical definition to C++
 is correct, for ``fib_iterative`` I would only be assured of its correctness
-when I tested it for some values. There are some more complicated algorithms
-that can not be implemented iteratively without manually managing a stack of
-data ‒ this is still usually more efficient than recursion, since you don't have
-to store return addresses or local variables that aren't needed after the
-recursive call would have been made. For those algorithms, you have to make a
-trade-off between readability/maintainability and efficiency, unless you are
-forced to avoid a recursive solution due to possible stack overflow errors.
+when I tested it for some values.
+
+However, we can significantly improve the efficiency of the recursion by
+implementing it the same way as the loop above, i.e. by computing bottom-up
+starting with :math:`\operatorname{fib}(0)` instead of top-down starting with
+:math:`\operatorname{fib}(1)`::
+
+  unsigned fib_impl(unsigned current, unsigned previous, unsigned i, unsigned n)
+  {
+    if (i < n)
+      return fib_impl(current + previous, current, i + 1, n);
+    return current;
+  }
+
+  unsigned fib_recursive2(unsigned n)
+  {
+      if (n == 0)
+          return 0;
+      return fib_impl(1, 0, 1, n);
+  }
+
+.. note:: This bottom-up computing technique that avoids computing the same
+  things over and over again is useful for many algorithms and even has a name:
+  `Dynamic programming`_
+
+.. _Dynamic programming: https://en.wikipedia.org/wiki/Dynamic_programming
+
+This also shows that transforming a loop into a recursion is a quite mechanical
+task: All local variables become parameters, the check in the loop head becomes
+an ``if`` which encompasses the loop body and at the end of the loop body comes
+the recursive call. It also shows that you can do everything with recursion that
+you can do with loops. Note that the above is already optimized further; a
+version of ``fib_impl`` more akin to the iterative implementation (with
+equivalent meaning as the above) would look like this::
+
+  unsigned fib_impl(unsigned current, unsigned previous, unsigned i, unsigned n)
+  {
+      if (i < n) {
+          auto next = current + previous;
+          previous = current;
+          current = next;
+          ++i;
+          return fib_impl(current, previous, i, n);
+      }
+      return current;
+  }
+
+There are some more complicated algorithms that cannot be implemented
+iteratively without manually managing a stack of data ‒ this is still usually
+more efficient than recursion, since you don't have to store return addresses or
+local variables that aren't needed after the recursive call would have been
+made. For those algorithms, you have to make a trade-off between
+readability/maintainability and efficiency, unless you are forced to avoid a
+recursive solution due to possible stack overflow errors.
 
 .. todo::
   * Overloading (Move after introduction of ``struct``?)
