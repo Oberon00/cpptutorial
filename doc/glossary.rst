@@ -6,7 +6,7 @@ Glossary
 
   preprocessor directive
    A line of C++ code that starts with a hashtag symbol ``#`` is processed by
-   the preprocessor, and is then removed, so that they don't appear in later
+   the preprocessor, and is then removed, so that it doesn't appear in later
    phases of compilation.
 
   boilerplate code
