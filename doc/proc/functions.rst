@@ -379,6 +379,25 @@ Now changing ``r`` will change ``x`` or ``y``, depending on ``c``.
   about this error.
 
 
+Why are functions useful?
+=========================
+
+There are many problems you can (mostly) avoid by using functions:
+
+  * Having to write the same or nearly the same code over and over again (you
+    write it once in a function and just call it multiple times)
+  * Having to read the same code over and over again (you read the function
+    once).
+  * Having to fix the same problem or make the same improvement in several
+    places in a program (you fix/improve the just the function).
+  * Having a huge ``main()`` function (you split it into multiple functions that
+    are called from it).
+  * Having deeply nested control structures (you flatten them by splitting them
+    into multiple functions).
+  * Having absolutely no idea what some piece of code does (with functions, the
+    name should you give at least the basic idea).
+
+
 Global variables and why you should not use them
 ================================================
 
