@@ -554,9 +554,8 @@ operations:
 These operations give the stack its name because like e.g. a stack of books, you
 can only add things to and remove them from the top. A minimal stack often
 supports only access to the top element, but on *the* stack you can access (both
-read and write) any object. The data objects on the stack are the local
-variables of the functions the return addresses and also the return values of
-functions.
+read and write) any object. The data objects on the stack are local variables,
+return addresses and also return values of functions.
 
 Consider e.g. the factorial function, repeated here for your convenience::
 
@@ -568,7 +567,7 @@ Consider e.g. the factorial function, repeated here for your convenience::
       return result;
   }
 
-If we call this from a ``main`` like the following::
+Let's call this from a ``main`` like the following::
 
   int main()
   {
@@ -659,7 +658,7 @@ argument and hence the return value.
 
 .. _calling convention: https://en.wikipedia.org/wiki/Calling_convention
 
-For reference parameters, not the values are pushed on the stack, but the
+For reference parameters, not the value is pushed on the stack, but the
 address of the variable.
 
 
