@@ -111,8 +111,6 @@ If you study the above program and its output you will also notice that
   * If you specify less values in the braces than the struct has members, the
     rest is filled with zero/false. In fact the ``= {}`` syntax we have seen
     before is just a special case of this.
-  * You can leave out the ``=`` from the ``= {...}`` for initialization but not for
-    (re)assignment.
   * If you have a function with a parameter of a ``struct`` type, you can use
     ``{...}`` to create a object of that type with the given values on the fly,
     withouth needing a variable.
