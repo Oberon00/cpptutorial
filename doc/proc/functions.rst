@@ -320,6 +320,41 @@ minimum and the maximum of its parameters:
 .. literalinclude:: ex/functions/ref-minmax.cpp
 
 
+.. task:: Sorting three numbers with a swap function
+
+  In :ref:`a previous task <t-sort3>`, you wrote a program to sort three
+  numbers. Improve this program by writing a function that swaps two numbers
+  and replace all manual swaps in the program with it. Think about:
+
+    * how to call the function that does the swapping
+    * what signature (arguments and return values) the function should have
+
+  When you are done, evaluate the improvements:
+
+    * Is the program shorter than the original? Or even longer?
+    * What about the readability of the program?
+    * What would change in your evaluation if you adapted the shorter program
+      that swaps just three numbers instead?
+
+  SOLUTION:
+
+  A good name for the swapping-function is ``swap``: As stated earlier, verbs
+  make good function names. Since we want to swap ``int``\ s the signature for
+  the function could be ``void swap(int& a, int& b)``, that is, it returns
+  nothing and takes two ``int``\ s by reference as arguments. The whole program
+  then could look like this:
+
+  .. literalinclude:: ex/functions/swap-sort3.cpp
+
+  The program is only two lines shorter than the one given as solution to the
+  previous task. If we were to use a swap function for the two-number program,
+  we would even have more lines than without using an extra function for swap.
+  In conclusion, the more you can use a function, the better.
+
+  The readability of the program with the extra function is greatly improved:
+  ``swap(a, b)`` is far easier to read than the whole swap-“algorithm”.
+
+
 Reference types
 ---------------
 
@@ -920,7 +955,8 @@ recursive solution due to possible stack overflow errors.
   * Overloading (Move after introduction of ``struct``?)
   * Later chapter (?): Function templates
 
-----
+
+.. tasksolutions:: .
 
 .. rubric:: Footnotes
 

@@ -326,6 +326,7 @@ However, since in this example we don't need ``original_a`` outside the ``if``,
 it's best to leave its definition were it was: In general you should always
 make the scope of a variable as small as possible and as big necessary.
 
+.. _t-sort3:
 
 .. task:: Sorting three numbers
 
