@@ -719,7 +719,9 @@ on another call to ``factorial``. This result ``1`` is now returned to
 You see, from a technical perspective, a recursive function call is no different
 than any other function call. For each call, the return address, arguments and
 local variables (if any) are pushed on :ref:`the stack <proc-func-stack>`. So
-for example, before ``factorial(0)`` returns, the stack might look as follows::
+for example, before ``factorial(0)`` returns, the stack might look as follows:
+
+.. code-block:: none
 
   0  ← factorial(0)/n, top
   return address to factorial(1)
@@ -791,7 +793,9 @@ mathematical definitions is the function that returns the
   \fib(n) &= \fib(n - 1) + \fib(n - 2)
 
 This means that each Fibonacci number is the sum of its two predecessors,
-yielding the following sequence of numbers::
+yielding the following sequence of numbers:
+
+.. code-block:: none
 
   n        0  1  2  3  4  5  6   7  …
   fib(n)   0  1  1  2  3  5  8  13  …

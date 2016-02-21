@@ -395,7 +395,9 @@ two kinds of comments in C++:
 
 * Line comments start with ``//`` and extend until the line ends.
 * C-Style comments start with ``/*`` and end with ``*/``. Note that they
-  cannot be nested, so the following is a syntax error::
+  cannot be nested, so the following is a syntax error:
+
+.. code-block:: none
 
     /* In comment. /* Still in comment. */ Already outside comment. */
 

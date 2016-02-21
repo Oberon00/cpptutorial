@@ -289,7 +289,7 @@ the same as ``x = y; x = z;``, leaving ``y`` unchanged and assigning to ``x``
 twice in a row. Fortunately, this is not the case. You can thus use statements
 of the form ::
 
-  a = b = … = z = some_expression;
+  a = b /* = … */ = z = some_expression;
 
 to assign the value ``some_expression`` to all of the variables ``a`` through
 ``z``.

@@ -171,7 +171,7 @@ following syntax::
   {
       statement_1
       statement_2
-      …
+      // ...
       statement_n
   }
 

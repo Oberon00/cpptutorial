@@ -171,7 +171,9 @@ variable means, but these names tell nothing.
    short names just for the sake of typing speed.
 
 
-These are invalid names::
+These are invalid names:
+
+.. code-block:: none
 
   42 99bottles $amount client@network first.name next-value file__content _Dummy
 
@@ -306,7 +308,9 @@ the type of the variable, in this case in an integer. This causes the floating
 point value to be rounded down, resulting in the value ``0``, which is then
 printed in the next line. If you use the warning options I :ref:`told
 <intro-compiler-howto>` you while compiling, your compiler should tell you that
-there is a problem here.  Microsoft's compiler, for example, emits this waning::
+there is a problem here.  Microsoft's compiler, for example, emits this waning:
+
+.. code-block:: none
 
   warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
 
@@ -597,7 +601,9 @@ number of the given variable's type from it and stores the result there [#inpute
 The program then goes on, as in the previous version, calculating the diameter,
 perimeter and area of the circle with the entered radius and printing them.
 
-An example session looks like this::
+An example session looks like this:
+
+.. code-block:: none
 
   Enter the circle's radius: 2.3
   r = 2.3 ==> d = 4.6, A = 16.619, P = 14.4513
