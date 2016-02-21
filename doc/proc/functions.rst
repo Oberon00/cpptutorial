@@ -312,7 +312,10 @@ intuitive way of distinguishing them: when looking at ``x + 3 = 4`` it should be
 immediately clear that this assignment makes no sense, so ``absolutize(x + 3)``
 does not make sense either. It is only logical that the rules for assignment and
 reference parameters are the same, since the special thing about reference
-parameters is that you can assign to them affecting the argument passed.
+parameters is that you can assign to them affecting the argument passed. You
+also cannot pass ``const`` variables as reference arguments, which makes sense
+when you think about it: If this was allowed, a “constant” could be changed by
+passing it to a function by reference.
 
 A use case for multiple return values could be a function that returns both the
 minimum and the maximum of its parameters:
@@ -419,18 +422,18 @@ Why are functions useful?
 
 There are many problems you can (mostly) avoid by using functions:
 
-  * Having to write the same or nearly the same code over and over again (you
-    write it once in a function and just call it multiple times)
-  * Having to read the same code over and over again (you read the function
-    once).
-  * Having to fix the same problem or make the same improvement in several
-    places in a program (you fix/improve the just the function).
-  * Having a huge ``main()`` function (you split it into multiple functions that
-    are called from it).
-  * Having deeply nested control structures (you flatten them by splitting them
-    into multiple functions).
-  * Having absolutely no idea what some piece of code does (with functions, the
-    name should you give at least the basic idea).
+* Having to write the same or nearly the same code over and over again (you
+  write it once in a function and just call it multiple times)
+* Having to read the same code over and over again (you read the function
+  once).
+* Having to fix the same problem or make the same improvement in several
+  places in a program (you fix/improve the just the function).
+* Having a huge ``main()`` function (you split it into multiple functions that
+  are called from it).
+* Having deeply nested control structures (you flatten them by splitting them
+  into multiple functions).
+* Having absolutely no idea what some piece of code does (with functions, the
+  name should you give at least the basic idea).
 
 
 Global variables and why you should not use them
@@ -472,6 +475,8 @@ should definitely use a parameter.
    instead of e.g. reporting the error to the caller using a special return
    value. This could not happen if ``std::cout`` was not globally available.
 
+
+.. _sec-sideeffect:
 
 Side effects and their order
 ============================

@@ -1,15 +1,16 @@
 #include <iostream>
 
 struct Player {
-    int x, y;
-    int points;
+    int x;
+    int y;
+    int n_points;
 };
 
 void draw_player(Player player)
 {
     std::cout
         << "Player at " << player.x << "," << player.y
-        << " with " << player.points << " points.\n";
+        << " with " << player.n_points << " points.\n";
 }
 
 void next_round(unsigned& game_round)

@@ -1,13 +1,14 @@
 #include <iostream>
 
 struct Player {
-    int x, y;
-    int points;
+    int x;
+    int y;
+    int n_points;
 };
 
 void print_player(Player player)
 {
-    std::cout << player.x << ',' << player.y << ": " << player.points << '\n';
+    std::cout << player.x << ',' << player.y << ": " << player.n_points << '\n';
 }
 
 int main()
