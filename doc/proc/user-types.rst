@@ -203,7 +203,13 @@ accessing it directly.
 
 
 Encapsulation and member functions
-----------------------------------
+==================================
+
+``struct``\ s can be more than simple data containers.
+
+
+Member functions
+----------------
 
 So far, we have only had data members in ``struct``\ s, but it turns out that we
 can also add functions to them. For example, we could write a member function
@@ -236,7 +242,11 @@ files. So without touching the file where the ``struct`` is defined, it is
 impossible to add new functions. With free functions, you can add more functions
 for working with the ``struct`` without changing the definition.
 
-There is, however, an important technique that only works with member functions:
+
+Encapsulation and access control
+--------------------------------
+
+There is an important technique that only works with member functions:
 :dfn:`encapsulation` (also called :dfn:`information hiding`). By encapsulating
 members of a type, you restrict access to them to member functions of the type
 only. This has two advantages: First, you can often change the (now) internal
@@ -286,6 +296,10 @@ is the case with the ``x`` and ``y`` properties of the player.
 .. note:: Getters are often used in expressions involving more than one function
   call and thus should be side-effect free; see :ref:`sec-sideeffect`.
 
+
+Constructors
+------------
+
 There is a problem with the previous example: it fails to realize the second
 advantage of encapsulation, namely maintained invariants. Although we have not
 explicitly stated any, it clearly undesirable to have a ``Player`` where any
@@ -297,8 +311,8 @@ of the initialized type are private). To remediate this, you can define a
 special member function called the :dfn:`constructor`. Constructors functions
 have no return type and the same name as the type. They can have parameters but
 don't have to. A constructor that can be called without parameters is called a
-default-constructor. If we add a default-constructor to our ``struct Player``,
-it looks like this::
+:dfn:`default-constructor`. If we add a default-constructor to our ``struct
+Player``, it looks like this::
 
   struct Player {
   public:
@@ -330,7 +344,7 @@ In the case of ``Player`` above, this is the same as if we had written::
   }
 
 There are cases where this makes a differences, namely when the some data
-members have constructors themselves. We will come to that shortly.
+members have constructors themselves.
 
 Instead of a default-constructor, we could also add a constructor that accepts
 the initial values as arguments::
