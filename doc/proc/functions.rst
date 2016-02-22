@@ -126,6 +126,47 @@ with arguments of different types, e.g.::
       f(1u); // unsigned
   }
 
+.. _ssec-default-args:
+
+Default arguments
+-----------------
+
+A nice and simple feature of C++ are function default arguments. The
+``print_sepline`` function is a good example: Probably we want to use the same
+separator line most of the time, and always needing to specify all parameters is
+cumbersome. To remedy this, we can define ``print_sepline`` as follows::
+
+  void print_sepline(char sep_char = '~', unsigned sep_len = 80)
+  {
+      // ... (as before)
+  }
+
+Now we can can call the function like this::
+
+  print_sepline();
+
+to print a line with 80 tildes (“~”). We can also specify the first argument to
+use defaults only for all arguments after that or we can just specify all
+arguments::
+
+  print_sepline('_'); // 80 * '_'
+  print_sepline('=', 30); // 30 * '='
+
+If we concluded that there is no sensible default for ``sep_char``, we could
+also have provided a default argument only for ``sep_len`` when defining
+``print_sepline``::
+
+  void print_sepline(char sep_char, unsigned sep_len = 80) { /* ... */ }
+
+However, we could *not* define the function like this::
+
+  void print_sepline(char sep_char = '~', unsigned sep_len) { /* ... */ }
+
+This would mean that the second argument must always be provided but the first
+can be left out but it is logically impossible to have a second argument without
+a first one. Thus, when a parameter has a default argument value, C++ requires
+all parameters after that to also have a default, i.e. the default arguments
+must always come at the end.
 
 Pass by value
 --------------
@@ -201,6 +242,31 @@ statement. For example, we could put the calculation of the :ref:`factorial
   function but if, for example, the ``print_sepline`` function returned a
   ``bool`` indicating if it succeeded, one might say that it is legitimate to
   ignore the return value.
+
+.. sidebar:: Default argument expressions
+
+  Interestingly, :ref:`default arguments <ssec-default-args>` are not
+  restricted to simple literals. You can put in arbitrary expressions there,
+  including function calls. For example if we had a function ``console_width``
+  that returned the width of the console window, we could declare the
+  ``print_sepline`` function as::
+
+    void print_sepline(char sep_char, unsigned sep_len = console_width())
+    {
+        // ...
+    }
+
+  This might raise a question: When is ``console_width()`` actually called? The
+  answer is that it is called every time ``print_sepline`` is called because the
+  compiler processes default argument values by inserting the expression after
+  the ``=`` into the function call. That is, when the compiler later sees a call
+  like this::
+
+    print_sepline('+');
+
+  this is transformed into::
+
+    print_sepline('+', console_width());
 
 
 ``main``'s return value
