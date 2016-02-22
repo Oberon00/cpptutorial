@@ -355,7 +355,24 @@ the initial values as arguments::
   {
   }
 
+Now I can also explain where the initializer list behaves different from using
+``=``: E.g. if ``Point`` had a constructor ``Point(int x, int y)``, then we
+would have to use the initialization list, because if we leave it out, the
+compiler will try to insert a call to the default constructor as if we had
+written:
 
+.. code-block:: cpp
+  :emphasize-lines: 2
+
+  Player(Position position_, int n_points_):
+      m_position{}
+  {
+      m_position = position_;
+      m_points = n_points;
+  }
+
+Since the constructor of ``m_position`` requires two ``int``\ s as parameters,
+however, this would be an error.
 
 .. rubric:: Footnotes
 
