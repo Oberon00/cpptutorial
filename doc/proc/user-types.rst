@@ -18,7 +18,7 @@ and another one for the points:
 
 This code suffers from several problems:
 
-  * The player variables are not explicitly seperated from each other or other
+  * The player variables are not explicitly separated from each other or other
     unrelated variables.
   * The variables are are ordinary ``int``\ s. E.g. nothing would prevent you
     from accidentally writing nonsensical statements like::
@@ -91,7 +91,7 @@ changing data members of one player will not change the other player.
 
 In the above example programs we have always used ``= {}`` to initialize all of
 a ``struct``\ s members with zero. However, we can also choose our own values
-for the data members by writing them inside the braces, seperated by comma:
+for the data members by writing them inside the braces, separated by comma:
 
 .. literalinclude:: ex/user-types/player-init.cpp
 

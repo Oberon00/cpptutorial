@@ -76,7 +76,7 @@ Parameters and arguments
 Often, we do not want to do *exactly* the same thing multiple times but reuse a
 certain behaviour with some small variations. That's where function parameters
 come in. For example, for ``print_sepline`` we could want to parametrize the
-length of the seperator line and the character of which it is made. The
+length of the separator line and the character of which it is made. The
 following program demonstrates that:
 
 .. literalinclude:: ex/functions/params-sepline.cpp
@@ -92,7 +92,7 @@ Example output:
   ____________________
   Enter separator character: ~
   Enter length of separator line: 35
-  Your custom seperator line:
+  Your custom separator line:
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   Double the length:
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
