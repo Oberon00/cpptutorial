@@ -374,6 +374,124 @@ written:
 Since the constructor of ``m_position`` requires two ``int``\ s as parameters,
 however, this would be an error.
 
+
+A quick glance at templates
+===========================
+
+One thing that is a bit limiting for the ``struct Point`` is that it only has
+``int``\ s as the ``x`` and ``y`` components. If we only use the ``Point`` for
+one application and we only need ``int``, that may be fine. But in general, we
+might need ``Point`` s of ``double`` or ``int`` or maybe in one case we need to
+optimize for memory and even want to use a ``Point`` of ``signed char``. We
+could just write a class for every case such as::
+
+  struct IntPoint { int x; int y; };
+  struct FloatPoint { float x; float y; };
+  struct DoublePoint { double x; double y; };
+  // ...
+
+In the case of ``Point`` this may even be feasible as the ``struct`` is so tiny.
+But now imagine we also wanted to provide some functions for ``Point``\ s, such
+as::
+
+  IntPoint move_int_point(IntPoint p, IntPoint by)
+  {
+      return {p.x + by.x, p.y + by.y};
+  }
+
+  void print_int_point(IntPoint p)
+  {
+      std::cout << '(' << p.x << ',' << p.y << ')';
+  }
+
+If we had :math:`n` functions and :math:`m` types of points, we would need to implement all
+of the :math:`n` functions separately for all :math:`m` types which results in :math:`m \cdot n`
+functions. Clearly this does not scale up well.
+
+
+Class templates
+---------------
+
+With the template mechanism of C++, ``struct``\ s we can instead write a struct
+template (usually called a :dfn:`class-template`) for ``Point``::
+
+  template <typename T>
+  struct Point {
+      T x;
+      T y;
+  };
+
+The ``template`` keyword tells the compiler that what follows is a template
+definition and inside the angle brackets (which are used the usual less-than and
+greater-than signs repurposed) come the template parameters. In this case the
+template has as parameter a type (``typename``) with the parameter name ``T``.
+Inside the template definition, you can use ``T`` just like a normal type.
+
+To use this class template, we now need to specify the template parameter:
+
+.. _lst-point-tpl-usage:
+
+::
+
+  void print_point(Point<int> p)
+  {
+      std::cout << '(' << p.x << ',' << p.y << ')';
+  }
+
+  int main()
+  {
+      Point<int> mypoint = {2, 5};
+      print_point(mypoint)
+  }
+
+This is very similar to functions. In fact, you could view the class template
+``Point`` as a “type function” that takes a component-type as parameter and
+“returns” a point-type. The big difference is that this “computation” is done by
+the compiler and not when the program runs.
+
+
+Function templates
+------------------
+
+Now we need to write only one ``Point`` class-template instead of several
+``SomeTypePoint`` classes, but we still would need :math:`m \cdot n` functions. But
+function templates come to the rescue!
+
+.. sidebar:: Function templates can be used without class templates
+
+  Of course, you can also use function-templates without class-templates.  For
+  example, we could make our good old factorial function a function template::
+
+    template <typename T>
+    T factorial(T n)
+    {
+        T result = 1;
+        for (T i = 1; i <= n; ++i)
+            result *= i;
+        return result;
+    }
+
+::
+
+  template <typename T>
+  void print_point(Point<T> p)
+  {
+      std::cout << '(' << p.x << ',' << p.y << ')';
+  }
+
+
+Transforming ``print_point`` from a function to a function-template should look
+extremely similar to the previous tranformation of ``Point`` to a
+class-template. However, when calling a function template, there is a catch: You
+usually don't need to specify the template parameter because the compiler
+figures them out automatically by comparing the function argument with
+parameter. That is, the ``main`` function :ref:`from before
+<lst-point-tpl-usage>` now looks exactly the same!
+
+By using class- and function-templates, instead of :math:`m \cdot n` functions, we now
+need to write each function only once for all ``Point`` types, greatly improving
+maintainability and readability of the program.
+
 .. rubric:: Footnotes
 
 .. [#sizeofbytes] Actually, the C++ standard defines ``sizeof`` to return the
