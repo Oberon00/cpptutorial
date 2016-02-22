@@ -11,6 +11,10 @@ void print_player(Player player)
     std::cout << player.x << ',' << player.y << ": " << player.n_points << '\n';
 }
 
+Player new_player(int n_points) {
+    return {0, 0, n_points};
+}
+
 int main()
 {
     Player player = {5, 3, 100};
@@ -22,4 +26,5 @@ int main()
     print_player(player_b);
 
     print_player({10, 7, 250});
+    print_player(new_player(310));
 }

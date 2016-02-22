@@ -104,6 +104,7 @@ Output:
   5,0: 0
   1,2: 42
   10,7: 250
+  0,0: 310
 
 If you study the above program and its output you will also notice that 
 
@@ -115,9 +116,13 @@ If you study the above program and its output you will also notice that
   * If you have a function with a parameter of a ``struct`` type, you can use
     ``{...}`` to create a object of that type with the given values on the fly,
     withouth needing a variable.
+  * Similarly, if you have a function with ``struct`` return type, you can use
+    ``{...}`` to return create an object of that type with the given values on
+    the fly.
 
 Naturally, in all cases where literals like ``42`` or ``5`` were used, you can
 use arbitrary expressions like variables or computations of the right type.
+
 
 
 ``const`` and ``struct``\ s
