@@ -1,0 +1,30 @@
+@import 'alabaster.css';
+
+div.related {
+    margin-left: auto;
+    margin-right: auto;
+    width: {{ theme_page_width }};
+}
+
+div.sidebar {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+div.admonition-task {
+    background-color: #ffffe0;
+    border-color: #ee7;
+}
+
+div.related ul {
+    padding: 0;
+}
+
+@media screen and (max-width: 875px) {
+    div.related {
+        width: 100%;
+        margin-bottom: 1em;
+    }
+}
