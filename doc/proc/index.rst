@@ -2,6 +2,10 @@
 The Basics: Procedural programming
 ##################################
 
+This part will teach you the basics of programming and C++. Beware, some
+chapters might be a bit dry as only the material from later chapters makes it
+possible to put it to interesting usages.
+
 Contents:
 
 .. toctree::
@@ -12,3 +16,4 @@ Contents:
    control-flow
    functions
    user-types
+   vector-intro

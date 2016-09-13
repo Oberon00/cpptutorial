@@ -488,9 +488,11 @@ figures them out automatically by comparing the function argument with
 parameter. That is, the ``main`` function :ref:`from before
 <lst-point-tpl-usage>` now looks exactly the same!
 
-By using class- and function-templates, instead of :math:`m \cdot n` functions, we now
-need to write each function only once for all ``Point`` types, greatly improving
-maintainability and readability of the program.
+By using class- and function-templates, instead of :math:`m \cdot n` functions,
+we now need to write each function only once for all ``Point`` types, greatly
+improving maintainability and readability of the program.
+
+----
 
 .. rubric:: Footnotes
 

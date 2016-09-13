@@ -134,7 +134,7 @@ Remembering values
 ==================
 
 Often, it is more readable to give names to intermediate results instead of
-putting all in a single, complicated expression. Also there are many situations
+putting all in a single, complicated expression. Also, there are many situations
 where multiple end results are calculated based on an intermediate value. The
 following demonstrates how to do this, using various calculations on a circle as
 an example:
@@ -331,17 +331,17 @@ these were just categories of types:
 Floating point numbers
 ----------------------
 
-For floating point numbers, there C++ has the ``float`` and ``double`` types.
-The difference between them is their precision and the minimum/maximum values
-they can contain.  As the name implies, a ``double`` usually occupies twice as
-much bytes as a ``float`` and thus has a higher precision and a greater range of
+For floating point numbers, C++ has the ``float``, ``double`` types. The
+difference between them is their precision and the minimum/maximum values they
+can contain.  As the name implies, a ``double`` usually occupies twice as much
+bytes as a ``float`` and thus has a higher precision and a greater range of
 representable numbers. There is also ``long double`` which can have an even
 greater range and precision (and size), but it is used very seldom and with
 Microsoft's compiler it is the same as ``double``. By default, if you write a
 number with a fractional part, like ``1.2`` or ``1.0`` [#emptyfractional]_ it is
 a ``double``.  If you want the literal to have the type ``float``, append a
 ``f`` or ``F``. So while ``1.0`` is of type ``double``, ``1.0f`` is a float. The
-same goes for ``long`` double only with ``l`` or ``L`` instead of ``f`` or
+same goes for ``long double`` only with ``l`` or ``L`` instead of ``f`` or
 ``F``. I recommend using the uppercase variant here, because lowercase ``l``
 looks very similar to ``1`` (compare ``1.1l`` and ``1.1L``). I recommend to
 always use ``double`` for floating point numbers, unless you have specific
