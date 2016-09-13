@@ -74,12 +74,14 @@ install an extra linker.
 Windows
 -------
 
-On Windows, I recommend using Microsoft's free :program:`Visual C++ Express for
-Windows Desktop` [#long-ms-names]_. At the time of this writing, the most recent
-version (which we will of course use) is 2013 Update 3, downloadable at
-http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-8.
-Just click the “Install now!” link, and run the downloaded installer. You can
-untick any checkboxes saying something about Windows Phone or .NET.
+On Windows, I recommend using Microsoft's free :program:`Visual Studio Community
+Edition`.  At the time of this writing, the most recent version (which we will
+of course use) is 2015 Update 3, downloadable at https://www.visualstudio.com/.
+When you download and run the installer, be sure to tick the checkbox under
+:menuselection:`Programming Languages --> Visual C++ --> Common Tools For Visual
+C++ 2015` (Visual Studio supports multiple programming languages and C++ is not
+among the defaults). You can untick any checkboxes saying something about
+Windows Phone or .NET.
 
 I will refer to this compiler as :abbr:`MSVC (Microsoft Visual C++)`.
 
@@ -452,8 +454,6 @@ Summary
 ----
 
 .. rubric:: Footnotes
-
-.. [#long-ms-names] Microsoft is infamous for its long product names.
 
 .. [#cmdtut] Although I have not read it and it uses PowerShell on Windows
    instead of the ordinary ``cmd``, http://cli.learncodethehardway.org/book/
