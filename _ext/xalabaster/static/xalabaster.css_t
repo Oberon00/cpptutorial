@@ -1,5 +1,9 @@
 @import 'alabaster.css';
 
+code, tt {
+    background: inherit;
+}
+
 div.related {
     margin-left: auto;
     margin-right: auto;

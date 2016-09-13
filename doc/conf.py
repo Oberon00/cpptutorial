@@ -141,7 +141,8 @@ html_theme_options = {
         'serif']),
     'github_user': 'Oberon00',
     'github_repo': 'cpptutorial',
-    'github_type': 'star' # watch is broken, would need ?v=2 in iframe
+    'github_type': 'star', # watch is broken, would need ?v=2 in iframe
+    'description': 'Yet another C++ tutorial.'
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -187,10 +188,11 @@ html_static_path = ['../_static']
 html_sidebars = {
     '**': [
         'about.html',
-        'navigation.html',
-        'relations.html',
-#        'searchbox.html',
-#        'donate.html',
+        'localtoc.html',
+#       'navigation.html',
+#       'relations.html',
+#       'searchbox.html',
+#       'donate.html',
     ]
 }
 
